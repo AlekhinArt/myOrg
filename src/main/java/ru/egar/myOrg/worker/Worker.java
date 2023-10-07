@@ -24,5 +24,6 @@ public class Worker {
     private String phoneNumber;
     private List<PaperDocument> documents;
     private List<WorkHistory> workHistory;
+    private List <ValuableObject> valuableObjects;
 
 }
