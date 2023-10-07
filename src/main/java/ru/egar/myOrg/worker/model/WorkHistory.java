@@ -1,4 +1,4 @@
-package ru.egar.myOrg.worker;
+package ru.egar.myOrg.worker.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

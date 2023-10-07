@@ -1,4 +1,4 @@
-package ru.egar.myOrg.repository;
+package ru.egar.myOrg.document.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

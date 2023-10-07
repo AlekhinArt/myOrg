@@ -1,0 +1,32 @@
+package ru.egar.myOrg.worker.mapper;
+
+import ru.egar.myOrg.worker.dto.WorkerDto;
+import ru.egar.myOrg.worker.model.Worker;
+
+public class WorkerMapper {
+
+
+    public static Worker toWorker(WorkerDto workerDto) {
+        return Worker.builder()
+                .name(workerDto.getName())
+                .surname(workerDto.getSurname())
+                .patronymic(workerDto.getPatronymic())
+                .birthday(workerDto.getBirthday())
+                .phoneNumber(workerDto.getPhoneNumber())
+                .workNow(workerDto.getWorkNow())
+                .build();
+
+    }
+
+    public static WorkerDto toWorkerDto(Worker worker) {
+        return WorkerDto.builder()
+                .name(worker.getName())
+                .surname(worker.getSurname())
+                .patronymic(worker.getPatronymic())
+                .birthday(worker.getBirthday())
+                .phoneNumber(worker.getPhoneNumber())
+                .workNow(worker.getWorkNow())
+                .build();
+
+    }
+}

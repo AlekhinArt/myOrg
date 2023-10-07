@@ -1,10 +1,10 @@
-package ru.egar.myOrg.worker;
+package ru.egar.myOrg.worker.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import ru.egar.myOrg.document.PaperDocument;
+import ru.egar.myOrg.document.model.PaperDocument;
 
 
 import java.time.LocalDate;

@@ -1,6 +1,6 @@
-package ru.egar.myOrg.service;
+package ru.egar.myOrg.document.service;
 
-import ru.egar.myOrg.document.PaperDocument;
+import ru.egar.myOrg.document.model.PaperDocument;
 
 import java.util.List;
 

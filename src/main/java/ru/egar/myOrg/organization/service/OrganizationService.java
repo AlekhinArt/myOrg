@@ -1,6 +1,6 @@
-package ru.egar.myOrg.service;
+package ru.egar.myOrg.organization.service;
 
-import ru.egar.myOrg.organization.Organization;
+import ru.egar.myOrg.organization.model.Organization;
 
 import java.util.List;
 

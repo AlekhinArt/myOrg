@@ -1,9 +1,9 @@
-package ru.egar.myOrg.organization;
+package ru.egar.myOrg.organization.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import ru.egar.myOrg.worker.Worker;
+import ru.egar.myOrg.worker.model.Worker;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
-package ru.egar.myOrg.service;
+package ru.egar.myOrg.worker.service;
 
-import ru.egar.myOrg.worker.EmployPosition;
+import ru.egar.myOrg.worker.model.EmployPosition;
 
 import java.util.List;
 

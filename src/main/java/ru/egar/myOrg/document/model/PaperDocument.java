@@ -1,4 +1,4 @@
-package ru.egar.myOrg.document;
+package ru.egar.myOrg.document.model;
 
 public abstract class PaperDocument {
 

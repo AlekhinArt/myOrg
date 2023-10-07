@@ -1,13 +1,13 @@
 package ru.egar.myOrg;
 
 import org.junit.jupiter.api.BeforeAll;
-import ru.egar.myOrg.document.Graduate;
-import ru.egar.myOrg.document.PaperDocument;
-import ru.egar.myOrg.document.Passport;
-import ru.egar.myOrg.organization.Organization;
-import ru.egar.myOrg.worker.EmployPosition;
-import ru.egar.myOrg.worker.WorkHistory;
-import ru.egar.myOrg.worker.Worker;
+import ru.egar.myOrg.document.model.Graduate;
+import ru.egar.myOrg.document.model.PaperDocument;
+import ru.egar.myOrg.document.model.Passport;
+import ru.egar.myOrg.organization.model.Organization;
+import ru.egar.myOrg.worker.model.EmployPosition;
+import ru.egar.myOrg.worker.model.WorkHistory;
+import ru.egar.myOrg.worker.model.Worker;
 
 
 import java.time.LocalDate;
