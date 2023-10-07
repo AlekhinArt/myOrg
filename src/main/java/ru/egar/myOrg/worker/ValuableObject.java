@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+
 @Setter
 @Getter
 @AllArgsConstructor
@@ -16,7 +17,6 @@ public class ValuableObject {
     private String name;
     private float price;
     private LocalDate dateOfPurchase;
-
 
 
 }

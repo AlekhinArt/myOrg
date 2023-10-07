@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @Builder
 public class Passport extends PaperDocument {
     private int id;
+    private static final int code= 1;
     private int number;
     private int series;
     private LocalDate issued;
