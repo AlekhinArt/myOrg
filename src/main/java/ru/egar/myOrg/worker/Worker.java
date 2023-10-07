@@ -25,5 +25,4 @@ public class Worker {
     private List<PaperDocument> documents;
     private List<WorkHistory> workHistory;
 
-
 }

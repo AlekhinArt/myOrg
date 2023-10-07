@@ -18,8 +18,11 @@ public class WorkHistory {
     private EmployPosition employPosition;
     private LocalDate startWork;
     private LocalDate endWork;
+//    прогулы
     private List<LocalDate> daysOf;
+//    больничные
     private List<LocalDate> sickDays;
+//    отпуск
     private List<LocalDate> vacation;
 
 
