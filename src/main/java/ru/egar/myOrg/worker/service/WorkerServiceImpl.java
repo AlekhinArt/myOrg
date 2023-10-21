@@ -8,6 +8,8 @@ import ru.egar.myOrg.worker.model.Worker;
 import ru.egar.myOrg.worker.repository.WorkerRepository;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class WorkerServiceImpl implements WorkerService {
@@ -19,25 +21,33 @@ public class WorkerServiceImpl implements WorkerService {
 
     @Override
     public WorkerDto create(WorkerDto workerDto) {
+
         return WorkerMapper.toWorkerDto(workerRepository.save(WorkerMapper.toWorker(workerDto)));
-
     }
 
     @Override
-    public WorkerDto get(int id) {
-        return WorkerMapper.toWorkerDto(workerRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Not found")));
+    public void deleteById(Long aLong) {
+        workerRepository.deleteById(aLong);
+    }
+
+
+    @Override
+    public List<WorkerDto> getAll() {
+        return workerRepository.findAll().stream()
+                .map(WorkerMapper::toWorkerDto)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<Worker> getAll() {
+    public Optional<WorkerDto> getById(Long aLong) {
+        return workerRepository.findById(aLong)
+                .map(WorkerMapper::toWorkerDto);
+    }
 
+    @Override
+    public WorkerDto updateById(Long aLong, WorkerDto workerDto) {
         return null;
     }
 
-    @Override
-    public void delete(int id) {
-        workerRepository.deleteById(id);
 
-    }
 }

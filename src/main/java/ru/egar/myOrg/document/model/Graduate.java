@@ -12,14 +12,18 @@ import java.time.LocalDate;
 @Getter
 @AllArgsConstructor
 @Builder
-public class Graduate extends PaperDocument {
-    private int id;
-    private static final int code= 2;
+public class Graduate extends BasePaperDocument {
+//    private Long id;
+//    private static final int code= 2;
     private String institution;
     private String grade;
     private String specialization;
     private LocalDate startDate;
     private LocalDate lastDate;
+    public Graduate(){
+        codeTypeDocument = "002";
+        nameDocument = "Квалификационный документ";
+    }
 
 
 }

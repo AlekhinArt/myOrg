@@ -6,7 +6,7 @@ import lombok.*;
 @Getter
 @Builder
 public class EmployPosition {
-    private int id;
+    private Long id;
     private String position;
     private String jobDescription;
 

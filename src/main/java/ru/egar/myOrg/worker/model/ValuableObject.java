@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 public class ValuableObject {
-    private int id;
+    private Long id;
     private Boolean isUse;
     private String name;
     private float price;

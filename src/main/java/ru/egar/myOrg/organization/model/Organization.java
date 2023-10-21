@@ -11,10 +11,10 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 public class Organization {
-    private int id;
+    private Long id;
     private String name;
-    private int inn;
-    private int ogrn;
+    private Integer inn;
+    private Integer ogrn;
     private String address;
     private String phoneNumber;
     private List<Worker> workers;

@@ -10,13 +10,16 @@ import java.time.LocalDate;
 @Getter
 @AllArgsConstructor
 @Builder
-public class Passport extends PaperDocument {
-    private int id;
-    private static final int code= 1;
-    private int number;
-    private int series;
+public class Passport extends BasePaperDocument {
+//    private Long id;
+//    private static final int code= 1;
+    private Integer number;
+    private Integer series;
     private LocalDate issued;
     private String whoIssued;
-
+    public Passport(){
+        codeTypeDocument = "001";
+        nameDocument = "Пасспорт";
+    }
 
 }

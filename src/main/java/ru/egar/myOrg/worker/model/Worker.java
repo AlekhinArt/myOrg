@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class Worker {
-    private int id;
+    private Long id;
     private Boolean workNow;
     private String name;
     private String surname;

@@ -1,10 +1,15 @@
 package ru.egar.myOrg.worker.service;
 
 import org.springframework.stereotype.Service;
+import ru.egar.myOrg.worker.dto.EmployPositionDto;
+import ru.egar.myOrg.worker.mapper.EmployPositionMapper;
 import ru.egar.myOrg.worker.model.EmployPosition;
 import ru.egar.myOrg.worker.repository.EmployPositionRepository;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 @Service
 public class EmployPositionServImpl implements EmployPositionService {
 
@@ -14,23 +19,37 @@ public class EmployPositionServImpl implements EmployPositionService {
 
     private final EmployPositionRepository employPositionRepository;
 
+
     @Override
-    public EmployPosition create() {
+    public List<EmployPositionDto> getAll() {
+        return employPositionRepository.findAll()
+                .stream()
+                .map(EmployPositionMapper::toEmployPositionDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<EmployPositionDto> getById(Long aLong) {
+        return employPositionRepository.findById(aLong)
+                .map(EmployPositionMapper::toEmployPositionDto);
+
+    }
+
+    @Override
+    public EmployPositionDto create(EmployPositionDto dto) {
+        return EmployPositionMapper.toEmployPositionDto(
+                employPositionRepository.save(
+                        EmployPositionMapper.toEmployPosition(dto)));
+    }
+
+    @Override
+    public EmployPositionDto updateById(Long aLong, EmployPositionDto employPositionDto) {
         return null;
     }
 
     @Override
-    public EmployPosition get() {
-        return null;
-    }
-
-    @Override
-    public List<EmployPosition> getAll() {
-        return null;
-    }
-
-    @Override
-    public void delete() {
+    public void deleteById(Long aLong) {
+        employPositionRepository.deleteById(aLong);
 
     }
 }

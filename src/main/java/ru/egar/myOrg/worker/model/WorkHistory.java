@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class WorkHistory {
-    private int id;
+    private Long id;
     private boolean workNow;
     private EmployPosition employPosition;
     private LocalDate startWork;
