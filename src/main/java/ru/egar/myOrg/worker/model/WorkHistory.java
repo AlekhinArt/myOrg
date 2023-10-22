@@ -25,7 +25,8 @@ public class WorkHistory {
     @Column(name = "work_now")
     private boolean workNow;
     @OneToOne
-    @Column(name = "employ_position")
+    @JoinColumn (name = "empl_id")
+
     private EmployPosition employPosition;
     @Column(name = "start_work")
     private LocalDate startWork;
