@@ -7,7 +7,8 @@ import java.time.LocalDate;
 
 @Setter
 @Getter
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 //@Entity
 public class ValuableObject {

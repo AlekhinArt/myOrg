@@ -1,11 +1,10 @@
 package ru.egar.myOrg.organization.repository;
 
-import org.hibernate.jdbc.Work;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import ru.egar.myOrg.organization.model.Organization;
-import ru.egar.myOrg.worker.model.Worker;
 
 import java.util.Collection;
 

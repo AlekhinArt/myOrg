@@ -1,10 +1,13 @@
 package ru.egar.myOrg.worker.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import ru.egar.myOrg.worker.model.EmployPosition;
 
 import java.time.LocalDate;
 import java.util.List;
-
+@AllArgsConstructor
+@NoArgsConstructor
 public class WorkerHistoryDto {
     private Long id;
     private boolean workNow;

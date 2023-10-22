@@ -1,9 +1,6 @@
 package ru.egar.myOrg.document.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 
@@ -11,6 +8,7 @@ import java.time.LocalDate;
 @Setter
 @Getter
 @AllArgsConstructor
+
 @Builder
 public class Graduate extends BasePaperDocument {
 //    private Long id;

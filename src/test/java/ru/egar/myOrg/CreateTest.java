@@ -1,21 +1,8 @@
 package ru.egar.myOrg;
 
-import org.junit.jupiter.api.BeforeAll;
-import ru.egar.myOrg.document.model.Graduate;
-import ru.egar.myOrg.document.model.PaperDocument;
-import ru.egar.myOrg.document.model.Passport;
-import ru.egar.myOrg.organization.model.Organization;
-import ru.egar.myOrg.worker.model.EmployPosition;
-import ru.egar.myOrg.worker.model.WorkHistory;
-import ru.egar.myOrg.worker.model.Worker;
-
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 public class CreateTest {
-
+/*
     Worker worker;
     EmployPosition employPosition;
     Organization organization;
@@ -73,7 +60,7 @@ public class CreateTest {
                 .build();
 
 
-    }
+    }*/
 
 
 }

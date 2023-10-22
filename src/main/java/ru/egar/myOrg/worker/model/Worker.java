@@ -11,7 +11,8 @@ import java.util.List;
 
 @Setter
 @Getter
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @Entity
 public class Worker {
@@ -27,7 +28,8 @@ public class Worker {
     private String phoneNumber;
 
 //    private List<BasePaperDocument> documents;
-//    private List<WorkHistory> workHistory;
+    @OneToMany(fetch = FetchType.LAZY)
+private List<WorkHistory> workHistory;
 //    private List <ValuableObject> valuableObjects;
 
 }

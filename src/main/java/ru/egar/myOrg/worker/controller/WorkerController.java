@@ -43,7 +43,7 @@ public class WorkerController {
     }
     @Operation(summary = "Удаление",
             description = "Удаляем работник из бд")
-    @DeleteMapping("/id")
+    @DeleteMapping("/{id}")
     public void deleteWorker (@PathVariable Long id){
         log.info("delete worker {}", id);
         workerService.deleteById(id);

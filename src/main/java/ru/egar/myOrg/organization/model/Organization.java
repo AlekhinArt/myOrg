@@ -8,7 +8,8 @@ import java.util.List;
 
 @Setter
 @Getter
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Builder
 public class Organization {

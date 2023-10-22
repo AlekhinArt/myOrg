@@ -1,14 +1,12 @@
 package ru.egar.myOrg.document.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 @Setter
 @Getter
 @AllArgsConstructor
+
 @Builder
 public class Passport extends BasePaperDocument {
 //    private Long id;

@@ -1,9 +1,6 @@
 package ru.egar.myOrg.worker.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import ru.egar.myOrg.worker.model.TypeOfValue;
 
 import java.time.LocalDate;
@@ -11,6 +8,7 @@ import java.time.LocalDate;
 @Setter
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 public class ValuableObjectDto {
     private Long id;
     private Boolean isUse;

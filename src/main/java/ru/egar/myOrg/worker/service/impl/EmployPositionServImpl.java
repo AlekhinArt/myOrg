@@ -3,7 +3,6 @@ package ru.egar.myOrg.worker.service.impl;
 import org.springframework.stereotype.Service;
 import ru.egar.myOrg.worker.dto.EmployPositionDto;
 import ru.egar.myOrg.worker.mapper.EmployPositionMapper;
-import ru.egar.myOrg.worker.model.EmployPosition;
 import ru.egar.myOrg.worker.repository.EmployPositionRepository;
 import ru.egar.myOrg.worker.service.EmployPositionService;
 
