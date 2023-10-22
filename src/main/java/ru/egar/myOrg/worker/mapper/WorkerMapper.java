@@ -8,6 +8,7 @@ public class WorkerMapper {
 
     public static Worker toWorker(WorkerDto workerDto) {
         return Worker.builder()
+                .id(workerDto.getId())
                 .name(workerDto.getName())
                 .surname(workerDto.getSurname())
                 .patronymic(workerDto.getPatronymic())
@@ -20,6 +21,7 @@ public class WorkerMapper {
 
     public static WorkerDto toWorkerDto(Worker worker) {
         return WorkerDto.builder()
+                .id(worker.getId())
                 .name(worker.getName())
                 .surname(worker.getSurname())
                 .patronymic(worker.getPatronymic())

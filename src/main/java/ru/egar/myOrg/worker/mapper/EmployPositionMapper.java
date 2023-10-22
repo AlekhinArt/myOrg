@@ -7,6 +7,7 @@ public class EmployPositionMapper {
 
     public static EmployPosition toEmployPosition (EmployPositionDto employPositionDto){
         return EmployPosition.builder()
+                .id(employPositionDto.getId())
                 .position(employPositionDto.getPosition())
                 .jobDescription(employPositionDto.getJobDescription())
                 .build();
@@ -14,6 +15,7 @@ public class EmployPositionMapper {
 
     public static EmployPositionDto toEmployPositionDto( EmployPosition employPosition){
         return EmployPositionDto.builder()
+                .id(employPosition.getId())
                 .position(employPosition.getPosition())
                 .jobDescription(employPosition.getJobDescription())
                 .build();

@@ -1,11 +1,13 @@
-package ru.egar.myOrg.worker.service;
+package ru.egar.myOrg.worker.service.impl;
 
+import org.springframework.stereotype.Service;
 import ru.egar.myOrg.worker.model.ValuableObject;
+import ru.egar.myOrg.worker.service.ValuableObjectsService;
 
 import java.util.List;
 import java.util.Optional;
-
-public class ValuableObjectServiceImpl implements ValuableObjectsService{
+@Service
+public class ValuableObjectServiceImpl implements ValuableObjectsService {
 
 
     @Override

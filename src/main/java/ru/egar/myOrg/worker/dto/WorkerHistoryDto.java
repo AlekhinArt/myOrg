@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class WorkerHistoryDto {
-
+    private Long id;
     private boolean workNow;
     private EmployPosition employPosition;
     private LocalDate startWork;

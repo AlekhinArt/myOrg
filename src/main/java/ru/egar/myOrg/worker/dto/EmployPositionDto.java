@@ -10,6 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 public class EmployPositionDto {
+    private Long id;
     private String position;
     private String jobDescription;
 }

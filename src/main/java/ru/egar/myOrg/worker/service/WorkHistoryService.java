@@ -1,16 +1,11 @@
 package ru.egar.myOrg.worker.service;
 
 
+import ru.egar.myOrg.base.BaseService;
 import ru.egar.myOrg.worker.model.WorkHistory;
 
-import java.util.List;
 
-public interface WorkHistoryService {
-    WorkHistory create();
 
-    WorkHistory get();
+public interface WorkHistoryService extends BaseService <WorkHistory, Long> {
 
-    List<WorkHistory> getAll();
-
-    void delete();
 }

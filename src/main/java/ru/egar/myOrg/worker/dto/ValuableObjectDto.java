@@ -4,20 +4,18 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import ru.egar.myOrg.worker.model.TypeOfValue;
 
 import java.time.LocalDate;
+@Builder
 @Setter
 @Getter
 @AllArgsConstructor
-@Builder
-public class WorkerDto {
+public class ValuableObjectDto {
     private Long id;
-    private Boolean workNow;
+    private Boolean isUse;
     private String name;
-    private String surname;
-    private String patronymic;
-    private LocalDate birthday;
-    private String phoneNumber;
-
-
+    private float price;
+    private LocalDate dateOfPurchase;
+    private TypeOfValue typeOfValue;
 }

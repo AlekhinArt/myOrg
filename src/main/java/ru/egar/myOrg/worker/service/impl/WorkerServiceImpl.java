@@ -1,11 +1,10 @@
-package ru.egar.myOrg.worker.service;
+package ru.egar.myOrg.worker.service.impl;
 
 import org.springframework.stereotype.Service;
-import ru.egar.myOrg.exception.NotFoundException;
 import ru.egar.myOrg.worker.dto.WorkerDto;
 import ru.egar.myOrg.worker.mapper.WorkerMapper;
-import ru.egar.myOrg.worker.model.Worker;
 import ru.egar.myOrg.worker.repository.WorkerRepository;
+import ru.egar.myOrg.worker.service.WorkerService;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,7 +20,6 @@ public class WorkerServiceImpl implements WorkerService {
 
     @Override
     public WorkerDto create(WorkerDto workerDto) {
-
         return WorkerMapper.toWorkerDto(workerRepository.save(WorkerMapper.toWorker(workerDto)));
     }
 
