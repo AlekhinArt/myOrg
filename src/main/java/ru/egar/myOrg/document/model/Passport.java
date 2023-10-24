@@ -15,9 +15,9 @@ public class Passport extends BasePaperDocument {
     private Integer series;
     private LocalDate issued;
     private String whoIssued;
-    public Passport(){
-        codeTypeDocument = "001";
-        nameDocument = "Пасспорт";
-    }
+//    public Passport(){
+//        codeTypeDocument = "001";
+//        nameDocument = "Паспорт";
+//    }
 
 }

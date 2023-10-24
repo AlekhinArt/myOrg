@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-//@Entity
+@Entity
 public class ValuableObject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -15,9 +15,11 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Entity
+@Table(name = "worker")
 public class Worker {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @Column (name = "worker_id")
     private Long id;
     @Column(name ="work_now")
     private Boolean workNow;

@@ -8,7 +8,6 @@ import java.time.LocalDate;
 @Setter
 @Getter
 @AllArgsConstructor
-
 @Builder
 public class Graduate extends BasePaperDocument {
 //    private Long id;
@@ -18,10 +17,10 @@ public class Graduate extends BasePaperDocument {
     private String specialization;
     private LocalDate startDate;
     private LocalDate lastDate;
-    public Graduate(){
-        codeTypeDocument = "002";
-        nameDocument = "Квалификационный документ";
-    }
+//    public Graduate(){
+//        codeTypeDocument = "002";
+//        nameDocument = "Квалификационный документ";
+//    }
 
 
 }
