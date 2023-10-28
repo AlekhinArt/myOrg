@@ -22,8 +22,8 @@ public class OrganizationController {
             description = "Добавляем организацию")
     @PostMapping
     public OrganizationDto create(@RequestParam String name,
-                                  @RequestParam Integer inn,
-                                  @RequestParam Integer ogrn,
+                                  @RequestParam String inn,
+                                  @RequestParam String ogrn,
                                   @RequestParam String address,
                                   @RequestParam String phoneNumber) {
         log.info("Create organization: {}, {}, {}, {}, {}", name, inn, ogrn, address, phoneNumber);
@@ -35,6 +35,12 @@ public class OrganizationController {
                 .phoneNumber(phoneNumber)
                 .build());
     }
+    @GetMapping("/newOrg")
+    public String newOrg() {
+        return "operations/newOrg";
+    }
+
+
 
     @Operation(summary = "Удаление",
             description = "Удаление организацию")
@@ -66,8 +72,8 @@ public class OrganizationController {
     @GetMapping("/upd/{id}")
     public String updateOrg(@PathVariable Long id,
                             @RequestParam String name,
-                            @RequestParam Integer inn,
-                            @RequestParam Integer ogrn,
+                            @RequestParam String inn,
+                            @RequestParam String ogrn,
                             @RequestParam String address,
                             @RequestParam String phoneNumber) {
         log.info("Create organization with id {}: {}, {}, {}, {}, {}", id, name, inn, ogrn, address, phoneNumber);

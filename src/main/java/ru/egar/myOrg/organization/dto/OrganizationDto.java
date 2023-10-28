@@ -9,10 +9,12 @@ import java.util.List;
 @Builder
 @Data
 public class OrganizationDto {
+
+    // TODO: 28.10.2023 добавить валидаторы здесь и в других дто
     private Long id;
     private String name;
-    private Integer inn;
-    private Integer ogrn;
+    private String inn;
+    private String ogrn;
     private String address;
     private String phoneNumber;
 

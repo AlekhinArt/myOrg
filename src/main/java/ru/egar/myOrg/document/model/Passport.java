@@ -11,8 +11,8 @@ import java.time.LocalDate;
 public class Passport extends BasePaperDocument {
 //    private Long id;
 //    private static final int code= 1;
-    private Integer number;
-    private Integer series;
+    private String number;
+    private String series;
     private LocalDate issued;
     private String whoIssued;
 //    public Passport(){

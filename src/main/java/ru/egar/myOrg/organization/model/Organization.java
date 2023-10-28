@@ -19,8 +19,8 @@ public class Organization {
     @Column(name = "org_id")
     private Long id;
     private String name;
-    private Integer inn;
-    private Integer ogrn;
+    private String inn;
+    private String  ogrn;
     private String address;
     @Column(name = "phone_number")
     private String phoneNumber;

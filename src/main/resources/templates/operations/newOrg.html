@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New org</title>
+    <head th:insert ="~{fragments/head :: head}"></head>
+</head>
+<body>
+<div th:insert ="~{fragments/header :: header}"></div>
+<div th:insert ="~{fragments/leftPanel :: leftPanel}"></div>
+
+<div class="container" >
+    <form class="form-inline" th:action="@{/save}" name="input_form" id="input_form"
+          method="post" role="form">
+        <div class="form-group">
+            <input type="text" class="form-control" id="brand" th:name="brand" placeholder="Enter brand"
+
+                   maxlength="100" required/>
+        </div>
+        <div class="form-inline">
+            <input type="text" class="form-control" id="33" th:name="brand" placeholder="Enter brand"
+
+                   maxlength="100" required/>
+        </div>
+        <div class="form-group-sm">
+            <input type="text" class="form-control" id="44" th:name="brand" placeholder="Enter brand"
+
+                   maxlength="100" required/>
+        </div>
+
+
+
+</div>
+</body>
+</html>
