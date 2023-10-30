@@ -22,6 +22,7 @@ public class Organization {
     private String inn;
     private String  ogrn;
     private String address;
+    private String zip;
     @Column(name = "phone_number")
     private String phoneNumber;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

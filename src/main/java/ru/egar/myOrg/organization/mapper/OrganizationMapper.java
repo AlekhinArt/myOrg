@@ -13,6 +13,7 @@ public class OrganizationMapper {
                 .ogrn(organization.getOgrn())
                 .phoneNumber(organization.getPhoneNumber())
                 .name(organization.getName())
+                .zip(organization.getZip())
                 .build();
     }
     public static Organization toOrganization(OrganizationDto organizationDto){
@@ -23,6 +24,7 @@ public class OrganizationMapper {
                 .ogrn(organizationDto.getOgrn())
                 .phoneNumber(organizationDto.getPhoneNumber())
                 .name(organizationDto.getName())
+                .zip(organizationDto.getZip())
                 .build();
     }
 

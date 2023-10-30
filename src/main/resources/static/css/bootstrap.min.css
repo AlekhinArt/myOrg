@@ -5,6 +5,27 @@
 
                 ЛИШНЕЕ*/
 
+.parent {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    overflow: auto;
+}
+
+.block43 {
+    background: #60a839;
+}
+
+
+
+
+
 
 html {
     font-family: sans-serif;
@@ -3300,7 +3321,7 @@ select[multiple].input-lg, textarea.input-lg {
 @media (min-width: 768px) {
     .form-inline .form-group {
         display: inline-block;
-        margin-bottom: 0;
+        margin-bottom: 1000px;
         vertical-align: middle
     }
 

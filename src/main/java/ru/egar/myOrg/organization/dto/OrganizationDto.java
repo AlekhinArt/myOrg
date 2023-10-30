@@ -17,6 +17,7 @@ public class OrganizationDto {
     private String ogrn;
     private String address;
     private String phoneNumber;
+    private String zip;
 
 
 }
