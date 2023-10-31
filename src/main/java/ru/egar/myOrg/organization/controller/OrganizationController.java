@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.egar.myOrg.organization.dto.OrganizationDto;
 import ru.egar.myOrg.organization.service.OrganizationService;
@@ -21,25 +22,20 @@ public class OrganizationController {
     @Operation(summary = "Добавление",
             description = "Добавляем организацию")
     @PostMapping
-    public OrganizationDto create(@RequestParam String name,
-                                  @RequestParam String inn,
-                                  @RequestParam String ogrn,
-                                  @RequestParam String address,
-                                  @RequestParam String phoneNumber) {
-        log.info("Create organization: {}, {}, {}, {}, {}", name, inn, ogrn, address, phoneNumber);
-        return organizationService.create(OrganizationDto.builder()
-                .name(name)
-                .inn(inn)
-                .ogrn(ogrn)
-                .address(address)
-                .phoneNumber(phoneNumber)
-                .build());
+    public String create(@ModelAttribute("organization") OrganizationDto organizationDto, Model model) {
+        log.info("Create organization: {}, {}, {}, {}, {}",organizationDto.getName(), organizationDto.getInn(),
+                organizationDto.getOgrn(), organizationDto.getAddress(),
+                organizationDto.getPhoneNumber(), organizationDto.getZip());
+
+         organizationService.create(organizationDto);
+         model.addAttribute("orgName", organizationDto.getName());
+                return "redirect:/";
     }
+
     @GetMapping("/newOrg")
     public String newOrg() {
         return "operations/newOrg";
     }
-
 
 
     @Operation(summary = "Удаление",
