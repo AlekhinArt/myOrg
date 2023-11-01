@@ -41,7 +41,7 @@ public class CreateTest {
         WorkHistory workHistory = WorkHistory.builder()
                 .id(1)
                 .workNow(true)
-                .employPosition(new EmployPosition(1, "Redactor", "new redactor"))
+//                .employPosition(new EmployPosition(1, "Redactor", "new redactor"))
                 .startWork(LocalDate.parse("2022-01-03"))
 
                 .build();
