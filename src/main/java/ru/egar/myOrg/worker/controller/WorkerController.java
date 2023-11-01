@@ -7,8 +7,10 @@ import lombok.AllArgsConstructor;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.egar.myOrg.worker.dto.WorkerDto;
+import ru.egar.myOrg.worker.service.EmployPositionService;
 import ru.egar.myOrg.worker.service.WorkerService;
 
 import java.time.LocalDate;
@@ -21,6 +23,7 @@ import java.time.LocalDate;
 public class WorkerController {
     // TODO: 28.10.2023  ЗАменить реквест парам на реквест боди
     private final WorkerService workerService;
+    private final EmployPositionService empPosService;
 
     @Operation(summary = "Добавление",
             description = "Добавляем работника")
@@ -30,8 +33,11 @@ public class WorkerController {
                             @RequestParam String surname,
                             @RequestParam String patronymic,
                             @RequestParam LocalDate birthday,
-                            @RequestParam String phoneNumber) {
+                            @RequestParam String employPosition,
+                            @RequestParam String phoneNumber, Model model) {
         log.info("Create worker: {}, {}, {}, {}, {}, {}", workNow, name, surname, patronymic, birthday, phoneNumber);
+       model.addAttribute("workName", name);
+
         return workerService.create(WorkerDto.builder()
                 .workNow(workNow)
                 .name(name)
@@ -57,7 +63,8 @@ public class WorkerController {
     }
 
     @GetMapping("/newWorker")
-    public String newOrg() {
+    public String newOrg(Model model) {
+        model.addAttribute("employPositions", empPosService.getPositionName());
         return "operations/newWorker";
     }
 

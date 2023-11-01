@@ -8,5 +8,7 @@ import java.util.List;
 
 public interface EmployPositionService extends BaseService <EmployPositionDto, Long> {
 
+    List <String> getPositionName();
+
 
 }

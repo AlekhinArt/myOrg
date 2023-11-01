@@ -16,12 +16,15 @@
     <div class="py-5 text-center  ">
         <h2>Рады Вас видеть</h2>
         <p class="lead">Пару слов о Вашей организации</p>
+
     </div>
     <div class="row">
         <div class="col-md-7 col-lg-8">
             <h4 class="mb-3">Чуть ниже введите данные</h4>
 
-            <form action="#" th:method="POST" th:object="${organization}" th:action="@{/organization}">
+            <form  th:method="POST" th:object="${orgName1}" th:action="@{/organization}">
+                <li class="checkbox" th:text="*{get().getPhoneNumber()}">Input is incorrect</li>
+
                 <div class="row">
                     <div class="col-sm-6">
                         <label for="name" class="form-label">Название организации</label>

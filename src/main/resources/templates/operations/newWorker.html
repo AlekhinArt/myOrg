@@ -17,7 +17,7 @@
         <div class="col-md-7 col-lg-8">
             <h4 class="mb-3">Чуть ниже введите данные</h4>
 
-            <form action="#" th:method="POST" th:object="${worker}" th:action="@{/worker}">
+            <form action="#" th:method="POST" th:action="@{/worker}">
                 <div class="row">
                     <div class="col-sm-6">
                         <label for="name" class="form-label">Имя</label>
@@ -43,7 +43,7 @@
                         <label for="patronymic" class="form-label">Отчество</label>
                         <div class="input-group">
                             <input type="text" class="form-control" id="patronymic"
-                                   th:name="ogrn" maxlength="20" placeholder="Иоганнович" required>
+                                   th:name="patronymic" maxlength="20" placeholder="Иоганнович" required>
                             <div class="invalid-feedback">
                                 Пожалуйста введите отчество работника.
                             </div>
@@ -93,13 +93,17 @@
                             <input type="date" class="form-control" id="startWork"
                                    th:name="startWork" placeholder="1782-12-17"
                                    min="2010-01-01" max="2025-01-01" required>
-                            <div class="invalid-feedback">
-                                Пожалуйста введите дату трудоустройства работника.
-                            </div>
                         </div>
                     </div>
                 </div>
-
+                <div class="row">
+                    <div class="col-md-5">
+                        <label for="emplPos" class="form-label">Выберите должность</label>
+                        <select type="text" class="form-control" th:name="employPosition" id="emplPos">
+                            <option th:each="pos : ${employPositions}" th:value="${pos}" th:text="${pos}"></option>
+                        </select>
+                    </div>
+                </div>
 
                 <hr>
                 <button type="submit" class="btn btn-primary">Сохранить</button>
