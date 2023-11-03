@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.egar.myOrg.organization.dto.OrganizationDto;
-import ru.egar.myOrg.organization.model.Organization;
 import ru.egar.myOrg.organization.service.OrganizationService;
 
 @Slf4j
@@ -35,8 +34,8 @@ public class OrganizationController {
 
     @GetMapping("/newOrg")
     public String newOrg(Model model) {
-        model.addAttribute("orgName1", organizationService.getById(1L));
-        return "operations/newOrg";
+//        model.addAttribute("orgName1", organizationService.getById(1L));
+        return "organization/newOrg";
     }
 
 

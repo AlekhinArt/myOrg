@@ -9,11 +9,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.egar.myOrg.worker.dto.WorkerDto;
+import ru.egar.myOrg.worker.dto.WorkerCreateDto;
+
 import ru.egar.myOrg.worker.service.EmployPositionService;
 import ru.egar.myOrg.worker.service.WorkerService;
 
-import java.time.LocalDate;
 
 @Slf4j
 @Controller
@@ -28,35 +28,31 @@ public class WorkerController {
     @Operation(summary = "Добавление",
             description = "Добавляем работника")
     @PostMapping
-    public WorkerDto create(@RequestParam Boolean workNow,
-                            @RequestParam String name,
-                            @RequestParam String surname,
-                            @RequestParam String patronymic,
-                            @RequestParam LocalDate birthday,
-                            @RequestParam String employPosition,
-                            @RequestParam String phoneNumber, Model model) {
-        log.info("Create worker: {}, {}, {}, {}, {}, {}", workNow, name, surname, patronymic, birthday, phoneNumber);
-       model.addAttribute("workName", name);
-
-        return workerService.create(WorkerDto.builder()
-                .workNow(workNow)
-                .name(name)
-                .surname(surname)
-                .patronymic(patronymic)
-                .birthday(birthday)
-                .phoneNumber(phoneNumber)
-                .build());
+    public String create(@ModelAttribute WorkerCreateDto workerDto, Model model) {
+        log.info("Create worker: {}, {}, {}, {}, {}, {}, {}, {}",
+                workerDto.getName(),
+                workerDto.getSurname(),
+                workerDto.getPatronymic(),
+                workerDto.getBirthday(),
+                workerDto.getPhoneNumber(),
+                workerDto.getWorkNow(),
+                workerDto.getEmployPosition(),
+                workerDto.getStartWork());
+        workerService.create(workerDto);
+        return "redirect:/";
     }
+
     @Operation(summary = "Удаление",
             description = "Удаляем работник из бд")
     @DeleteMapping("/{id}")
-    public void deleteWorker (@PathVariable Long id){
+    public void deleteWorker(@PathVariable Long id) {
         log.info("delete worker {}", id);
         workerService.deleteById(id);
     }
-    @Operation (summary = "Все работники")
+
+    @Operation(summary = "Все работники")
     @GetMapping
-    public String getAll(){
+    public String getAll() {
         log.info("Get all workers");
         workerService.getAll();
         return "";
@@ -67,11 +63,6 @@ public class WorkerController {
         model.addAttribute("employPositions", empPosService.getPositionName());
         return "operations/newWorker";
     }
-
-
-
-
-
 
 
 }

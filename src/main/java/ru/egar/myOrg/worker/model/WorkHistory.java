@@ -16,7 +16,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ToString(exclude = "worker")
 @Entity
+@Table(name = "work_history")
 public class WorkHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,21 +27,32 @@ public class WorkHistory {
     @Column(name = "work_now")
     private boolean workNow;
     @OneToOne
-    @JoinColumn (name = "empl_id")
-
+    @JoinColumn(name = "empl_id")
     private EmployPosition employPosition;
     @Column(name = "start_work")
     private LocalDate startWork;
     @Column(name = "end_work")
     private LocalDate endWork;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "worker_id", referencedColumnName = "work_history_id")
+    private Worker worker;
     //    прогулы
     @OneToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "days_of",
+            joinColumns = {@JoinColumn(name = "work_history_id")},
+            inverseJoinColumns = {@JoinColumn(name = "id")})
     private List<DaysOf> daysOf = new LinkedList<>();
     //    больничные
     @OneToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "sick_days",
+            joinColumns = {@JoinColumn(name = "work_history_id")},
+            inverseJoinColumns = {@JoinColumn(name = "id")})
     private List<SickDays> sickDays = new LinkedList<>();
     //    отпуск
     @OneToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "vacation",
+            joinColumns = {@JoinColumn(name = "work_history_id")},
+            inverseJoinColumns = {@JoinColumn(name = "id")})
     private List<Vacation> vacation = new LinkedList<>();
 
 

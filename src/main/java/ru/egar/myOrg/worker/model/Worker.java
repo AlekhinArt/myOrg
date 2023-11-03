@@ -7,6 +7,7 @@ import ru.egar.myOrg.document.model.BasePaperDocument;
 
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Setter
@@ -30,8 +31,14 @@ public class Worker {
     private String phoneNumber;
 
 //    private List<BasePaperDocument> documents;
-    @OneToMany(fetch = FetchType.LAZY)
-private List<WorkHistory> workHistory;
+
+//    @JoinTable(name = "WORKER_WORK_HISTORY",
+//            joinColumns = {@JoinColumn(name = "worker_id")},
+//            inverseJoinColumns = {@JoinColumn(name = "work_history_id")})
+//@OneToMany(fetch = FetchType.LAZY, mappedBy = "work_history")
+    @OneToMany(mappedBy = "worker")
+//    @JoinColumn(name = "work_history_id", referencedColumnName = "worker_id")
+    private List<WorkHistory> workHistory = new ArrayList<>();
 //    private List <ValuableObject> valuableObjects;
 
 }

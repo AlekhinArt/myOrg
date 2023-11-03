@@ -10,4 +10,6 @@ public interface EmployPositionRepository extends JpaRepository<EmployPosition, 
 
     @Query("SELECT position from EmployPosition ")
     List<String> getAllPosition();
+
+    EmployPosition getByPosition(String name);
 }

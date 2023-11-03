@@ -1,9 +1,26 @@
 package ru.egar.myOrg.worker.model.notWorksDays;
 
+import jakarta.persistence.*;
+import lombok.Data;
+
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 
+@Data
+@MappedSuperclass
 public abstract class NotWorksDays {
-    private List<LocalDate> days;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+    @Column(name = "start_date")
+    private LocalDate start;
+    @Column(name = "end_date")
+    private LocalDate end;
     private String note;
+
+
+
+
 }
