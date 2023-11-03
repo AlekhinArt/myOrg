@@ -39,30 +39,19 @@ public class WorkerController {
                 workerDto.getEmployPosition(),
                 workerDto.getStartWork());
         workerService.create(workerDto);
-        return "redirect:/";
+        return "redirect:/worker";
     }
 
     @Operation(summary = "Удаление",
             description = "Удаляем работник из бд")
-    @DeleteMapping("/{id}")
-    public void deleteWorker(@PathVariable Long id) {
+    @GetMapping("/delete/{id}")
+    public String deleteWorker(@PathVariable Long id) {
         log.info("delete worker {}", id);
         workerService.deleteById(id);
+        return "redirect:/worker";
     }
 
-    @Operation(summary = "Все работники")
-    @GetMapping
-    public String getAll() {
-        log.info("Get all workers");
-        workerService.getAll();
-        return "";
-    }
 
-    @GetMapping("/newWorker")
-    public String newOrg(Model model) {
-        model.addAttribute("employPositions", empPosService.getPositionName());
-        return "operations/newWorker";
-    }
 
 
 }
