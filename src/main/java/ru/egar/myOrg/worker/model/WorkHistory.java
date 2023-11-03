@@ -33,9 +33,13 @@ public class WorkHistory {
     private LocalDate startWork;
     @Column(name = "end_work")
     private LocalDate endWork;
+
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "worker_id", referencedColumnName = "work_history_id")
+    @JoinColumn(name = "worker_id")
     private Worker worker;
+
+
     //    прогулы
     @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "days_of",
