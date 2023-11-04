@@ -1,55 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Добавляем новую должность</title>
+    <!--    <meta charset="UTF-8">-->
+    <title>MyOrg</title>
     <head th:insert="~{fragments/head :: head}"></head>
 </head>
 <body>
 <div th:insert="~{fragments/header :: header}"></div>
 <div th:insert="~{fragments/leftPanel :: leftPanel}"></div>
 
+<h2 class="sub-header">Список должностей</h2>
 <div class="container center">
     <div class="text-center">
         <p class="lead">Работа без работников не работается</p>
     </div>
     <div class="row">
         <div class="col-md-7 col-lg-8">
-            <h4 class="mb-3">Создаем новую должность </h4>
+            <h4 class="mb-3">Редактор должности </h4>
             <h5 class="mb-3">Чуть ниже введите данные</h5>
-            <form action="#" th:method="POST" th:object="${emplPos}" th:action="@{/empl}">
+            <form action="#" th:method="POST" th:object="${empl}" th:action="@{/empl}">
+                <div class="form-group">
+                    <input type="hidden" id="id" th:name="id" th:value="*{id}"/>
+                </div>
                 <div class="row">
                     <div class="col-sm-9">
                         <label for="position" class="form-label">Название должности</label>
                         <div class="input-group">
                             <input type="text" class="form-control" id="position" placeholder=""
-                                   th:name="position" maxlength="20" required>
+                                   th:name="position" th:value="*{position}" maxlength="20" required>
                         </div>
                     </div>
-
                     <div class="col-sm-9">
                         <label for="jobDescription" class="form-label">Описание должности</label>
                         <div class="input-group">
-                            <textarea cols="50" rows="4" type="text" class="form-control" id="jobDescription"
-                                      th:name="jobDescription" placeholder="Описание должности" maxlength="120"
+                            <textarea cols="50" rows="4" type="text" class="form-control" id="jobDescription" th:placeholder="*{jobDescription}"
+                                      th:name="jobDescription" th:value="*{jobDescription}"  maxlength="120"
                                       required></textarea>
                         </div>
                     </div>
                 </div>
                 <hr>
-                <button type="submit" class="btn btn-primary">Сохранить</button>
+                <button type="submit" class="btn btn-primary">Сохранить изменения</button>
             </form>
             <hr>
-
-
         </div>
     </div>
 </div>
-</div>
+
 <footer class="my-5 pt-5 text-body-secondary text-center text-small">
     <p class="mb-1">&copy; 2023 AlekhinArt </p>
 </footer>
-</div>
 
 </body>
 </html>

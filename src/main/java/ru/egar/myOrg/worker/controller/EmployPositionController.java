@@ -6,10 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import ru.egar.myOrg.worker.dto.EmployPositionDto;
 import ru.egar.myOrg.worker.service.EmployPositionService;
 
@@ -31,17 +28,30 @@ public class EmployPositionController {
         log.info("Create employ position: {}, {}, {}, {}, {}", employPositionDto.getPosition(), employPositionDto.getJobDescription());
         empPosService.create(employPositionDto);
 
-        return "redirect:/";
+        return "redirect:/empl";
     }
+
     @GetMapping("/newEmplPos")
     public String newOrg() {
 
         return "employPos/newEmplPos";
     }
 
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable Long id) {
+        empPosService.deleteById(id);
+        return "employPos/emplsMain";
+    }
+
+    @GetMapping("/update/{id}")
+    public String update(@PathVariable Long id, Model model) {
+        model.addAttribute("empl", empPosService.getById(id).orElseThrow());
+        return "employPos/emplsUpdate";
+    }
+
     @GetMapping
-    public String workers(Model model) {
-        model.addAttribute("empls",empPosService.getAll());
+    public String emplsMain(Model model) {
+        model.addAttribute("empls", empPosService.getAll());
 
         return "employPos/emplsMain";
     }

@@ -21,7 +21,7 @@ import ru.egar.myOrg.worker.service.WorkerService;
 @Tag(name = "Работник", description = "Взаимодействие с сущностью работник")
 @AllArgsConstructor
 public class WorkerController {
-    // TODO: 28.10.2023  ЗАменить реквест парам на реквест боди
+
     private final WorkerService workerService;
     private final EmployPositionService empPosService;
 
