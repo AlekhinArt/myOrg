@@ -41,19 +41,19 @@ public class WorkHistory {
     //    прогулы
     @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "days_of",
-            joinColumns = {@JoinColumn(name = "work_history_id")},
+            joinColumns = {@JoinColumn(name = "wh_id")},
             inverseJoinColumns = {@JoinColumn(name = "id")})
     private List<DaysOf> daysOf = new LinkedList<>();
     //    больничные
     @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "sick_days",
-            joinColumns = {@JoinColumn(name = "work_history_id")},
+            joinColumns = {@JoinColumn(name = "wh_id")},
             inverseJoinColumns = {@JoinColumn(name = "id")})
     private List<SickDays> sickDays = new LinkedList<>();
     //    отпуск
     @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "vacation",
-            joinColumns = {@JoinColumn(name = "work_history_id")},
+            joinColumns = {@JoinColumn(name = "wh_id")},
             inverseJoinColumns = {@JoinColumn(name = "id")})
     private List<Vacation> vacation = new LinkedList<>();
 

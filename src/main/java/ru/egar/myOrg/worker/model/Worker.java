@@ -29,7 +29,10 @@ public class Worker {
     private String phoneNumber;
 
     @OneToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY, mappedBy = "workerH")
+            fetch = FetchType.LAZY)
+    @JoinTable(name = "worker_work_history",
+            joinColumns = {@JoinColumn(name = "worker_id")},
+            inverseJoinColumns = {@JoinColumn(name = "work_history_id")})
     private List<WorkHistory> workHistory = new ArrayList<>();
 //    private List <ValuableObject> valuableObjects;
 

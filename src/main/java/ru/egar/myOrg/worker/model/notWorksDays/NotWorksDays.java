@@ -2,6 +2,8 @@ package ru.egar.myOrg.worker.model.notWorksDays;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import ru.egar.myOrg.worker.model.EmployPosition;
+import ru.egar.myOrg.worker.model.WorkHistory;
 
 import java.time.LocalDate;
 
@@ -18,6 +20,9 @@ public abstract class NotWorksDays {
     @Column(name = "end_date")
     private LocalDate end;
     private String note;
+    @ManyToOne
+    @JoinColumn(name = "wh_id")
+    private WorkHistory workHistory;
 
 
 

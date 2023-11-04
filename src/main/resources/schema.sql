@@ -29,7 +29,7 @@ create table if not EXISTS worker
     patronymic   VARCHAR not null,
     birthday     DATE,
     phone_number VARCHAR not null,
-    history_id BIGINT,
+--     history_id BIGINT,
     CONSTRAINT pk_worker PRIMARY KEY (worker_id)
 );
 
@@ -67,6 +67,7 @@ CREATE TABLE IF NOT EXISTS vacation
     start_date DATE not null,
     end_date DATE,
     note VARCHAR,
+    wh_id BIGINT,
     CONSTRAINT pk_vacation PRIMARY KEY (id)
     );
 CREATE TABLE IF NOT EXISTS sick_days
@@ -75,6 +76,7 @@ CREATE TABLE IF NOT EXISTS sick_days
     start_date DATE not null,
     end_date DATE,
     note VARCHAR,
+    wh_id BIGINT,
     CONSTRAINT pk_sick_days PRIMARY KEY (id)
     );
 CREATE TABLE IF NOT EXISTS days_of
@@ -83,6 +85,7 @@ CREATE TABLE IF NOT EXISTS days_of
     start_date DATE not null,
     end_date DATE,
     note VARCHAR,
+    wh_id BIGINT,
     CONSTRAINT pk_days_of PRIMARY KEY (id)
     );
 
@@ -100,8 +103,8 @@ create table if not EXISTS work_history
     CONSTRAINT pk_work_history PRIMARY KEY (work_history_id)
 );
 
-ALTER TABLE worker
-    ADD CONSTRAINT WORKER_WORK_HISTORY FOREIGN KEY (history_id) REFERENCES work_history (work_history_id);
+-- ALTER TABLE worker
+--     ADD CONSTRAINT WORKER_WORK_HISTORY FOREIGN KEY (history_id) REFERENCES work_history (work_history_id);
 
 
 CREATE TABLE IF NOT EXISTS WORKER_WORK_HISTORY (

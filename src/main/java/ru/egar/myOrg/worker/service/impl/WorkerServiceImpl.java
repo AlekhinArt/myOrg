@@ -63,12 +63,6 @@ public class WorkerServiceImpl implements WorkerService {
     @Override
     public WorkerDto create(WorkerCreateDto workerDto) {
         ArrayList<WorkHistory> wh = new ArrayList<>();
-        wh.add(
-                WorkHistory.builder()
-                        .startWork(workerDto.getStartWork())
-                        .workNow(workerDto.getWorkNow())
-                        .employPosition(emlpRepository.getByPosition(workerDto.getEmployPosition()))
-                        .build());
         Worker newWorker = Worker.builder()
                 .name(workerDto.getName())
                 .surname(workerDto.getSurname())
@@ -76,8 +70,15 @@ public class WorkerServiceImpl implements WorkerService {
                 .phoneNumber(workerDto.getPhoneNumber())
                 .birthday(workerDto.getBirthday())
                 .workNow(workerDto.getWorkNow())
-                .workHistory(wh)
                 .build();
+        wh.add(WorkHistory.builder()
+                .workerH(newWorker)
+                .startWork(workerDto.getStartWork())
+                .workNow(workerDto.getWorkNow())
+                .employPosition(emlpRepository.getByPosition(workerDto.getEmployPosition()))
+                .build());
+        newWorker.setWorkHistory(wh);
+//        newWorker = workerRepository.save(newWorker);
         return WorkerMapper.toWorkerDto(workerRepository.save(newWorker));
     }
 
