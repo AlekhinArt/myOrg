@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import ru.egar.myOrg.exception.NotFoundException;
 import ru.egar.myOrg.organization.dto.OrganizationDto;
 import ru.egar.myOrg.organization.mapper.OrganizationMapper;
-import ru.egar.myOrg.organization.model.Organization;
 import ru.egar.myOrg.organization.repository.OrganizationRepository;
 import ru.egar.myOrg.worker.model.Worker;
 

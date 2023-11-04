@@ -66,6 +66,7 @@ public class WorkerServiceImpl implements WorkerService {
         wh.add(
                 WorkHistory.builder()
                         .startWork(workerDto.getStartWork())
+                        .workNow(workerDto.getWorkNow())
                         .employPosition(emlpRepository.getByPosition(workerDto.getEmployPosition()))
                         .build());
         Worker newWorker = Worker.builder()

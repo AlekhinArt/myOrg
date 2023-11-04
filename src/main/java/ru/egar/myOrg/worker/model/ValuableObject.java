@@ -1,6 +1,6 @@
 package ru.egar.myOrg.worker.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.*;;
 import lombok.*;
 
 import java.time.LocalDate;

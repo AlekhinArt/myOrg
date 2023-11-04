@@ -1,3 +1,21 @@
+-- drop table ORGANIZATION_WORKER;
+--
+-- drop table ORGANIZATION;
+--
+-- alter table WORKER
+-- drop constraint WORKER_WORK_HISTORY;
+--
+-- drop table WORK_HISTORY;
+--
+-- drop table DAYS_OF;
+--
+-- drop table EMPLOY_POS;
+--
+-- drop table SICK_DAYS;
+--
+-- drop table VACATION;
+--
+-- drop table WORKER;
 
 
 
@@ -11,6 +29,7 @@ create table if not EXISTS worker
     patronymic   VARCHAR not null,
     birthday     DATE,
     phone_number VARCHAR not null,
+    history_id BIGINT,
     CONSTRAINT pk_worker PRIMARY KEY (worker_id)
 );
 
@@ -77,8 +96,12 @@ create table if not EXISTS work_history
     days_of_id BIGINT REFERENCES days_of (id),
     sick_days_id BIGINT REFERENCES sick_days (id),
     vacation BIGINT REFERENCES vacation (id),
+    worker_id BIGINT REFERENCES worker (worker_id),
     CONSTRAINT pk_work_history PRIMARY KEY (work_history_id)
 );
+
+ALTER TABLE worker
+    ADD CONSTRAINT WORKER_WORK_HISTORY FOREIGN KEY (history_id) REFERENCES work_history (work_history_id);
 
 
 CREATE TABLE IF NOT EXISTS WORKER_WORK_HISTORY (

@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.egar.myOrg.organization.dto.OrganizationDto;
 import ru.egar.myOrg.worker.dto.EmployPositionDto;
 import ru.egar.myOrg.worker.service.EmployPositionService;
 
@@ -31,18 +30,20 @@ public class EmployPositionController {
     public String create(@ModelAttribute("emplPos") EmployPositionDto employPositionDto, Model model) {
         log.info("Create employ position: {}, {}, {}, {}, {}", employPositionDto.getPosition(), employPositionDto.getJobDescription());
         empPosService.create(employPositionDto);
-        model.addAttribute("emplPos", employPositionDto.getPosition());
+
         return "redirect:/";
     }
     @GetMapping("/newEmplPos")
-    public String newOrg(Model model) {
+    public String newOrg() {
 
-        return "operations/newEmplPos";
+        return "employPos/newEmplPos";
     }
 
-    @GetMapping("/newWorker")
-    public Model getEmpls(Model model){
-        return model.addAttribute("empls", empPosService.getAll());
+    @GetMapping
+    public String workers(Model model) {
+        model.addAttribute("empls",empPosService.getAll());
+
+        return "employPos/emplsMain";
     }
 
 

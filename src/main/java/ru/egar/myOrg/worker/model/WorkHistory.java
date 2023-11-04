@@ -7,7 +7,6 @@ import ru.egar.myOrg.worker.model.notWorksDays.SickDays;
 import ru.egar.myOrg.worker.model.notWorksDays.Vacation;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString(exclude = "worker")
+@ToString(exclude = "workerH")
 @Entity
 @Table(name = "work_history")
 public class WorkHistory {
@@ -26,7 +25,7 @@ public class WorkHistory {
     private Long id;
     @Column(name = "work_now")
     private boolean workNow;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "empl_id")
     private EmployPosition employPosition;
     @Column(name = "start_work")
@@ -35,10 +34,9 @@ public class WorkHistory {
     private LocalDate endWork;
 
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "worker_id")
-    private Worker worker;
-
+    private Worker workerH;
 
     //    прогулы
     @OneToMany(fetch = FetchType.LAZY)

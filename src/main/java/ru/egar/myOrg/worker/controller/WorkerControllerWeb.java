@@ -17,8 +17,8 @@ public class WorkerControllerWeb {
     private final EmployPositionService empPosService;
 
     @GetMapping("/newWorker")
-    public String newWorker() {
-        System.out.println("22222222222222");
+    public String newWorker(Model model) {
+        model.addAttribute("employPositions", empPosService.getPositionName());
         return "workers/newWorker";
     }
 
@@ -27,7 +27,6 @@ public class WorkerControllerWeb {
     public String workers(Model model) {
         model.addAttribute("workers",workerService.getAll());
 
-        System.out.println("");
         return "workers/workMain";
     }
 

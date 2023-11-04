@@ -4,8 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
+
 
 @Data
 @MappedSuperclass
