@@ -85,13 +85,4 @@ public class OrganizationController {
 
     }
 
-
-
-//    @GetMapping("/newOrg")
-//    public String abc (Model model){
-////        organizationService.getById(1L);
-//
-//        return "operations/newOrg";
-//    }
-
 }

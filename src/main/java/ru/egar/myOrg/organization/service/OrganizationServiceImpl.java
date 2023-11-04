@@ -1,6 +1,8 @@
 package ru.egar.myOrg.organization.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import ru.egar.myOrg.exception.NotFoundException;
 import ru.egar.myOrg.organization.dto.OrganizationDto;
@@ -17,6 +19,7 @@ import java.util.stream.Collectors;
 public class OrganizationServiceImpl implements OrganizationService {
     private final OrganizationRepository organizationRepository;
 
+
     @Override
     public List<OrganizationDto> getAll() {
         return organizationRepository.findAll()
@@ -25,26 +28,29 @@ public class OrganizationServiceImpl implements OrganizationService {
                 .collect(Collectors.toList());
     }
 
+    @Cacheable(cacheNames = "organizathion")
     @Override
     public Optional<OrganizationDto> getById(Long aLong) {
-        return organizationRepository.findById(aLong).
+        final Optional<OrganizationDto> orgDto = organizationRepository.findById(aLong).
                 map(OrganizationMapper::toOrganizationDto);
+        return orgDto;
     }
 
+    @CacheEvict(cacheNames = "organizathion", allEntries = true)
     @Override
     public OrganizationDto create(OrganizationDto dto) {
         return OrganizationMapper.toOrganizationDto(
                 organizationRepository.save(
                         OrganizationMapper.toOrganization(dto)));
     }
-
+    @CacheEvict(cacheNames = "organizathion", allEntries = true)
     @Override
     public OrganizationDto updateById(Long aLong, OrganizationDto organization) {
         return OrganizationMapper.toOrganizationDto(organizationRepository.updateOrg(organization.getName(), organization.getInn(),
                 organization.getOgrn(), organization.getAddress(),
                 organization.getPhoneNumber(), aLong));
     }
-
+    @CacheEvict(cacheNames = "organizathion", allEntries = true)
     @Override
     public void deleteById(Long aLong) {
         organizationRepository.deleteById(aLong);

@@ -1,5 +1,7 @@
 package ru.egar.myOrg.worker.service.impl;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import ru.egar.myOrg.worker.dto.WorkerCreateDto;
 import ru.egar.myOrg.worker.dto.WorkerDto;
@@ -35,18 +37,19 @@ public class WorkerServiceImpl implements WorkerService {
 
         return WorkerMapper.toWorkerDto(workerRepository.save(WorkerMapper.toWorker(workerDto)));
     }
-
+    @CacheEvict(cacheNames="workers", allEntries=true)
     @Override
     public void deleteById(Long aLong) {
         workerRepository.deleteById(aLong);
     }
 
-
+    @Cacheable(cacheNames = "workers")
     @Override
     public List<WorkerDto> getAll() {
-        return workerRepository.findAll().stream()
+        final List<WorkerDto> workerDTO = workerRepository.findAll().stream()
                 .map(WorkerMapper::toWorkerDto)
                 .collect(Collectors.toList());
+        return workerDTO;
     }
 
     @Override
@@ -59,7 +62,7 @@ public class WorkerServiceImpl implements WorkerService {
     public WorkerDto updateById(Long aLong, WorkerDto workerDto) {
         return null;
     }
-
+    @CacheEvict(cacheNames="workers", allEntries=true)
     @Override
     public WorkerDto create(WorkerCreateDto workerDto) {
         ArrayList<WorkHistory> wh = new ArrayList<>();
@@ -78,7 +81,6 @@ public class WorkerServiceImpl implements WorkerService {
                 .employPosition(emlpRepository.getByPosition(workerDto.getEmployPosition()))
                 .build());
         newWorker.setWorkHistory(wh);
-//        newWorker = workerRepository.save(newWorker);
         return WorkerMapper.toWorkerDto(workerRepository.save(newWorker));
     }
 

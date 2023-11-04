@@ -27,20 +27,19 @@ public class EmployPositionController {
     public String create(@ModelAttribute("emplPos") EmployPositionDto employPositionDto, Model model) {
         log.info("Create employ position: {}, {}, {}, {}, {}", employPositionDto.getPosition(), employPositionDto.getJobDescription());
         empPosService.create(employPositionDto);
-
         return "redirect:/empl";
     }
 
     @GetMapping("/newEmplPos")
-    public String newOrg() {
-
+    public String newEmplPos() {
         return "employPos/newEmplPos";
     }
 
     @GetMapping("/delete/{id}")
-    public String delete(@PathVariable Long id) {
+    public String delete(@PathVariable Long id, Model model) {
+        model.addAttribute("empls", empPosService.getAll());
         empPosService.deleteById(id);
-        return "employPos/emplsMain";
+        return "redirect:/empl";
     }
 
     @GetMapping("/update/{id}")
@@ -52,7 +51,6 @@ public class EmployPositionController {
     @GetMapping
     public String emplsMain(Model model) {
         model.addAttribute("empls", empPosService.getAll());
-
         return "employPos/emplsMain";
     }
 

@@ -1,12 +1,15 @@
 package ru.egar.myOrg.worker.service.impl;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import ru.egar.myOrg.worker.dto.EmployPositionDto;
 import ru.egar.myOrg.worker.mapper.EmployPositionMapper;
-import ru.egar.myOrg.worker.model.EmployPosition;
 import ru.egar.myOrg.worker.repository.EmployPositionRepository;
 import ru.egar.myOrg.worker.service.EmployPositionService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -20,13 +23,14 @@ public class EmployPositionServImpl implements EmployPositionService {
 
     private final EmployPositionRepository employPositionRepository;
 
-
+    @Cacheable(cacheNames = "emsdto")
     @Override
     public List<EmployPositionDto> getAll() {
-        return employPositionRepository.findAll()
+        final List<EmployPositionDto> empsDto = employPositionRepository.findAll()
                 .stream()
                 .map(EmployPositionMapper::toEmployPositionDto)
                 .collect(Collectors.toList());
+        return empsDto;
     }
 
     @Override
@@ -36,6 +40,7 @@ public class EmployPositionServImpl implements EmployPositionService {
 
     }
 
+    @CacheEvict(cacheNames = "emsdto", allEntries = true)
     @Override
     public EmployPositionDto create(EmployPositionDto dto) {
         return EmployPositionMapper.toEmployPositionDto(
@@ -48,6 +53,7 @@ public class EmployPositionServImpl implements EmployPositionService {
         return null;
     }
 
+    @CacheEvict(cacheNames = "emsdto", allEntries = true)
     @Override
     public void deleteById(Long aLong) {
         employPositionRepository.deleteById(aLong);
