@@ -25,7 +25,7 @@ public class WorkerControllerWeb {
 
     @GetMapping
     public String workers(Model model) {
-        model.addAttribute("workers",workerService.getAll());
+        model.addAttribute("workers",workerService.showWorkers());
 
         return "workers/workMain";
     }

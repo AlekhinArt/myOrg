@@ -5,6 +5,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import ru.egar.myOrg.worker.dto.WorkerCreateDto;
 import ru.egar.myOrg.worker.dto.WorkerDto;
+import ru.egar.myOrg.worker.dto.WorkerShowDto;
 import ru.egar.myOrg.worker.mapper.WorkerMapper;
 import ru.egar.myOrg.worker.model.WorkHistory;
 import ru.egar.myOrg.worker.model.Worker;
@@ -14,6 +15,7 @@ import ru.egar.myOrg.worker.repository.WorkerRepository;
 import ru.egar.myOrg.worker.service.WorkerService;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -43,7 +45,7 @@ public class WorkerServiceImpl implements WorkerService {
         workerRepository.deleteById(aLong);
     }
 
-    @Cacheable(cacheNames = "workers")
+//    @Cacheable(cacheNames = "workers")
     @Override
     public List<WorkerDto> getAll() {
         final List<WorkerDto> workerDTO = workerRepository.findAll().stream()
@@ -82,6 +84,15 @@ public class WorkerServiceImpl implements WorkerService {
                 .build());
         newWorker.setWorkHistory(wh);
         return WorkerMapper.toWorkerDto(workerRepository.save(newWorker));
+    }
+    @Cacheable(cacheNames = "workers")
+    @Override
+    public Collection<WorkerShowDto> showWorkers() {
+        final List <WorkerShowDto> wsh = workerRepository.showWorkerInMain()
+                .stream()
+                .map(WorkerMapper::toShowWorker)
+                .collect(Collectors.toList());
+        return wsh;
     }
 
 }

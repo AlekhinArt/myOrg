@@ -10,7 +10,7 @@
 <div th:insert="~{fragments/header :: header}"></div>
 <div th:insert="~{fragments/leftPanel :: leftPanel}"></div>
 
-<h2 class="sub-header">Список сотрудников</h2>
+<h2 class="sub-header">Список работающих сотрудников</h2>
 <div class="table-responsive">
     <table class="table table-striped">
         <thead>
@@ -19,6 +19,7 @@
             <th style="width: 20%">Имя</th>
             <th style="width: 20%">Фамилия</th>
             <th style="width: 20%">Отчество</th>
+            <th style="width: 20%">Должность</th>
             <th style="width: 20%">Год рождения</th>
             <th style="width: 20%">Контактный телефон</th>
             <th style="width: 5%">Edit</th>
@@ -30,16 +31,15 @@
             <td th:text="${iterationStatus.count }" style="text-align: center">#</td>
             <td th:text="${worker.name}">name</td>
             <td th:text="${worker.surname}">surname</td>
+            <td th:text="${worker.employPosition}">employPosition</td>
             <td th:text="${worker.patronymic}">patronymic</td>
             <td th:text="${worker.birthday}">birthday</td>
             <td th:text="${worker.phoneNumber}">phoneNumber</td>
-
-
             <td style="text-align: center"><a th:href="@{'/edit/{id}'(id=${worker.id})}"><i class="fa fa-edit"
                                                                                             style="font-size:20px"></i></a>
             </td>
             <td style="text-align: center"><a th:href="@{'worker/delete/{id}'(id=${worker.id})}"><i class="fa fa-trash"
-                                                                                              style="font-size:20px"></i></a>
+                                                                                                    style="font-size:20px"></i></a>
             </td>
         </tr>
         </tbody>
@@ -48,8 +48,8 @@
 
 <div class="container">
     <hr>
-    <form class="form-horizontal" th:action="@{/worker/newWorker}"  method="get" role="form">
-        <button  type="submit" class="btn btn-primary">Добавить нового сотрудника</button>
+    <form class="form-horizontal" th:action="@{/worker/newWorker}" method="get" role="form">
+        <button type="submit" class="btn btn-primary">Добавить нового сотрудника</button>
     </form>
 
 
