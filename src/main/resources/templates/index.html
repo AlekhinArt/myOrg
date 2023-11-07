@@ -4,25 +4,68 @@
 
 <head th:insert="~{fragments/head :: head}"></head>
 
-<body>
 <div th:insert="~{fragments/header :: header}"></div>
 <div th:insert="~{fragments/leftPanel :: leftPanel}"></div>
 
-<div class="container"  >
+<div class="container">
     <div class="jumbotron">
         <div class="py-5 text-center">
-        <h1> Начинаем отсюда </h1>
-        <p> Возможно тут в скором времени появится осмысленный текст
-            или даже возможно что-то более менее автоматизированное или даже кликабельное</p>
-        <p> но пока тут будет </p>
-        <p> <3</p>
+            <h1> Привет!</h1>
+            <p> Для начала выберите организацию, или создайте новую </p>
+            <p> <3</p>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th style="width: 10%"></th>
+                    <th style="width: 10%">#</th>
+                    <th style="width: 20%">Название</th>
+                    <th style="width: 20%">ИНН</th>
+                    <th style="width: 20%">Адрес</th>
+                    <th style="width: 20%">Телефон</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <div th:if="${ not #lists.isEmpty(orgs)}">
+                    <tr th:each="org, iterationStatus : ${orgs}">
+                        <td style="text-align: center"><a th:href="@{'/organization/{id}'(id=${org.id})}">
+                            <i class="fa fa-sign-in"
+                               style="font-size:30px"></i></a>
+                        </td>
+                        <td th:text="${iterationStatus.count }" style="text-align: center">#</td>
+                        <td th:text="${org.name}">name</td>
+                        <td th:text="${org.inn}">inn</td>
+                        <td th:text="${org.address}">address</td>
+                        <td th:text="${org.phoneNumber}">phoneNumber</td>
+
+                    </tr>
+                </div>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="justify-center">
+<!--            <div class="col-md-5">-->
+                <label for="click" class="form-label center ">Создать новую организацию </label>
+                <form th:method="GET" th:action="@{/organization/newOrg}">
+                    <button type="submit" class="btn btn-primary " id=click> Создание</button>
+                </form>
+<!--            </div>-->
+        </div>
+        <div th:if="${#lists.isEmpty(orgs)}">
+            <form th:method="GET" th:action="@{/organization/newOrg}">
+                <button type="submit" class="btn btn-primary">Создать новую организацию</button>
+            </form>
         </div>
     </div>
 </div>
-</div>
-<footer class="my-5 pt-5 text-body-secondary text-center text-small">
-    <p class="mb-1">&copy; 2023 AlekhinArt </p>
-</footer>
-</div>
+
+    <footer class="my-5 pt-5 text-body-secondary text-center text-small">
+        <p class="mb-1">&copy; 2023 AlekhinArt </p>
+    </footer>
+
 </body>
 </html>

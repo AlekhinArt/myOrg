@@ -31,6 +31,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     @Cacheable(cacheNames = "organizathion")
     @Override
     public Optional<OrganizationDto> getById(Long aLong) {
+
         final Optional<OrganizationDto> orgDto = organizationRepository.findById(aLong).
                 map(OrganizationMapper::toOrganizationDto);
         return orgDto;

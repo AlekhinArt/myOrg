@@ -7,12 +7,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.egar.myOrg.exception.NotFoundException;
 import ru.egar.myOrg.organization.dto.OrganizationDto;
 import ru.egar.myOrg.organization.service.OrganizationService;
 
 @Slf4j
 @Controller
-@RequestMapping("/organization")
+@RequestMapping
 @Tag(name = "Организация", description = "Взаимодействие с сущностью организация")
 @AllArgsConstructor
 public class OrganizationController {
@@ -21,18 +22,18 @@ public class OrganizationController {
 
     @Operation(summary = "Добавление",
             description = "Добавляем организацию")
-    @PostMapping
+    @PostMapping("/organization")
     public String create(@ModelAttribute("organization") OrganizationDto organizationDto, Model model) {
-        log.info("Create organization: {}, {}, {}, {}, {}",organizationDto.getName(), organizationDto.getInn(),
+        log.info("Create organization: {}, {}, {}, {}, {}", organizationDto.getName(), organizationDto.getInn(),
                 organizationDto.getOgrn(), organizationDto.getAddress(),
                 organizationDto.getPhoneNumber(), organizationDto.getZip());
 
-         organizationService.create(organizationDto);
-         model.addAttribute("orgName", organizationDto.getName());
-                return "redirect:/";
+        organizationService.create(organizationDto);
+//         model.addAttribute("orgName", organizationDto.getName());
+        return "redirect:/";
     }
 
-    @GetMapping("/newOrg")
+    @GetMapping("/organization/newOrg")
     public String newOrg(Model model) {
 //        model.addAttribute("orgName1", organizationService.getById(1L));
         return "organization/newOrg";
@@ -41,7 +42,7 @@ public class OrganizationController {
 
     @Operation(summary = "Удаление",
             description = "Удаление организацию")
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/organization/{id}")
     public void deleteOrg(@PathVariable Long id) {
         log.info("delete organization with id {}", id);
         organizationService.deleteById(id);
@@ -49,24 +50,25 @@ public class OrganizationController {
 
     @Operation(summary = "Получение",
             description = "Получение организации по id")
-    @GetMapping("/{id}")
-    public String getById(@PathVariable Long id) {
+    @GetMapping("/organization/{id}")
+    public String getById(@PathVariable Long id, Model model) {
         log.info("getById organization with id {}", id);
-        organizationService.getById(id);
-        return "";
+        model.addAttribute("org", organizationService.getById(id)
+                .orElseThrow(() -> new NotFoundException("Организация не найден")));
+        return "organization/orgMain";
 
     }
 
     @Operation(summary = "Получение работников",
             description = "Получение работников организации по id")
-    @GetMapping("/worker/{id}")
+    @GetMapping("/organization/worker/{id}")
     public String getWorkers(@PathVariable Long id) {
         log.info("getWorkers organization with id {}", id);
         organizationService.getWorkers(id);
         return "";
     }
 
-    @GetMapping("/upd/{id}")
+    @GetMapping("/organization/upd/{id}")
     public String updateOrg(@PathVariable Long id,
                             @RequestParam String name,
                             @RequestParam String inn,
@@ -82,7 +84,12 @@ public class OrganizationController {
                 .phoneNumber(phoneNumber)
                 .build());
         return "";
+    }
 
+    @GetMapping("/")
+    public String getAllOrg(Model model) {
+        model.addAttribute("orgs", organizationService.getAll());
+        return "index";
     }
 
 }

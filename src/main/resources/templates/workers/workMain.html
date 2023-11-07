@@ -27,6 +27,7 @@
         </tr>
         </thead>
         <tbody>
+        <div th:if="${ not #lists.isEmpty(workers)}">
         <tr th:each="worker, iterationStatus : ${workers}">
             <td th:text="${iterationStatus.count }" style="text-align: center">#</td>
             <td th:text="${worker.name}">name</td>
@@ -42,6 +43,7 @@
                                                                                                     style="font-size:20px"></i></a>
             </td>
         </tr>
+        </div>
         </tbody>
     </table>
 </div>

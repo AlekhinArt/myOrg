@@ -1,6 +1,7 @@
 package ru.egar.myOrg.worker.dto;
 
 import lombok.*;
+import ru.egar.myOrg.organization.model.Organization;
 
 import java.time.LocalDate;
 @Builder
@@ -14,7 +15,7 @@ public class WorkerCreateDto {
     private String patronymic;
     private LocalDate birthday;
     private String phoneNumber;
-
+    private Organization organization;
     private Boolean workNow;
     private String employPosition;
     private LocalDate startWork;

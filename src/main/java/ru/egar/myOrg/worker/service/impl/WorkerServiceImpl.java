@@ -45,7 +45,7 @@ public class WorkerServiceImpl implements WorkerService {
         workerRepository.deleteById(aLong);
     }
 
-//    @Cacheable(cacheNames = "workers")
+
     @Override
     public List<WorkerDto> getAll() {
         final List<WorkerDto> workerDTO = workerRepository.findAll().stream()
@@ -88,7 +88,7 @@ public class WorkerServiceImpl implements WorkerService {
     @Cacheable(cacheNames = "workers")
     @Override
     public Collection<WorkerShowDto> showWorkers() {
-        final List <WorkerShowDto> wsh = workerRepository.showWorkerInMain()
+        final List <WorkerShowDto> wsh = workerRepository.showWorkersInMain()
                 .stream()
                 .map(WorkerMapper::toShowWorker)
                 .collect(Collectors.toList());

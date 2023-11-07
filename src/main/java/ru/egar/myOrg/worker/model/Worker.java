@@ -2,6 +2,7 @@ package ru.egar.myOrg.worker.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import ru.egar.myOrg.organization.model.Organization;
 
 
 import java.time.LocalDate;
@@ -27,7 +28,9 @@ public class Worker {
     private String patronymic;
     private LocalDate birthday;
     private String phoneNumber;
-
+    @ManyToOne
+    @JoinColumn(name = "org_id")
+    private Organization organization;
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
     @JoinTable(name = "worker_work_history",

@@ -32,8 +32,6 @@ public class WorkHistory {
     private LocalDate startWork;
     @Column(name = "end_work")
     private LocalDate endWork;
-
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "worker_id")
     private Worker workerH;
