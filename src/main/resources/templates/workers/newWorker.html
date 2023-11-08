@@ -17,7 +17,7 @@
         <div class="col-md-7 col-lg-8">
             <h4 class="mb-3">Чуть ниже введите данные</h4>
 
-            <form action="#" th:method="POST" th:action="@{/worker}">
+            <form action="#" th:method="POST" th:action="@{/worker}" th:object="${worker}">
                 <div class="row">
                     <div class="col-sm-6">
                         <label for="name" class="form-label">Имя</label>
@@ -98,15 +98,23 @@
                 </div>
                 <div class="row">
                     <div class="col-md-5">
-                        <label for="emplPos" class="form-label">Выберите должность</label>
-                        <select type="text" class="form-control" th:name="employPosition" id="emplPos">
-                            <option th:each="pos : ${employPositions}" th:value="${pos}" th:text="${pos}"></option>
-                        </select>
+                        <div th:if="${ not #arrays.isEmpty(employPositions)}">
+                            <label for="emplPos" class="form-label">Выберите должность</label>
+                            <select type="text" class="form-control" th:name="employPosition" id="emplPos">
+                                <option th:each="pos : ${employPositions}" th:value="${pos}" th:text="${pos}"></option>
+                            </select>
+                        </div>
+                        <div th:if="${ #lists.isEmpty(employPositions)}">
+                            <form action="#" th:action="@{'/empl/newEmplPos/'}" method="GET">
+                                <input class="btn btn-primary" type="submit" value="Необходимо добавить должность"/>
+                            </form>
+                        </div>
                     </div>
                 </div>
-
                 <hr>
-                <button type="submit" class="btn btn-primary">Сохранить</button>
+                <div th:if="${ not #arrays.isEmpty(employPositions)}">
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                </div>
             </form>
             <hr>
 

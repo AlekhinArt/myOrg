@@ -11,17 +11,18 @@
 <div th:insert="~{fragments/leftPanel :: leftPanel}"></div>
 <div class="container">
 
-    <div class="py-5 text-center">
-        <h1> Привет!</h1>
-
-        <td th:text="${org.name}">name</td>
-        <td th:text="${org.name}">name</td>
-        <td th:text="${org.name}">name</td>
-        <td th:text="${org.name}">name</td>
-        <td th:text="${org.name}">name</td>
+    <div class="text-capitalize">
+        <h1><span th:text="${org.name}"></span></h1>
+        <p><b>Название организации: </b><span th:text="${org.name}"></span></p>
+        <p><b>ИНН: </b><span th:text="${org.inn}"></span></p>
+        <p><b>ОГРН: </b><span th:text="${org.ogrn}"></span></p>
+        <p><b>Адрес: </b><span th:text="${org.address}"></span></p>
+        <p><b>Телефон: </b><span th:text="${org.getPhoneNumber()}"></span></p>
 
     </div>
-
+    <form action="#" th:action="@{'/organization/upd/' + ${org.id}}" method="GET">
+        <input class="btn btn-primary" type="submit" value="Обновить данные"/>
+    </form>
 
 
 </div>

@@ -27,15 +27,12 @@ public class OrganizationController {
         log.info("Create organization: {}, {}, {}, {}, {}", organizationDto.getName(), organizationDto.getInn(),
                 organizationDto.getOgrn(), organizationDto.getAddress(),
                 organizationDto.getPhoneNumber(), organizationDto.getZip());
-
-        organizationService.create(organizationDto);
-//         model.addAttribute("orgName", organizationDto.getName());
-        return "redirect:/";
+        return "redirect:/organization/" + organizationService.create(organizationDto).getId();
     }
 
     @GetMapping("/organization/newOrg")
     public String newOrg(Model model) {
-//        model.addAttribute("orgName1", organizationService.getById(1L));
+
         return "organization/newOrg";
     }
 
@@ -54,7 +51,7 @@ public class OrganizationController {
     public String getById(@PathVariable Long id, Model model) {
         log.info("getById organization with id {}", id);
         model.addAttribute("org", organizationService.getById(id)
-                .orElseThrow(() -> new NotFoundException("Организация не найден")));
+                .orElseThrow(() -> new NotFoundException("Организация не найдена")));
         return "organization/orgMain";
 
     }
@@ -69,22 +66,29 @@ public class OrganizationController {
     }
 
     @GetMapping("/organization/upd/{id}")
-    public String updateOrg(@PathVariable Long id,
-                            @RequestParam String name,
-                            @RequestParam String inn,
-                            @RequestParam String ogrn,
-                            @RequestParam String address,
-                            @RequestParam String phoneNumber) {
-        log.info("Create organization with id {}: {}, {}, {}, {}, {}", id, name, inn, ogrn, address, phoneNumber);
-        organizationService.updateById(id, OrganizationDto.builder()
-                .name(name)
-                .inn(inn)
-                .ogrn(ogrn)
-                .address(address)
-                .phoneNumber(phoneNumber)
-                .build());
-        return "";
+    public String updateOrg(@PathVariable Long id, Model model) {
+        model.addAttribute("organization", organizationService.getById(id)
+                .orElseThrow(() -> new NotFoundException("Организация не найдена")));
+        return "organization/updOrg";
     }
+
+//    @GetMapping("/organization/upd/{id}")
+//    public String updateOrg(@PathVariable Long id,
+//                            @RequestParam String name,
+//                            @RequestParam String inn,
+//                            @RequestParam String ogrn,
+//                            @RequestParam String address,
+//                            @RequestParam String phoneNumber) {
+//        log.info("Create organization with id {}: {}, {}, {}, {}, {}", id, name, inn, ogrn, address, phoneNumber);
+//        organizationService.updateById(id, OrganizationDto.builder()
+//                .name(name)
+//                .inn(inn)
+//                .ogrn(ogrn)
+//                .address(address)
+//                .phoneNumber(phoneNumber)
+//                .build());
+//        return "";
+//    }
 
     @GetMapping("/")
     public String getAllOrg(Model model) {

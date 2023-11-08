@@ -29,6 +29,7 @@ public class WorkerControllerWeb {
         try {
             model.addAttribute("workers",workerService.showWorkers());
         } catch (Exception e){
+            model.addAttribute("employPositions", empPosService.getPositionName());
             return "workers/newWorker";
         }
 
