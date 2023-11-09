@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import ru.egar.myOrg.exception.NotFoundException;
 import ru.egar.myOrg.organization.dto.OrganizationDto;
 import ru.egar.myOrg.organization.mapper.OrganizationMapper;
 import ru.egar.myOrg.organization.repository.OrganizationRepository;
@@ -59,8 +58,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     @Override
     public List<Worker> getWorkers(Long id) {
-        return organizationRepository.findById(id).orElseThrow(
-                () -> new NotFoundException("Organization with id " + id + " not found")).getWorkers();
+        return null;
     }
 
 

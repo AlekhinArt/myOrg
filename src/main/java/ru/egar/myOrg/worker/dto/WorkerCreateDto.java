@@ -19,5 +19,6 @@ public class WorkerCreateDto {
     private Boolean workNow;
     private String employPosition;
     private LocalDate startWork;
+    private Long orgId;
 
 }

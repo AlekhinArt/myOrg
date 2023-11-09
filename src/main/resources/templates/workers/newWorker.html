@@ -16,8 +16,14 @@
     <div class="row">
         <div class="col-md-7 col-lg-8">
             <h4 class="mb-3">Чуть ниже введите данные</h4>
+            <form action="#" th:method="POST" th:action="@{/worker}">
 
-            <form action="#" th:method="POST" th:action="@{/worker}" th:object="${worker}">
+
+                <div class="form-group">
+                    <input type="hidden" id="orgId"  th:name="orgId" th:value="*{orgId}"/>
+                </div>
+
+
                 <div class="row">
                     <div class="col-sm-6">
                         <label for="name" class="form-label">Имя</label>

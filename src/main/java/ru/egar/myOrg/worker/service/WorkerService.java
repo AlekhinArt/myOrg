@@ -12,7 +12,7 @@ import java.util.List;
 public interface WorkerService extends BaseService<WorkerDto, Long> {
     WorkerDto create(WorkerCreateDto workerDto);
 
-    Collection<WorkerShowDto> showWorkers();
+    Collection<WorkerShowDto> showWorkers(Long id);
 
 
 }

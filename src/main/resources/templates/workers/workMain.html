@@ -26,31 +26,51 @@
             <th style="width: 5%">Delete</th>
         </tr>
         </thead>
-        <tbody>
         <div th:if="${ not #lists.isEmpty(workers)}">
-        <tr th:each="worker, iterationStatus : ${workers}">
-            <td th:text="${iterationStatus.count }" style="text-align: center">#</td>
-            <td th:text="${worker.name}">name</td>
-            <td th:text="${worker.surname}">surname</td>
-            <td th:text="${worker.employPosition}">employPosition</td>
-            <td th:text="${worker.patronymic}">patronymic</td>
-            <td th:text="${worker.birthday}">birthday</td>
-            <td th:text="${worker.phoneNumber}">phoneNumber</td>
-            <td style="text-align: center"><a th:href="@{'/edit/{id}'(id=${worker.id})}"><i class="fa fa-edit"
-                                                                                            style="font-size:20px"></i></a>
-            </td>
-            <td style="text-align: center"><a th:href="@{'worker/delete/{id}'(id=${worker.id})}"><i class="fa fa-trash"
-                                                                                                    style="font-size:20px"></i></a>
-            </td>
-        </tr>
+            <tbody>
+
+            <tr th:each="worker, iterationStatus : ${workers}">
+                <td th:text="${iterationStatus.count }" style="text-align: center">#</td>
+                <td th:text="${worker.name}">name</td>
+                <td th:text="${worker.surname}">surname</td>
+                <td th:text="${worker.employPosition}">employPosition</td>
+                <td th:text="${worker.patronymic}">patronymic</td>
+                <td th:text="${worker.birthday}">birthday</td>
+                <td th:text="${worker.phoneNumber}">phoneNumber</td>
+                <td style="text-align: center"><a th:href="@{'/edit/{id}'(id=${worker.id})}"><i class="fa fa-edit"
+                                                                                                style="font-size:20px"></i></a>
+                </td>
+                <td style="text-align: center"><a th:href="@{'worker/delete/{id}'(id=${worker.id})}"><i
+                        class="fa fa-trash"
+                        style="font-size:20px"></i></a>
+                </td>
+            </tr>
+            </tbody>
+            <form>
+                <tr>
+                    <td > Поиск</td>
+                    <td><input  type="text" th:name="name"></td>
+                    <td><input type="text" th:name="surname"></td>
+                    <td><input type="text" th:name="employPosition"></td>
+                    <td><input type="text" th:name="patronymic"></td>
+                    <td><input type="text" th:name="birthday"></td>
+                    <td><input type="text" th:name="phoneNumber"></td>
+                </tr>
+
+                </tfoot>
+
+
+            </form>
+
         </div>
-        </tbody>
+
+
     </table>
 </div>
 
 <div class="container">
     <hr>
-    <form class="form-horizontal" th:action="@{/worker/newWorker}" method="get" role="form">
+    <form class="form-horizontal" th:action="@{'/worker/newWorker/'+ ${orgId}}" method="get" role="form">
         <button type="submit" class="btn btn-primary">Добавить нового сотрудника</button>
     </form>
 
