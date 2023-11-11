@@ -29,6 +29,8 @@ public class WorkerMapper {
                 .birthday(worker.getBirthday())
                 .phoneNumber(worker.getPhoneNumber())
                 .workNow(worker.getWorkNow())
+                .workHistory(worker.getWorkHistory())
+                .organization(worker.getOrganization())
                 .build();
 
     }

@@ -1,8 +1,13 @@
 package ru.egar.myOrg.worker.dto;
 
 import lombok.*;
+import ru.egar.myOrg.organization.model.Organization;
+import ru.egar.myOrg.worker.model.WorkHistory;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 @Setter
 @Getter
 @AllArgsConstructor
@@ -16,6 +21,7 @@ public class WorkerDto {
     private String patronymic;
     private LocalDate birthday;
     private String phoneNumber;
-
+    private Organization organization;
+    private List<WorkHistory> workHistory = new ArrayList<>();
 
 }

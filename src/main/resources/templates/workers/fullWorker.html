@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!--    <meta charset="UTF-8">-->
+    <title>MyOrg</title>
+    <head th:insert="~{fragments/head :: head}"></head>
+</head>
+<body>
+<div th:insert="~{fragments/header :: header}"></div>
+<div th:insert="~{fragments/leftPanel :: leftPanel}"></div>
+<div class="container">
+    <div class="text-primary" style="color: #080808">
+        <H3><b>Полная информация о сотруднике</b></H3>
+        <p><b>Фамилия: </b><span th:text="${worker.surname}"></span></p>
+        <p><b>Имя: </b><span th:text="${worker.name}"></span></p>
+        <p><b>Отчество: </b><span th:text="${worker.patronymic}"></span></p>
+        <p><b>Дата рождения: </b><span th:text="${worker.birthday}"></span></p>
+        <p><b>Телефон: </b><span th:text="${worker.phoneNumber}"></span></p>
+        <p><b>Серия паспорта </b><span th:text="${worker.phoneNumber}"></span></p>
+        <p><b>Номер паспорта </b><span th:text="${worker.phoneNumber}"></span></p>
+        <p><b>Кем и когда выдан: </b><span th:text="${worker.phoneNumber}"></span></p>
+    </div>
+    <h3><b>История</b></h3>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th style="width: 5%">Работает на этой должности</th>
+                <th style="width: 20%">Должность</th>
+                <th style="width: 20%">Описание должности</th>
+                <th style="width: 20%">Старт</th>
+                <th style="width: 20%">Финиш</th>
+                <th style="width: 20%">Год рождения</th>
+                <th style="width: 20%">Контактный телефон</th>
+                <th style="width: 5%">Edit</th>
+                <th style="width: 5%">Delete</th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            <tr th:each="history, iterationStatus : ${worker.getWorkHistory()}">
+
+                <td th:text="${history.workNow}">workNow</td>
+                <td th:text="${history.employPosition.position}">employPosition</td>
+                <td th:text="${history.employPosition.jobDescription}">jobDescription</td>
+                <td th:text="${history.startWork}">startWork</td>
+                <td th:text="${history.endWork}">endWork</td>
+                <td><a th:href="@{'/edit/{id}'(id=${history.id})}"> Отпуска </a></td>
+                <td><a th:href="@{'/edit/{id}'(id=${history.id})}"> Прогулы </a></td>
+                <td><a th:href="@{'/edit/{id}'(id=${history.id})}"> Больничные </a></td>
+
+            </tr>
+            </tbody>
+
+
+        </table>
+    </div>
+
+</div>
+
+
+</body>
+<footer class="my-5 pt-5 text-body-secondary text-center text-small">
+    <p class="mb-1">&copy; 2023 AlekhinArt </p>
+</footer>
+</html>

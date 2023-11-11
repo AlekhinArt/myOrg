@@ -2,6 +2,7 @@ package ru.egar.myOrg.worker.service.impl;
 
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import ru.egar.myOrg.exception.NotFoundException;
 import ru.egar.myOrg.organization.repository.OrganizationRepository;
@@ -44,7 +45,10 @@ public class WorkerServiceImpl implements WorkerService {
         return WorkerMapper.toWorkerDto(workerRepository.save(WorkerMapper.toWorker(workerDto)));
     }
 
-    @CacheEvict(cacheNames = "workers", allEntries = true)
+    @Caching(evict = {
+            @CacheEvict(cacheNames = "workers", allEntries = true),
+            @CacheEvict(cacheNames = "worker", allEntries = true)
+    })
     @Override
     public void deleteById(Long aLong) {
         workerRepository.deleteById(aLong);
@@ -59,18 +63,31 @@ public class WorkerServiceImpl implements WorkerService {
         return workerDTO;
     }
 
+    @Cacheable(cacheNames = "worker")
     @Override
     public Optional<WorkerDto> getById(Long aLong) {
-        return workerRepository.findById(aLong)
+
+        final var workerDto = workerRepository.findById(aLong)
                 .map(WorkerMapper::toWorkerDto);
+        return workerDto;
+
+
     }
+
+    @Caching(evict = {
+            @CacheEvict(cacheNames = "workers", allEntries = true),
+            @CacheEvict(cacheNames = "worker", allEntries = true)
+    })
 
     @Override
     public WorkerDto updateById(Long aLong, WorkerDto workerDto) {
         return null;
     }
 
-    @CacheEvict(cacheNames = "workers", allEntries = true)
+    @Caching(evict = {
+            @CacheEvict(cacheNames = "workers", allEntries = true),
+            @CacheEvict(cacheNames = "worker", allEntries = true)
+    })
     @Override
     public WorkerDto create(WorkerCreateDto workerDto) {
         ArrayList<WorkHistory> wh = new ArrayList<>();
