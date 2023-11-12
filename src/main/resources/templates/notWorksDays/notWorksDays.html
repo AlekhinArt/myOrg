@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!--    <meta charset="UTF-8">-->
+    <title>MyOrg</title>
+    <head th:insert="~{fragments/head :: head}"></head>
+</head>
+<body>
+<div th:insert="~{fragments/header :: header}"></div>
+<div th:insert="~{fragments/leftPanel :: leftPanel}"></div>
+<div class="container">
+
+    <h3><b>Не рабочие дни</b></h3>
+    <div th:if="${ #lists.isEmpty(ndws)}">
+        <h3><b>Пока тут пусто, добавьте отпуск, больничный или прогул</b></h3>
+        <hr>
+        <form action="#" th:action="@{'/wh/create/{id}'  (id=${whId})}" method="GET">
+            <input class="btn btn-primary" type="submit" value="Добавить"/>
+        </form>
+
+    </div>
+    <div th:if="${ not #lists.isEmpty(ndws)}">
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th style="width: 5%">#</th>
+                <th style="width: 20%">С какого дня</th>
+                <th style="width: 20%">По какой</th>
+                <th style="width: 20%">Типа</th>
+                <th style="width: 20%">Пометка</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="nwd, iterationStatus : ${ndws}">
+                <td th:text="${iterationStatus.index}">workNow</td>
+                <td th:text="${nwd.getStart()}">старт</td>
+                <td th:text="${nwd.getEnd()()}">конец</td>
+                <td th:text="${nwd.getTypeDay()()}">типа</td>
+                <td th:text="${nwd.getNote()}">пометка</td>
+
+<!--                <td><a th:href="@{'/edit/{id}'(id=${history.id})}"> Больничные </a></td>-->
+            </tr>
+            </tbody>
+
+
+        </table>
+    </div>
+
+        <hr>
+        <form action="#" th:action="@{'/worker/{orgId}/get/{id}'  (orgId=${orgId}, id = ${id})}" method="GET">
+            <input class="btn btn-primary" type="submit" value="Назад"/>
+        </form>
+    </div>
+
+</div>
+
+
+</body>
+<footer class="my-5 pt-5 text-body-secondary text-center text-small">
+    <p class="mb-1">&copy; 2023 AlekhinArt </p>
+</footer>
+</html>

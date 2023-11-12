@@ -29,10 +29,9 @@
                 <th style="width: 5%">Работает на этой должности</th>
                 <th style="width: 20%">Должность</th>
                 <th style="width: 20%">Описание должности</th>
-                <th style="width: 20%">Старт</th>
-                <th style="width: 20%">Финиш</th>
-                <th style="width: 20%">Год рождения</th>
-                <th style="width: 20%">Контактный телефон</th>
+                <th style="width: 20%">Начало работы</th>
+                <th style="width: 20%">Конец работы</th>
+                <th style="width: 20%">Отпуска, больничные, отгулы</th>
                 <th style="width: 5%">Edit</th>
                 <th style="width: 5%">Delete</th>
             </tr>
@@ -47,15 +46,20 @@
                 <td th:text="${history.employPosition.jobDescription}">jobDescription</td>
                 <td th:text="${history.startWork}">startWork</td>
                 <td th:text="${history.endWork}">endWork</td>
-                <td><a th:href="@{'/edit/{id}'(id=${history.id})}"> Отпуска </a></td>
-                <td><a th:href="@{'/edit/{id}'(id=${history.id})}"> Прогулы </a></td>
-                <td><a th:href="@{'/edit/{id}'(id=${history.id})}"> Больничные </a></td>
+                <td><a th:href="@{'/wh/{id}'(id=${history.id})}"> Не рабочие дни </a></td>
+                <td><a th:href="@{'/wh/{id}'(id=${history.id})}"> Редактировать </a></td>
+                <td><a th:href="@{'/wh/{id}'(id=${history.id})}"> Удалить </a></td>
+
 
             </tr>
             </tbody>
 
 
         </table>
+        <hr>
+        <form action="#" th:action="@{'/worker/org/' + ${orgId}}" method="GET">
+            <input class="btn btn-primary" type="submit" value="Назад"/>
+        </form>
     </div>
 
 </div>

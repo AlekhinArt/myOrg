@@ -1,16 +1,22 @@
 package ru.egar.myOrg.worker.model.notWorksDays;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 import ru.egar.myOrg.worker.model.EmployPosition;
 import ru.egar.myOrg.worker.model.WorkHistory;
 
 import java.time.LocalDate;
 
 
-@Data
-@MappedSuperclass
-public abstract class NotWorksDays {
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Entity
+@Table(name = "not_work_days")
+
+public class NotWorksDays {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -20,11 +26,12 @@ public abstract class NotWorksDays {
     @Column(name = "end_date")
     private LocalDate end;
     private String note;
+    @Enumerated(EnumType.STRING)
+    @Column (name = "type_day")
+    private TypeOffDay typeDay;
     @ManyToOne
-    @JoinColumn(name = "wh_id")
+    @JoinColumn(name = "work_history_id")
     private WorkHistory workHistory;
-
-
 
 
 }

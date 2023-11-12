@@ -23,10 +23,13 @@
     <form action="#" th:action="@{'/organization/upd/' + ${org.id}}" method="GET">
         <input class="btn btn-primary" type="submit" value="Обновить данные"/>
     </form>
-
-
+    <hr>
     <form action="#" th:action="@{'/worker/org/' + ${org.id}}" method="GET">
         <input class="btn btn-primary" type="submit" value="Просмотреть работников организации"/>
+    </form>
+    <hr>
+    <form action="#" th:action="@{'/'}" method="GET">
+        <input class="btn btn-primary" type="submit" value="Выбрать другую организацию"/>
     </form>
 
 

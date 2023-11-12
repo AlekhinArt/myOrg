@@ -103,7 +103,7 @@ public class WorkerServiceImpl implements WorkerService {
                                 workerDto.getOrgId() + " not found")))
                 .build();
         wh.add(WorkHistory.builder()
-                .workerH(newWorker)
+                .worker(newWorker)
                 .startWork(workerDto.getStartWork())
                 .workNow(workerDto.getWorkNow())
                 .employPosition(emlpRepository.getByPosition(workerDto.getEmployPosition()))

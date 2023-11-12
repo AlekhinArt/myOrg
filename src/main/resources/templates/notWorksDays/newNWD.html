@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!--    <meta charset="UTF-8">-->
+    <title>New org</title>
+    <head th:insert="~{fragments/head :: head}"></head>
+</head>
+<body>
+<div th:insert="~{fragments/header :: header}"></div>
+<div th:insert="~{fragments/leftPanel :: leftPanel}"></div>
+
+
+<div class="container">
+
+    <div class="py-5 text-center  ">
+        <h2>Добавляем</h2>
+        <p class="lead">С какого дня и по какой и почему</p>
+
+    </div>
+    <div class="row">
+        <div class="col-md-7 col-lg-8">
+            <h4 class="mb-3">Чуть ниже введите данные</h4>
+
+            <form th:method="POST" th:object="${whs}" th:action="@{'/wh/' + ${id}}">
+<!--                <div class="form-group">-->
+<!--                    <input type="hidden" id="orgId"  th:name="workHistory" th:value="{whs}"/>-->
+<!--                </div>-->
+
+
+                <div class="row">
+
+                    <div class="row">
+                        <div class="col-md-5">
+                            <label for="typeDay" class="form-label">Выберите тип</label>
+                            <select type="text" class="form-control" th:name="typeDay" id="typeDay" required>
+                                <option value="">-- Select Type--</option>
+                                <option th:value="SICK_DAY">Больничный</option>
+                                <option th:value="VACATION">Отпуск</option>
+                                <option th:value="DAY_OF">Прогул</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-6">
+
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <label for="start" class="form-label">Дата начала</label>
+                                    <div class="input-group">
+                                        <input type="date" class="form-control" id="start"
+                                               th:name="start"
+                                               th:min="*{startWork}" th:max="${maxTime}"
+                                               required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-sm-5">
+                            <label for="end" class="form-label">Дата окончания</label>
+                            <div class="input-group">
+                                <input type="date" class="form-control" id="end"
+                                       th:name="end"
+                                       th:min="*{startWork}" th:max="${maxTime}"
+                                       required>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-9">
+                            <label for="jobDescription" class="form-label">Пометка</label>
+                            <div class="input-group">
+                            <textarea cols="50" rows="4" type="text" class="form-control" id="jobDescription"
+                                      th:name="note" placeholder="Ушел в отпуск добровольно-принудительно" maxlength="120"
+                                      required></textarea>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <hr>
+                <button type="submit" class="btn btn-primary btn-lg">Нажмите для продолжения</button>
+                <hr>
+            </form>
+            <hr>
+            <form action="#" th:action="@{'/wh/' + ${whs.id}}" method="GET">
+                <input class="btn btn-primary" type="submit" value="Назад"/>
+            </form>
+        </div>
+    </div>
+</div>
+<footer class="my-5 pt-5 text-body-secondary text-center text-small">
+    <p class="mb-1">&copy; 2023 AlekhinArt </p>
+</footer>
+</div>
+
+
+</body>
+</html>

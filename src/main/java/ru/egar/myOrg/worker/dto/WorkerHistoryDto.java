@@ -16,10 +16,5 @@ public class WorkerHistoryDto {
     private LocalDate startWork;
     private LocalDate endWork;
 
-    private List<LocalDate> daysOf;
-
-    private List<LocalDate> sickDays;
-
-    private List<LocalDate> vacation;
 
 }

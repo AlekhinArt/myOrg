@@ -34,8 +34,9 @@
             <tbody>
 
             <tr th:each="worker, iterationStatus : ${workers}">
-                <td style="text-align: center"><a th:href="@{'/worker/{orgId}/get/{id}'(id=${worker.id}, orgId= ${orgId})}"><i class="fa fa-edit"
-                                                                                                style="font-size:20px"></i></a>
+                <td style="text-align: center"><a
+                        th:href="@{'/worker/{orgId}/get/{id}'(id=${worker.id}, orgId= ${orgId})}"><i
+                        class="fa fa-address-card-o" style="font-size:20px" aria-hidden="true"></i></a>
                 </td>
                 <td th:text="${worker.name}">name</td>
                 <td th:text="${worker.surname}">surname</td>
@@ -78,7 +79,10 @@
     <form class="form-horizontal" th:action="@{'/worker/newWorker/'+ ${orgId}}" method="get" role="form">
         <button type="submit" class="btn btn-primary">Добавить нового сотрудника</button>
     </form>
-
+    <hr>
+    <form action="#" th:action="@{'/organization/' + ${orgId}}" method="GET">
+        <input class="btn btn-primary" type="submit" value="Назад"/>
+    </form>
 
 </div>
 <footer class="my-5 pt-5 text-body-secondary text-center text-small">
