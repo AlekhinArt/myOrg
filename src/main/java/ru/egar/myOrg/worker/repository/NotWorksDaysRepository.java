@@ -8,5 +8,5 @@ import java.util.Collection;
 
 public interface NotWorksDaysRepository extends JpaRepository<NotWorksDays, Long> {
 
-    Collection <NotWorksDays> findAllByWorkHistoryId(Long id);
+//    Collection <NotWorksDays> findAllByWorkHistoryId(Long id);
 }

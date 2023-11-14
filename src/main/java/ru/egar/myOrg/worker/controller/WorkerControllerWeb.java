@@ -28,15 +28,15 @@ public class WorkerControllerWeb {
     }
 
     // TODO: 07.11.2023 поставить отлов ошибки на более нижний уровень
-    @GetMapping("/org/{id}")
-    public String workers(@PathVariable Long id, Model model) {
+    @GetMapping("/org/{orgId}")
+    public String workersByOrg(@PathVariable Long orgId, Model model) {
         try {
-            model.addAttribute("workers", workerService.showWorkers(id));
+            model.addAttribute("workers", workerService.showWorkers(orgId));
         } catch (Exception e) {
             model.addAttribute("employPositions", empPosService.getPositionName());
             return "workers/newWorker";
         } finally {
-            model.addAttribute("orgId", id);
+            model.addAttribute("orgId", orgId);
         }
         return "workers/workMain";
     }

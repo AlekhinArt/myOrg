@@ -43,12 +43,12 @@ public class NotWorksDayServiceImpl implements NotWorksDayService {
     @Override
     public void deleteById(Long aLong) {
         worksDaysRepository.deleteById(aLong);
-
     }
 
     @Override
     public Collection<NotWorksDays> getAllByWhId(Long id) {
-        return worksDaysRepository.findAllByWorkHistoryId(id);
+        return null;
+//        return worksDaysRepository.findAllByWorkHistoryId(id);
     }
 
     @Override

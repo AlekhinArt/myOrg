@@ -108,6 +108,7 @@ public class WorkerServiceImpl implements WorkerService {
                 .workNow(workerDto.getWorkNow())
                 .employPosition(emlpRepository.getByPosition(workerDto.getEmployPosition()))
                 .build());
+
         newWorker.setWorkHistory(wh);
         return WorkerMapper.toWorkerDto(workerRepository.save(newWorker));
     }
@@ -115,7 +116,7 @@ public class WorkerServiceImpl implements WorkerService {
     @Cacheable(cacheNames = "workers")
     @Override
     public Collection<WorkerShowDto> showWorkers(Long id) {
-        final List<WorkerShowDto> wsh = workerRepository.showWorkersInMainWhereOrgId(id)
+        final List<WorkerShowDto> wsh = workerRepository.getWorkerByOrganization_Id(id)
                 .stream()
                 .map(WorkerMapper::toShowWorker)
                 .collect(Collectors.toList());

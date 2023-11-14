@@ -5,6 +5,7 @@ import lombok.*;
 import ru.egar.myOrg.worker.model.notWorksDays.NotWorksDays;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -35,8 +36,8 @@ public class WorkHistory {
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
     @JoinTable(name = "work_history_notWD",
-            joinColumns = {@JoinColumn(name = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "work_history_id")})
+            joinColumns = {@JoinColumn(name = "work_history_id")},
+            inverseJoinColumns = {@JoinColumn(name = "nwd_id")})
     private List <NotWorksDays> notWorksDays = new LinkedList<>();
 
 

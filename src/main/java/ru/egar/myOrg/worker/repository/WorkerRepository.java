@@ -8,20 +8,15 @@ import java.util.Collection;
 
 public interface WorkerRepository extends JpaRepository<Worker, Long> {
 
-    @Query(value = "select w.WORKER_ID as wid,  w.WORK_NOW, w.NAME, w.SURNAME, w.PATRONYMIC, w.BIRTHDAY, w.PHONE_NUMBER, w.ORG_ID," +
-            " ep.POSITION , WH.WORK_HISTORY_ID as whid " +
-            "from worker w " +
-            "left join WORKER_WORK_HISTORY WWH on w.worker_id  = WWH.WORKER_ID " +
-            "left join WORK_HISTORY WH on WH.WORK_HISTORY_ID = WWH.WORK_HISTORY_ID " +
-            "left join EMPLOY_POS EP on WH.EMPL_ID = EP.EMPL_ID " +
-            "where WH.WORK_NOW = TRUE", nativeQuery = true)
-    Collection<Worker> showWorkersWorkNow();
-    @Query(value = "select w.WORKER_ID as wid,  w.WORK_NOW, w.NAME, w.SURNAME, w.PATRONYMIC, w.BIRTHDAY, w.PHONE_NUMBER, w.ORG_ID," +
-            " ep.POSITION , WH.WORK_HISTORY_ID as whid " +
-            "from worker w " +
-            "left join WORKER_WORK_HISTORY WWH on w.worker_id  = WWH.WORKER_ID " +
-            "left join WORK_HISTORY WH on WH.WORK_HISTORY_ID = WWH.WORK_HISTORY_ID " +
-            "left join EMPLOY_POS EP on WH.EMPL_ID = EP.EMPL_ID " +
-            "where w.ORG_ID = ?", nativeQuery = true)
-    Collection<Worker> showWorkersInMainWhereOrgId(Long id);
+//    @Query(value = "select w.WORKER_ID as wid,  w.WORK_NOW, w.NAME, w.SURNAME, w.PATRONYMIC, w.BIRTHDAY, w.PHONE_NUMBER, w.ORG_ID," +
+//            " ep.POSITION , WH.WORK_HISTORY_ID as whid " +
+//            "from worker w " +
+//            "left join WORKER_WORK_HISTORY WWH on w.worker_id  = WWH.WORKER_ID " +
+//            "left join WORK_HISTORY WH on WH.WORK_HISTORY_ID = WWH.WORK_HISTORY_ID " +
+//            "left join EMPLOY_POS EP on WH.EMPL_ID = EP.EMPL_ID " +
+//            "where WH.WORK_NOW = TRUE", nativeQuery = true)
+//    Collection<Worker> showWorkersWorkNow();
+//
+    @Query
+    Collection <Worker> getWorkerByOrganization_Id(Long Id);
 }

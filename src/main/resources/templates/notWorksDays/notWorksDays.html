@@ -15,41 +15,51 @@
     <div th:if="${ #lists.isEmpty(ndws)}">
         <h3><b>Пока тут пусто, добавьте отпуск, больничный или прогул</b></h3>
         <hr>
-        <form action="#" th:action="@{'/wh/create/{id}'  (id=${whId})}" method="GET">
+        <form action="#" th:action="@{'/wh/{orgId}/create/{id}'  (id=${whId}, orgId=${orgId})}" method="GET">
             <input class="btn btn-primary" type="submit" value="Добавить"/>
         </form>
 
     </div>
     <div th:if="${ not #lists.isEmpty(ndws)}">
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th style="width: 5%">#</th>
-                <th style="width: 20%">С какого дня</th>
-                <th style="width: 20%">По какой</th>
-                <th style="width: 20%">Типа</th>
-                <th style="width: 20%">Пометка</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="nwd, iterationStatus : ${ndws}">
-                <td th:text="${iterationStatus.index}">workNow</td>
-                <td th:text="${nwd.getStart()}">старт</td>
-                <td th:text="${nwd.getEnd()()}">конец</td>
-                <td th:text="${nwd.getTypeDay()()}">типа</td>
-                <td th:text="${nwd.getNote()}">пометка</td>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th style="width: 5%">#</th>
+                    <th style="width: 20%">С какого дня</th>
+                    <th style="width: 20%">По какой</th>
+                    <th style="width: 20%">Типа</th>
+                    <th style="width: 20%">Пометка</th>
+                    <th style="width: 20%">Удалить</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="nwd, iterationStatus : ${ndws}">
+                    <td th:text="${iterationStatus.index}+1">workNow</td>
+                    <td th:text="${nwd.getStart()}">старт</td>
+                    <td th:text="${nwd.getEnd()}">конец</td>
+                    <td th:text="${nwd.getTypeDay()}">типа</td>
+                    <td th:text="${nwd.getNote()}">пометка</td>
 
-<!--                <td><a th:href="@{'/edit/{id}'(id=${history.id})}"> Больничные </a></td>-->
-            </tr>
-            </tbody>
+                    <td style="text-align: center"><a
+                            th:href="@{'/wh/{orgId}/{whId}/delete/{id}'(id=${nwd.getNwdId()}, orgId = ${orgId},whId = ${whId})}"><i
+                            class="fa fa-trash"
+                            style="font-size:20px"></i></a>
+                    </td>
+
+                </tr>
+                </tbody>
 
 
-        </table>
-    </div>
+            </table>
+        </div>
+        <hr>
+        <form action="#" th:action="@{'/wh/{orgId}/create/{id}'  (id=${whId}, orgId=${orgId})}" method="GET">
+            <input class="btn btn-primary" type="submit" value="Добавить"/>
+        </form>
 
         <hr>
-        <form action="#" th:action="@{'/worker/{orgId}/get/{id}'  (orgId=${orgId}, id = ${id})}" method="GET">
+        <form action="#" th:action="@{'/worker/{orgId}/get/{id}'  (orgId=${orgId}, id = ${workerId})}" method="GET">
             <input class="btn btn-primary" type="submit" value="Назад"/>
         </form>
     </div>

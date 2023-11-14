@@ -39,4 +39,5 @@ public class Worker {
     private List<WorkHistory> workHistory = new ArrayList<>();
 //    private List <ValuableObject> valuableObjects;
 
+
 }

@@ -25,41 +25,48 @@ public class WorkHistoryController {
     private final WorkerHistoryService whs;
 
 
-    @GetMapping("/{id}")
-    public String getAllNotWorkDayByWh(@PathVariable Long id, Model model) {
-        model.addAttribute("ndws", nwds.getAllByWhId(id));
+    @GetMapping("/{orgId}/{id}")
+    public String getAllNotWorkDayByWh(@PathVariable Long id, @PathVariable Long orgId, Model model) {
+        log.info("getAllNotWorkDayByWh historyId {} ", id);
+        model.addAttribute("ndws", whs.getById(id)
+                .orElseThrow(() -> new NotFoundException("История не найдена")).getNotWorksDays());
         model.addAttribute("whId", id);
+        model.addAttribute("workerId", whs.getById(id).orElseThrow().getWorker().getId());
+        model.addAttribute("orgId", orgId);
 
         return "notWorksDays/notWorksDays";
     }
 
-    @GetMapping("/create/{id}")
-    public String createNotWorkDaysMVC(@PathVariable Long id, Model model) {
-
+    @GetMapping("/{orgId}/create/{id}")
+    public String createNotWorkDaysMVC(@PathVariable Long id, @PathVariable Long orgId, Model model) {
+        log.info("createNotWorkDaysMVC historyId {} ", id);
         model.addAttribute("whs", whs.getById(id)
                 .orElseThrow(() -> new NotFoundException("История не найдена")));
         model.addAttribute("maxTime", LocalDate.now());
+        model.addAttribute("orgId", orgId);
         return "notWorksDays/newNWD";
     }
 
 
-    @PostMapping("/{id}")
-    public String saveNotWorkDay(@ModelAttribute NotWorksDays nwd, @PathVariable Long id, Model model){
-//        model.addAttribute("ndws", nwds.getAllByWhId(nwd.getWorkHistory().getId()));
-//       log.info("Добавили не рабочий день {}, {}, {}, {},{}", nwd.getWorkHistory().getId(), nwd.getStart(), nwd.getEnd(), nwd.getTypeDay(), nwd.getNote());
-//       nwd.getWorkHistory().setId(id);
-//       nwds.create(nwd);
-        WorkHistory workHistory =whs.getById(id).orElseThrow();
+    @PostMapping("{orgId}/{whId}")
+    public String saveNotWorkDay(@ModelAttribute NotWorksDays nwd, @PathVariable Long whId,
+                                 @PathVariable Long orgId, Model model) {
+        log.info("Добавили не рабочий день {}, {}, {}, {},{}", nwd.getNwdId(), nwd.getStart(), nwd.getEnd(), nwd.getTypeDay(), nwd.getNote());
+
+        WorkHistory workHistory = whs.getById(whId).orElseThrow();
         workHistory.getNotWorksDays().add(nwd);
         whs.create(workHistory);
-       log.info("Сюда зашли");
-        return "notWorksDays/notWorksDays";
+        return "redirect:/wh/" + orgId + "/" + whId;
     }
 
+    @GetMapping("/{orgId}/{whId}/delete/{id}")
+    public String deleteNotWorkDay(@PathVariable Long id,
+                                   @PathVariable Long whId,
+                                   @PathVariable Long orgId) {
+        log.info("delete not work day id {}", id);
+        nwds.deleteById(id);
+        return "redirect:/" + orgId + "/" + whId;
 
-
-
-
-
+    }
 
 }
