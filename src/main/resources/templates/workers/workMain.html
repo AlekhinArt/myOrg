@@ -12,9 +12,15 @@
 
 <h2 class="sub-header">Список сотрудников</h2>
 <div th:if="${ #lists.isEmpty(workers)}">
-    <h2 class="sub-header">Пока тут пусто, добавьте хотя бы одного</h2>
+    <h2 class="sub-header">Пока тут пусто, добавьте хотя бы одного работника</h2>
 </div>
 <div th:if="${ not #lists.isEmpty(workers)}">
+    <form th:action="@{/search}" method="get">
+        <input type="text" name="keyword" th:value="${keyword}"  placeholder="Ищем по любому параметру" size="50" >
+        <button type="submit"  class="btn btn-primary" >Поиск</button>
+        <button type="submit"  class="btn btn-primary" >Сбросить</button>
+        <hr>
+    </form>
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
@@ -54,40 +60,50 @@
                 </td>
             </tr>
             </tbody>
-            <form>
-                <tr>
-                    <td> Поиск</td>
-                    <td><input type="text" th:name="name"></td>
-                    <td><input type="text" th:name="surname"></td>
-                    <td><input type="text" th:name="employPosition"></td>
-                    <td><input type="text" th:name="patronymic"></td>
-                    <td><input type="text" th:name="birthday"></td>
-                    <td><input type="text" th:name="phoneNumber"></td>
-                </tr>
-                </tfoot>
-                <button type="submit" class="btn btn-primary">поиск</button>
-            </form>
+
+
+        </table>
+    </div>
+<!--    <form>-->
+
+<!--        <select type="text" class="form-control" th:name="typeOffDay" id="typeOffDay" required>-->
+<!--            <option value="">&#45;&#45; Select Type&#45;&#45;</option>-->
+<!--            <option th:value="name">по имени</option>-->
+<!--            <option th:value="surname">По фамилии</option>-->
+<!--            <option th:value="employPosition">По отчеству</option>-->
+<!--            <option th:value="patronymic">По должности</option>-->
+<!--            <option th:value="birthday">По дате рождения</option>-->
+<!--            <option th:value="phoneNumber">По телефонному номеру</option>-->
+<!---->
+<!--        </select>-->
+
+
+<!--            <td> Поиск</td>-->
+<!--            <td><input type="text" th:name="name"></td>-->
+<!--            <td><input type="text" th:name="surname"></td>-->
+<!--            <td><input type="text" th:name="employPosition"></td>-->
+<!--            <td><input type="text" th:name="patronymic"></td>-->
+<!--            <td><input type="text" th:name="birthday"></td>-->
+<!--            <td><input type="text" th:name="phoneNumber"></td>-->
+
+
+<!--        <button type="submit" class="btn btn-primary">поиск</button>-->
+<!--    </form>-->
+
+    <div class="container">
+        <hr>
+        <form class="form-horizontal" th:action="@{'/worker/newWorker/'+ ${orgId}}" method="get" role="form">
+            <button type="submit" class="btn btn-primary">Добавить нового сотрудника</button>
+        </form>
+        <hr>
+        <form action="#" th:action="@{'/organization/' + ${orgId}}" method="GET">
+            <input class="btn btn-primary" type="submit" value="Назад"/>
+        </form>
 
     </div>
-
-
-    </table>
-</div>
-
-<div class="container">
-    <hr>
-    <form class="form-horizontal" th:action="@{'/worker/newWorker/'+ ${orgId}}" method="get" role="form">
-        <button type="submit" class="btn btn-primary">Добавить нового сотрудника</button>
-    </form>
-    <hr>
-    <form action="#" th:action="@{'/organization/' + ${orgId}}" method="GET">
-        <input class="btn btn-primary" type="submit" value="Назад"/>
-    </form>
-
-</div>
-<footer class="my-5 pt-5 text-body-secondary text-center text-small">
-    <p class="mb-1">&copy; 2023 AlekhinArt </p>
-</footer>
+    <footer class="my-5 pt-5 text-body-secondary text-center text-small">
+        <p class="mb-1">&copy; 2023 AlekhinArt </p>
+    </footer>
 
 </body>
 </html>
