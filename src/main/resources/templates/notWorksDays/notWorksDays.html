@@ -38,7 +38,7 @@
                     <td th:text="${iterationStatus.index}+1">workNow</td>
                     <td th:text="${nwd.getStart()}">старт</td>
                     <td th:text="${nwd.getEnd()}">конец</td>
-                    <td th:text="${nwd.getTypeDay().getType()}">типа</td>
+                    <td th:text="${nwd.getTypeDay()}">тип</td>
                     <td th:text="${nwd.getNote()}">пометка</td>
 
                     <td style="text-align: center"><a
@@ -52,6 +52,19 @@
 
 
             </table>
+            <form action="#" th:action="@{'/wh/{orgId}/{whId}/bt'  (whId=${whId}, orgId=${orgId})}" method="GET">
+            <div class="col-md-5">
+                <label for="typeOffDay" class="form-label">Выберите тип</label>
+                <select type="text" class="form-control" th:name="typeOffDay" id="typeOffDay" required>
+                    <option value="">-- Select Type--</option>
+                    <option th:value="SICK_DAY">Больничный</option>
+                    <option th:value="VACATION">Отпуск</option>
+                    <option th:value="DAY_OF">Прогул</option>
+                </select>
+            </div>
+                <input class="btn btn-primary" type="submit" value="Показать только"/>
+            </form>
+
         </div>
         <hr>
         <form action="#" th:action="@{'/wh/{orgId}/create/{id}'  (id=${whId}, orgId=${orgId})}" method="GET">
