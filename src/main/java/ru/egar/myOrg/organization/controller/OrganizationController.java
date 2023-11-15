@@ -31,7 +31,7 @@ public class OrganizationController {
     }
 
     @GetMapping("/organization/newOrg")
-    public String newOrg(Model model) {
+    public String newOrg() {
 
         return "organization/newOrg";
     }
@@ -72,24 +72,6 @@ public class OrganizationController {
                 .orElseThrow(() -> new NotFoundException("Организация не найдена")));
         return "organization/updOrg";
     }
-
-//    @GetMapping("/organization/upd/{id}")
-//    public String updateOrg(@PathVariable Long id,
-//                            @RequestParam String name,
-//                            @RequestParam String inn,
-//                            @RequestParam String ogrn,
-//                            @RequestParam String address,
-//                            @RequestParam String phoneNumber) {
-//        log.info("Create organization with id {}: {}, {}, {}, {}, {}", id, name, inn, ogrn, address, phoneNumber);
-//        organizationService.updateById(id, OrganizationDto.builder()
-//                .name(name)
-//                .inn(inn)
-//                .ogrn(ogrn)
-//                .address(address)
-//                .phoneNumber(phoneNumber)
-//                .build());
-//        return "";
-//    }
 
     @GetMapping("/")
     public String getAllOrg(Model model) {

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!--    <meta charset="UTF-8">-->
+    <title>New org</title>
+    <head th:insert="~{fragments/head :: head}"></head>
+</head>
+<body>
+<div th:insert="~{fragments/header :: header}"></div>
+<div th:insert="~{fragments/leftPanel :: leftPanel}"></div>
+
+
+<div class="container">
+
+    <div class="py-5 text-center">
+        <h4 class="mb-3">Уволить сотрудника.</h4>
+    </div>
+    <div class="row">
+        <div class="col-md-7 col-lg-8">
+            <h5 class="mb-3">Укажите дату увольнения</h5>
+            <form th:method="POST"
+                  th:action="@{'/wh/{orgId}/{workerId}/layOf/{whId}'(orgId=${orgId}, workerId = ${workerId},whId=${wh.getId()})}">
+                <div class="col-sm-5">
+                    <label for="endWork" class="form-label">Дата увольнения</label>
+                    <div class="input-group">
+                        <input type="date" class="form-control" id="endWork"
+                               th:name="endWork" th:min="${wh.getStartWork()}"
+                               th:max="${wh.getStartWork().plusMonths(2)}">
+                    </div>
+                </div>
+
+                <hr>
+                <button type="submit" class="btn btn-primary btn-lg">Нажмите для продолжения</button>
+                <hr>
+            </form>
+            <hr>
+            <form action="#" th:action="@{'/worker/{orgId}/get/{id}'  (orgId=${orgId}, id = ${workerId})}" method="GET">
+                <input class="btn btn-primary" type="submit" value="Назад"/>
+            </form>
+        </div>
+
+    </div>
+    <footer class="my-5 pt-5 text-body-secondary text-center text-small">
+        <p class="mb-1">&copy; 2023 AlekhinArt </p>
+    </footer>
+</div>
+
+
+</body>
+</html>

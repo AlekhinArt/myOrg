@@ -44,4 +44,5 @@ public class WorkerHistoryService implements WorkHistoryService {
         workHistoryRepository.deleteById(aLong);
 
     }
+
 }

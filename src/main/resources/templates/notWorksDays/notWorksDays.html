@@ -28,7 +28,7 @@
                     <th style="width: 5%">#</th>
                     <th style="width: 20%">С какого дня</th>
                     <th style="width: 20%">По какой</th>
-                    <th style="width: 20%">Типа</th>
+                    <th style="width: 20%">Тип</th>
                     <th style="width: 20%">Пометка</th>
                     <th style="width: 20%">Удалить</th>
                 </tr>
@@ -38,7 +38,7 @@
                     <td th:text="${iterationStatus.index}+1">workNow</td>
                     <td th:text="${nwd.getStart()}">старт</td>
                     <td th:text="${nwd.getEnd()}">конец</td>
-                    <td th:text="${nwd.getTypeDay()}">типа</td>
+                    <td th:text="${nwd.getTypeDay().getType()}">типа</td>
                     <td th:text="${nwd.getNote()}">пометка</td>
 
                     <td style="text-align: center"><a

@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.*;
 import ru.egar.myOrg.exception.NotFoundException;
 import ru.egar.myOrg.worker.model.WorkHistory;
 import ru.egar.myOrg.worker.model.notWorksDays.NotWorksDays;
+import ru.egar.myOrg.worker.service.EmployPositionService;
 import ru.egar.myOrg.worker.service.NotWorksDayService;
 import ru.egar.myOrg.worker.service.impl.WorkerHistoryService;
+import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDate;
 
@@ -23,6 +25,7 @@ public class WorkHistoryController {
 
     private final NotWorksDayService nwds;
     private final WorkerHistoryService whs;
+    private final EmployPositionService emps;
 
 
     @GetMapping("/{orgId}/{id}")
@@ -67,6 +70,46 @@ public class WorkHistoryController {
         nwds.deleteById(id);
         return "redirect:/" + orgId + "/" + whId;
 
+    }
+
+    @GetMapping("/{orgId}/{workerId}/edit/{whId}")
+    public String layOffWorkerMVC(@PathVariable Long whId,
+                                  @PathVariable Long workerId,
+                                  @PathVariable Long orgId,
+                                  Model model) {
+        model.addAttribute("wh", whs.getById(whId)
+                .orElseThrow(() -> new NotFoundException("История не найдена")));
+        model.addAttribute("workerId", workerId);
+        model.addAttribute("orgId", orgId);
+
+
+        return "workHistory/layOffWorker";
+    }
+
+
+    @PostMapping("/{orgId}/{workerId}/layOf/{whId}")
+    public String layOffWorker(@ModelAttribute WorkHistory workHistory,
+                               @PathVariable Long whId,
+                               @PathVariable Long workerId,
+                               @PathVariable Long orgId) {
+        WorkHistory workHistory1 = whs.getById(whId)
+                .orElseThrow(() -> new NotFoundException("История не найдена"));
+        workHistory1.setEndWork(workHistory.getEndWork());
+        workHistory1.setWorkNow(false);
+        whs.create(workHistory1);
+
+        return "redirect:/worker/" + workerId + "/get/" + whId;
+    }
+
+    @GetMapping("/{orgId}/{workerId}/create/")
+    public String createWorkHistoryMVC(@PathVariable Long workerId,
+                                       @PathVariable Long orgId,
+                                       Model model) {
+        model.addAttribute("employPositions", emps.getAll());
+        model.addAttribute("workerId", workerId);
+        model.addAttribute("orgId", orgId);
+
+        return "workHistory/newWorkHistory";
     }
 
 }

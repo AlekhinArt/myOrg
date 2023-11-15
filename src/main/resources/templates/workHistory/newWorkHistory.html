@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!--    <meta charset="UTF-8">-->
+    <title>New org</title>
+    <head th:insert="~{fragments/head :: head}"></head>
+</head>
+<body>
+<div th:insert="~{fragments/header :: header}"></div>
+<div th:insert="~{fragments/leftPanel :: leftPanel}"></div>
+
+
+<div class="container">
+
+    <div class="py-5 text-center  ">
+        <h4 class="mb-3">Редактируем историю </h4>
+    </div>
+    <div class="row">
+        <div class="col-md-7 col-lg-8">
+            <h5 class="mb-3">Чуть ниже введите данные</h5>
+            <form th:method="POST" th:action="@{'/wh/{orgId}/{workerId}/create'(orgId=${orgId}, workerId = ${workerId})}">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </form>
+
+                <div class="form-group">
+                    <input type="hidden" id="id" th:name="id" th:value="${wh.getId()}"/>
+                    <input type="hidden" id="employPosition" th:name="employPosition"
+                           th:value="${wh.getEmployPosition()}"/>
+                </div>
+
+
+                <div class="col-sm-5">
+                    <label for="startWork" class="form-label">Дата принятия на должность</label>
+                    <div class="input-group">
+                        <input type="date" class="form-control" id="startWork"
+                               th:name="startWork" th:value="${wh.getStartWork()}" required>
+                    </div>
+                </div>
+                label for="emplPos" class="form-label">Выберите должность</label>
+                <select type="text" class="form-control" th:name="employPosition" id="emplPos">
+                    <option th:each="pos : ${employPositions}" th:value="${pos}" th:text="${pos}"></option>
+                </select>
+
+
+                <div class="col-sm-5">
+                    <select type="text" class="form-control" th:name="workNow" id="workNow" required>
+                        <option value="true">Работает сейчас</option>
+                        <option value="false">Уволен с должности</option>
+                    </select>
+                </div>
+
+
+        </div>
+        <hr>
+        <button type="submit" class="btn btn-primary btn-lg">Нажмите для продолжения</button>
+        <hr>
+        </form>
+
+
+
+    </div>
+    <footer class="my-5 pt-5 text-body-secondary text-center text-small">
+        <p class="mb-1">&copy; 2023 AlekhinArt </p>
+    </footer>
+</div>
+
+
+</body>
+</html>
