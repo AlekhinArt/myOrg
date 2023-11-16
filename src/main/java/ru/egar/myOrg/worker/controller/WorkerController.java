@@ -3,6 +3,7 @@ package ru.egar.myOrg.worker.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +29,7 @@ public class WorkerController {
     @Operation(summary = "Добавление",
             description = "Добавляем работника")
     @PostMapping
-    public String create(@ModelAttribute WorkerCreateDto workerDto, Model model) {
+    public String create(@ModelAttribute @Valid WorkerCreateDto workerDto, Model model) {
         log.info("Create worker: {}, {}, {}, {}, {}, {}, {}, {}",
                 workerDto.getName(),
                 workerDto.getSurname(),
@@ -50,8 +51,6 @@ public class WorkerController {
         workerService.deleteById(id);
         return "redirect:/worker/org/" + orgId;
     }
-
-
 
 
 }

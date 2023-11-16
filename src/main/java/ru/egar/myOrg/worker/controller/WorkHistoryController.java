@@ -1,12 +1,14 @@
 package ru.egar.myOrg.worker.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.xml.bind.ValidationException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.egar.myOrg.exception.NotFoundException;
+import ru.egar.myOrg.exception.ValidException;
 import ru.egar.myOrg.worker.model.WorkHistory;
 import ru.egar.myOrg.worker.model.notWorksDays.NotWorksDays;
 import ru.egar.myOrg.worker.model.notWorksDays.TypeOffDay;
@@ -72,6 +74,8 @@ public class WorkHistoryController {
                                  @PathVariable Long orgId, Model model) {
         log.info("Добавили не рабочий день {}, {}, {}, {},{}", nwd.getNwdId(), nwd.getStart(), nwd.getEnd(), nwd.getTypeDay(), nwd.getNote());
         whs.saveNotWorksDay(nwd, whId);
+
+
         return "redirect:/wh/" + orgId + "/" + whId;
     }
 

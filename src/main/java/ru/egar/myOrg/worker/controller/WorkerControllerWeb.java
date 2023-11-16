@@ -13,6 +13,8 @@ import ru.egar.myOrg.exception.NotFoundException;
 import ru.egar.myOrg.worker.service.EmployPositionService;
 import ru.egar.myOrg.worker.service.WorkerService;
 
+import java.time.LocalDate;
+
 @Slf4j
 @Controller
 @RequestMapping("/worker")
@@ -25,6 +27,7 @@ public class WorkerControllerWeb {
     public String newWorker(@PathVariable Long id, Model model) {
         model.addAttribute("employPositions", empPosService.getPositionName());
         model.addAttribute("orgId", id);
+        model.addAttribute("currentDate", LocalDate.now());
         return "workers/newWorker";
     }
 
@@ -37,9 +40,11 @@ public class WorkerControllerWeb {
 
         } catch (Exception e) {
             model.addAttribute("employPositions", empPosService.getPositionName());
+            model.addAttribute("currentDate", LocalDate.now());
             return "workers/newWorker";
         } finally {
             model.addAttribute("orgId", orgId);
+
         }
         return "workers/workMain";
     }

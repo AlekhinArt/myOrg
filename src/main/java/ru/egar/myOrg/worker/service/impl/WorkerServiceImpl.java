@@ -128,13 +128,11 @@ public class WorkerServiceImpl implements WorkerService {
     @Override
     public Collection<WorkerShowDto> searchWorkers(Long orgId, String word, String position) {
         if (position == null || position.isBlank()) {
-            log.info("ПУСТООООООООООООООООООООООООООООООООООООЙ");
             return workerRepository.searchWorkerByOrgAndParam(orgId, word)
                     .stream()
                     .map(WorkerMapper::toShowWorker)
                     .collect(Collectors.toList());
         } else {
-            log.info("ПОЛЛЛЛЛЛЛЛЛЛЛЛЛЛЛЛЛЛЛЛЛНЫЙ");
             return workerRepository.searchWorkerByOrgAndParam(orgId, word)
                     .stream()
                     .map(WorkerMapper::toShowWorker)

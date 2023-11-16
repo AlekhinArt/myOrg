@@ -1,7 +1,9 @@
 package ru.egar.myOrg.worker.service.impl;
 
+import jakarta.xml.bind.ValidationException;
 import org.springframework.stereotype.Service;
 import ru.egar.myOrg.exception.NotFoundException;
+import ru.egar.myOrg.exception.ValidException;
 import ru.egar.myOrg.worker.model.WorkHistory;
 import ru.egar.myOrg.worker.model.notWorksDays.NotWorksDays;
 import ru.egar.myOrg.worker.model.notWorksDays.TypeOffDay;
@@ -53,6 +55,9 @@ public class WorkerHistoryService implements WorkHistoryService {
 
     @Override
     public WorkHistory saveNotWorksDay(NotWorksDays nwd, Long whId) {
+        if (nwd.getEnd().isBefore(nwd.getStart()) || nwd.getStart().isAfter(nwd.getEnd())){
+            throw new ValidException("Не корректно указаны даты начала и окончания не рабочих дней");
+        }
         WorkHistory wh = workHistoryRepository.findById(whId).orElseThrow(() -> new NotFoundException("История не найдена"));
         wh.getNotWorksDays().add(nwd);
         nwd.setWorkHistory(wh);
@@ -65,6 +70,7 @@ public class WorkerHistoryService implements WorkHistoryService {
         WorkHistory whOld = workHistoryRepository.findById(whId).orElseThrow(() -> new NotFoundException("История не найдена"));
         whOld.setEndWork(wh.getEndWork());
         whOld.setWorkNow(false);
+
         workHistoryRepository.save(whOld);
     }
 

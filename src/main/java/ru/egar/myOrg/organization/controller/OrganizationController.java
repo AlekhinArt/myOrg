@@ -2,6 +2,7 @@ package ru.egar.myOrg.organization.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -23,8 +24,8 @@ public class OrganizationController {
     @Operation(summary = "Добавление",
             description = "Добавляем организацию")
     @PostMapping("/organization")
-    public String create(@ModelAttribute("organization") OrganizationDto organizationDto, Model model) {
-        log.info("Create organization: {}, {}, {}, {}, {}", organizationDto.getName(), organizationDto.getInn(),
+    public String create(@ModelAttribute("organization") @Valid OrganizationDto organizationDto, Model model) {
+        log.info("Create organization: {}, {}, {}, {}, {},{}", organizationDto.getName(), organizationDto.getInn(),
                 organizationDto.getOgrn(), organizationDto.getAddress(),
                 organizationDto.getPhoneNumber(), organizationDto.getZip());
         return "redirect:/organization/" + organizationService.create(organizationDto).getId();

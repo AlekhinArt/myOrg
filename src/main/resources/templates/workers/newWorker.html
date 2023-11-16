@@ -20,7 +20,9 @@
 
 
                 <div class="form-group">
-                    <input type="hidden" id="orgId"  th:name="orgId" th:value="*{orgId}"/>
+                    <input type="hidden" id="orgId" th:name="orgId" th:value="*{orgId}"/>
+                    <input type="hidden" id="workNow" th:name="orgId" th:value="*{orgId}"/>
+
                 </div>
 
 
@@ -29,7 +31,7 @@
                         <label for="name" class="form-label">Имя</label>
                         <div class="input-group">
                             <input type="text" class="form-control" id="name" placeholder="Людвиг"
-                                   th:name="name" maxlength="20" required>
+                                   th:name="name" maxlength="40" required>
                             <div class="invalid-feedback">
                                 Пожалуйста введите имя работника.
                             </div>
@@ -39,7 +41,7 @@
                         <label for="surname" class="form-label">Фамилия</label>
                         <div class="input-group">
                             <input type="text" class="form-control" id="surname"
-                                   th:name="surname" placeholder="Бетховен" maxlength="20" required>
+                                   th:name="surname" placeholder="Бетховен" maxlength="40" required>
                             <div class="invalid-feedback">
                                 Пожалуйста введите фамилию работника.
                             </div>
@@ -49,7 +51,7 @@
                         <label for="patronymic" class="form-label">Отчество</label>
                         <div class="input-group">
                             <input type="text" class="form-control" id="patronymic"
-                                   th:name="patronymic" maxlength="20" placeholder="Иоганнович" required>
+                                   th:name="patronymic" maxlength="40" placeholder="Иоганнович" required>
                             <div class="invalid-feedback">
                                 Пожалуйста введите отчество работника.
                             </div>
@@ -62,7 +64,8 @@
                         <div class="input-group">
                             <input type="date" class="form-control" id="birthday"
                                    th:name="birthday" placeholder="1770-12-17"
-                                   min="1920-01-01" max="2010-01-01" required>
+                                   th:min="${currentDate.minusYears(120)}" th:max="${currentDate.minusYears(16)}"
+                                   required>
                             <div class="invalid-feedback">
                                 Пожалуйста введите дату рождения работника.
                             </div>
@@ -84,21 +87,14 @@
                     </div>
                 </div>
                 <hr>
-                <div class="row">
-                    <div class="col-sm-5">
-                        <select type="text" class="form-control" th:name="workNow" id="workNow" required>
-                            <option value="true">Работает сейчас</option>
-                            <option value="false">Пока не трудоустроен</option>
-                        </select>
-                    </div>
-                </div>
+
                 <div class="row">
                     <div class="col-sm-5">
                         <label for="startWork" class="form-label">Дата трудоустройства</label>
                         <div class="input-group">
                             <input type="date" class="form-control" id="startWork"
                                    th:name="startWork" placeholder="1782-12-17"
-                                   min="2010-01-01" max="2025-01-01" required>
+                                   th:min="${currentDate.minusWeeks(1)}" th:max="${currentDate.plusWeeks(2)}" required>
                         </div>
                     </div>
                 </div>
