@@ -79,8 +79,8 @@ public class WorkerHistoryService implements WorkHistoryService {
     }
 
     @Override
-    public Collection<NotWorksDays> notWorkDayByType(TypeOffDay type, Long whId) {
-        return notWorksDaysRepository.findAllByWorkHistory_IdAndTypeDay(whId, type);
+    public Collection<NotWorksDays> notWorkDayByTypeAndDate(TypeOffDay type, Long whId, LocalDate start, LocalDate end) {
+        return notWorksDaysRepository.findAllByWorkHistory_IdAndTypeDay(whId, type, start, end);
     }
 
     @Override

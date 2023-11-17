@@ -7,6 +7,7 @@ import ru.egar.myOrg.worker.model.WorkHistory;
 import ru.egar.myOrg.worker.model.notWorksDays.NotWorksDays;
 import ru.egar.myOrg.worker.model.notWorksDays.TypeOffDay;
 
+import java.time.LocalDate;
 import java.util.Collection;
 
 
@@ -15,7 +16,7 @@ public interface WorkHistoryService extends BaseService<WorkHistory, Long> {
 
     void layOffWorker(WorkHistory wh, Long whId);
 
-    Collection<NotWorksDays> notWorkDayByType(TypeOffDay type, Long whId);
+    Collection<NotWorksDays> notWorkDayByTypeAndDate(TypeOffDay type, Long whId, LocalDate start, LocalDate end);
 
     Long getAllNotWorkDays(Collection<NotWorksDays> nwds);
 
