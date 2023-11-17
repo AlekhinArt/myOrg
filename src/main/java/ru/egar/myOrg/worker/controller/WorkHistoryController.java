@@ -34,11 +34,13 @@ public class WorkHistoryController {
     @GetMapping("/{orgId}/{whId}")
     public String getAllNotWorkDayByWh(@PathVariable Long whId, @PathVariable Long orgId, Model model) {
         log.info("getAllNotWorkDayByWh historyId {} ", whId);
-        model.addAttribute("ndws", whs.getById(whId)
-                .orElseThrow(() -> new NotFoundException("История не найдена")).getNotWorksDays());
+        WorkHistory workHistory = whs.getById(whId)
+                .orElseThrow(() -> new NotFoundException("История не найдена"));
+        model.addAttribute("ndws", workHistory.getNotWorksDays());
         model.addAttribute("whId", whId);
-        model.addAttribute("workerId", whs.getById(whId).orElseThrow().getWorker().getId());
+        model.addAttribute("workerId",workHistory.getWorker().getId());
         model.addAttribute("orgId", orgId);
+        model.addAttribute("sum", whs.getAllNotWorkDays(workHistory.getNotWorksDays()));
 
         return "notWorksDays/notWorksDays";
     }
@@ -47,10 +49,13 @@ public class WorkHistoryController {
     public String getNotWorkDaysByType(@PathVariable Long orgId, @PathVariable Long whId,
                                        @ModelAttribute TypeOffDay typeOffDay, Model model) {
         log.info("getNotWorkDaysByType historyId {}, type {}", whId, typeOffDay);
+        WorkHistory workHistory = whs.getById(whId)
+                .orElseThrow(() -> new NotFoundException("История не найдена"));
         model.addAttribute("ndws", whs.notWorkDayByType(typeOffDay, whId));
         model.addAttribute("whId", whId);
-        model.addAttribute("workerId", whs.getById(whId).orElseThrow().getWorker().getId());
+        model.addAttribute("workerId", workHistory.getWorker().getId());
         model.addAttribute("orgId", orgId);
+        model.addAttribute("sum", whs.getAllNotWorkDays(whs.notWorkDayByType(typeOffDay, whId)));
 
         return "notWorksDays/notWorksDays";
     }

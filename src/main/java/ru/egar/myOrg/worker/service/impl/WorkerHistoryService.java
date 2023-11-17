@@ -1,6 +1,7 @@
 package ru.egar.myOrg.worker.service.impl;
 
 import jakarta.xml.bind.ValidationException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.egar.myOrg.exception.NotFoundException;
 import ru.egar.myOrg.exception.ValidException;
@@ -11,11 +12,14 @@ import ru.egar.myOrg.worker.repository.NotWorksDaysRepository;
 import ru.egar.myOrg.worker.repository.WorkHistoryRepository;
 import ru.egar.myOrg.worker.service.WorkHistoryService;
 
+import java.time.Duration;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
-
+@Slf4j
 @Service
 public class WorkerHistoryService implements WorkHistoryService {
     private final WorkHistoryRepository workHistoryRepository;
@@ -55,7 +59,7 @@ public class WorkerHistoryService implements WorkHistoryService {
 
     @Override
     public WorkHistory saveNotWorksDay(NotWorksDays nwd, Long whId) {
-        if (nwd.getEnd().isBefore(nwd.getStart()) || nwd.getStart().isAfter(nwd.getEnd())){
+        if (nwd.getEnd().isBefore(nwd.getStart()) || nwd.getStart().isAfter(nwd.getEnd())) {
             throw new ValidException("Не корректно указаны даты начала и окончания не рабочих дней");
         }
         WorkHistory wh = workHistoryRepository.findById(whId).orElseThrow(() -> new NotFoundException("История не найдена"));
@@ -76,9 +80,20 @@ public class WorkerHistoryService implements WorkHistoryService {
 
     @Override
     public Collection<NotWorksDays> notWorkDayByType(TypeOffDay type, Long whId) {
-
-
         return notWorksDaysRepository.findAllByWorkHistory_IdAndTypeDay(whId, type);
+    }
+
+    @Override
+    public Long getAllNotWorkDays(Collection<NotWorksDays> nwds) {
+        long sumDays = 0L;
+        for (NotWorksDays nwd : nwds) {
+            long a = nwd.getEnd().toEpochDay() - nwd.getStart().toEpochDay();
+            if (a == 0L) {
+                sumDays++;
+            } else sumDays = sumDays + a + 1L;
+
+        }
+        return sumDays;
     }
 
 }

@@ -12,7 +12,11 @@ import java.util.Collection;
 
 public interface WorkHistoryService extends BaseService<WorkHistory, Long> {
     WorkHistory saveNotWorksDay(NotWorksDays nwd, Long id) throws ValidationException;
-    void layOffWorker (WorkHistory wh, Long whId);
-    Collection <NotWorksDays> notWorkDayByType(TypeOffDay type, Long whId);
+
+    void layOffWorker(WorkHistory wh, Long whId);
+
+    Collection<NotWorksDays> notWorkDayByType(TypeOffDay type, Long whId);
+
+    Long getAllNotWorkDays(Collection<NotWorksDays> nwds);
 
 }

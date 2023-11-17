@@ -53,18 +53,21 @@
 
             </table>
             <form action="#" th:action="@{'/wh/{orgId}/{whId}/bt'  (whId=${whId}, orgId=${orgId})}" method="GET">
-            <div class="col-md-5">
-                <label for="typeOffDay" class="form-label">Выберите тип</label>
-                <select type="text" class="form-control" th:name="typeOffDay" id="typeOffDay" required>
-                    <option value="">-- Select Type--</option>
-                    <option th:value="SICK_DAY">Больничный</option>
-                    <option th:value="VACATION">Отпуск</option>
-                    <option th:value="DAY_OF">Прогул</option>
-                </select>
-            </div>
-                <input class="btn btn-primary" type="submit" value="Показать только"/>
+                <div class="col-md-5">
+                    <input class="btn btn-primary" type="submit" value="Показать только"/>
+                    <select type="text" class="form" th:name="typeOffDay" id="typeOffDay" required>
+                        <option value="">-- Select Type--</option>
+                        <option th:value="SICK_DAY">Больничный</option>
+                        <option th:value="VACATION">Отпуск</option>
+                        <option th:value="DAY_OF">Прогул</option>
+                    </select>
+                </div>
             </form>
 
+        </div>
+        <hr>
+        <div class="text-primary" style="color: #080808">
+            <p><b>Всего не рабочих дней: </b><span th:text="${sum}"></span></p>
         </div>
         <hr>
         <form action="#" th:action="@{'/wh/{orgId}/create/{id}'  (id=${whId}, orgId=${orgId})}" method="GET">
