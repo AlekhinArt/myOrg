@@ -29,7 +29,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class WorkHistoryController {
 
-    private final NotWorksDayService nwds;
+//    private final NotWorksDayService nwds;
     private final WorkerHistoryService whs;
     private final EmployPositionService emps;
 
@@ -97,7 +97,7 @@ public class WorkHistoryController {
                                    @PathVariable Long whId,
                                    @PathVariable Long orgId) {
         log.info("delete not work day id {}", id);
-        nwds.deleteById(id);
+//        nwds.deleteById(id);
         return "redirect:/" + orgId + "/" + whId;
 
     }

@@ -15,9 +15,9 @@ public class ErrorHandler {
     @ExceptionHandler
     @ResponseStatus(HttpStatus.CONFLICT)
     public MainServiceError dataConflict(final DataConflictException e) {
-        log.info("State number is busy {}", e.getMessage());
+        log.info("Data conflict {}", e.getMessage());
         return MainServiceError.builder()
-                .message("DataConflictException" + e.getMessage())
+                .message("DataConflictException " + e.getMessage())
                 .status("FORBIDDEN")
                 .reason("For the requested operation the conditions are not met.")
                 .timestamp(LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME))

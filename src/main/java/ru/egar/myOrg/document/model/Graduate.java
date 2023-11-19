@@ -1,5 +1,6 @@
 package ru.egar.myOrg.document.model;
 
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -9,19 +10,18 @@ import java.time.LocalDate;
 @Getter
 @AllArgsConstructor
 @Builder
-
+@Entity
+@NoArgsConstructor
 public class Graduate extends BasePaperDocument {
-//    private Long id;
-//    private static final int code= 2;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "graduate_id")
+    private Long id;
     private String institution;
     private String grade;
     private String specialization;
     private LocalDate startDate;
     private LocalDate lastDate;
-//    public Graduate(){
-//        codeTypeDocument = "002";
-//        nameDocument = "Квалификационный документ";
-//    }
 
 
 }

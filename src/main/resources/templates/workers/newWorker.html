@@ -106,11 +106,6 @@
                                 <option th:each="pos : ${employPositions}" th:value="${pos}" th:text="${pos}"></option>
                             </select>
                         </div>
-                        <div th:if="${ #lists.isEmpty(employPositions)}">
-                            <form action="#" th:action="@{'/empl/newEmplPos/'}" method="GET">
-                                <input class="btn btn-primary" type="submit" value="Необходимо добавить должность"/>
-                            </form>
-                        </div>
                     </div>
                 </div>
                 <hr>
@@ -118,6 +113,11 @@
                     <button type="submit" class="btn btn-primary">Сохранить</button>
                 </div>
             </form>
+            <div th:if="${ #lists.isEmpty(employPositions)}">
+                <form action="#" th:action="@{'/empl/newEmplPos'}" method="GET">
+                    <input class="btn btn-primary" type="submit" value="Необходимо добавить должность"/>
+                </form>
+            </div>
             <hr>
 
 

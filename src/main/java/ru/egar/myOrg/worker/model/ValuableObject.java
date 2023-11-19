@@ -1,13 +1,14 @@
 package ru.egar.myOrg.worker.model;
 
 import jakarta.persistence.*;;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import ru.egar.myOrg.organization.model.Organization;
 
 import java.time.LocalDate;
-import java.util.Collection;
+
 
 @Setter
 @Getter
@@ -25,6 +26,7 @@ public class ValuableObject {
     private Boolean isUse;
     @Size(min = 1, max = 40, message = "Должно быть не меньше одного и не более 40 символов")
     @NotNull
+    @NotBlank
     private String name;
     @NotNull
     private float price;

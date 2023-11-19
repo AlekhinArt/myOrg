@@ -1,23 +1,21 @@
 package ru.egar.myOrg.worker.service.impl;
 
-import jakarta.xml.bind.ValidationException;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import ru.egar.myOrg.exception.DataConflictException;
 import ru.egar.myOrg.exception.NotFoundException;
 import ru.egar.myOrg.exception.ValidException;
 import ru.egar.myOrg.worker.model.WorkHistory;
 import ru.egar.myOrg.worker.model.notWorksDays.NotWorksDays;
-import ru.egar.myOrg.worker.model.notWorksDays.TypeOffDay;
 import ru.egar.myOrg.worker.repository.NotWorksDaysRepository;
 import ru.egar.myOrg.worker.repository.WorkHistoryRepository;
 import ru.egar.myOrg.worker.service.WorkHistoryService;
 
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 
 @Slf4j
@@ -64,6 +62,14 @@ public class WorkerHistoryService implements WorkHistoryService {
             throw new ValidException("Не корректно указаны даты начала и окончания не рабочих дней");
         }
         WorkHistory wh = workHistoryRepository.findById(whId).orElseThrow(() -> new NotFoundException("История не найдена"));
+        for (NotWorksDays oldNwd : wh.getNotWorksDays()) {
+            if (oldNwd.getStart().isBefore(nwd.getStart()) && oldNwd.getEnd().isAfter(nwd.getEnd())
+                    || oldNwd.getStart().isBefore(nwd.getStart()) && oldNwd.getEnd().isBefore(nwd.getEnd())
+                    || oldNwd.getStart().isAfter(nwd.getStart()) && oldNwd.getEnd().isAfter(nwd.getEnd())
+                    || oldNwd.getStart().isAfter(nwd.getStart()) && oldNwd.getEnd().isBefore(nwd.getEnd())) {
+                throw new DataConflictException(" Не корректно указаны даты");
+            }
+        }
         wh.getNotWorksDays().add(nwd);
         nwd.setWorkHistory(wh);
         notWorksDaysRepository.save(nwd);
