@@ -45,6 +45,7 @@ public class WorkerMapper {
                 .patronymic(worker.getPatronymic())
                 .birthday(worker.getBirthday())
                 .phoneNumber(worker.getPhoneNumber())
+                .workNow(worker.getWorkNow())
                 .employPosition(worker.getWorkHistory().get(0).getEmployPosition().getPosition())
                 .build();
 

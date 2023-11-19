@@ -17,6 +17,7 @@ public class WorkerShowDto {
     private LocalDate birthday;
     private String phoneNumber;
     private String employPosition;
+    private Boolean workNow;
 
 
 }

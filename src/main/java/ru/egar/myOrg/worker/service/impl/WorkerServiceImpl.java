@@ -123,22 +123,31 @@ public class WorkerServiceImpl implements WorkerService {
         return wsh;
     }
 
+    // TODO: 20.11.2023 работает не корректно, переделать
     @Override
-    public Collection<WorkerShowDto> searchWorkers(Long orgId, String word, String position) {
+    public Collection<WorkerShowDto> searchWorkers(Long orgId, String word, String position, String workNow) {
+        Collection<WorkerShowDto> workerShowDtos;
         if (position == null || position.isBlank()) {
-            return workerRepository.searchWorkerByOrgAndParam(orgId, word)
+            workerShowDtos = workerRepository.searchWorkerByOrgAndParam(orgId, word)
                     .stream()
                     .map(WorkerMapper::toShowWorker)
                     .collect(Collectors.toList());
         } else {
-            return workerRepository.searchWorkerByOrgAndParam(orgId, word)
+            workerShowDtos = workerRepository.searchWorkerByOrgAndParam(orgId, word)
                     .stream()
                     .map(WorkerMapper::toShowWorker)
                     .filter(pos -> pos.getEmployPosition().equals(position))
                     .collect(Collectors.toList());
         }
+        if (!(workNow == null) && workNow.isBlank()) {
+            return workerShowDtos;
+        } else return workerShowDtos.stream()
+                .filter(w -> w.getWorkNow().equals(Boolean.valueOf(workNow)))
+                .collect(Collectors.toList());
+
 
     }
+
 
     @Override
     public Worker createWorker(Worker worker) {

@@ -27,14 +27,22 @@
     <form th:action="@{'/worker/org/{orgId}/search' (orgId= ${orgId})}" method="get">
         <input type="text" name="word" th:value="${word}" placeholder="Ищем по любому параметру" size="50">
         <select type="text" class="form-inline" th:name="pos" id="emplPos">
-            <option value="">Можно выбрать должность </option>
-            <option th:each="pos : ${employPositions}"  th:text="${pos}"></option>
+            <option value="">Можно выбрать должность</option>
+            <option th:each="pos : ${employPositions}" th:text="${pos}"></option>
         </select>
+        <select type="text" class="form-inline" th:name="workNow">
+            <option value="">Работает на данный момент</option>
+            <option th:value="true">Работает</option>
+            <option th:value="false">Не работает</option>
+        </select>
+
+
         <button type="submit" class="btn btn-primary">Поиск</button>
         <button type="submit" class="btn btn-primary">Сбросить</button>
 
         <hr>
     </form>
+
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
@@ -78,11 +86,6 @@
 
         </table>
     </div>
-
-
-
-
-
 
 
     <div class="container">

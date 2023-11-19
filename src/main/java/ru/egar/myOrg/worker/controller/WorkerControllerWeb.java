@@ -53,9 +53,10 @@ public class WorkerControllerWeb {
     @GetMapping("/org/{orgId}/search")
     public String searchByOrgAndParam(@PathVariable Long orgId, Model model,
                                       @RequestParam String word,
+                                      @RequestParam (defaultValue = " ") String workNow,
                                       @RequestParam String pos) {
-        log.info("Search workers by ORG orgID{}, search {}, pos {}", orgId, word, pos);
-        model.addAttribute("workers", workerService.searchWorkers(orgId, word, pos));
+        log.info("Search workers by ORG orgID{}, search {}, pos {}, workNow {}", orgId, word, pos, workNow);
+        model.addAttribute("workers", workerService.searchWorkers(orgId, word, pos, workNow));
         model.addAttribute("employPositions", empPosService.getPositionName());
         model.addAttribute("orgId", orgId);
 
