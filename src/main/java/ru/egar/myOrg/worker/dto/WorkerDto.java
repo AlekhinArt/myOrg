@@ -2,6 +2,7 @@ package ru.egar.myOrg.worker.dto;
 
 import lombok.*;
 import ru.egar.myOrg.organization.model.Organization;
+import ru.egar.myOrg.worker.model.ValuableObject;
 import ru.egar.myOrg.worker.model.WorkHistory;
 
 import java.time.LocalDate;
@@ -23,5 +24,6 @@ public class WorkerDto {
     private String phoneNumber;
     private Organization organization;
     private List<WorkHistory> workHistory = new ArrayList<>();
+    private List<ValuableObject> valuableObjects = new ArrayList<>();
 
 }

@@ -31,6 +31,7 @@ public class WorkerMapper {
                 .workNow(worker.getWorkNow())
                 .workHistory(worker.getWorkHistory())
                 .organization(worker.getOrganization())
+                .valuableObjects(worker.getValuableObjects())
                 .build();
 
     }

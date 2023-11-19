@@ -16,7 +16,7 @@ public interface WorkHistoryService extends BaseService<WorkHistory, Long> {
 
     void layOffWorker(WorkHistory wh, Long whId);
 
-    Collection<NotWorksDays> notWorkDayByTypeAndDate(TypeOffDay type, Long whId, LocalDate start, LocalDate end);
+    Collection<NotWorksDays> notWorkDayByTypeAndDate(String type, Long whId, String start, String end);
 
     Long getAllNotWorkDays(Collection<NotWorksDays> nwds);
 

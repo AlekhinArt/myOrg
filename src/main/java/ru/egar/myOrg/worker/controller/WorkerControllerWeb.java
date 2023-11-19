@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.egar.myOrg.exception.NotFoundException;
+import ru.egar.myOrg.worker.model.Worker;
 import ru.egar.myOrg.worker.service.EmployPositionService;
 import ru.egar.myOrg.worker.service.WorkerService;
 
@@ -39,11 +40,12 @@ public class WorkerControllerWeb {
             model.addAttribute("workers", workerService.showWorkers(orgId));
 
         } catch (Exception e) {
-            model.addAttribute("employPositions", empPosService.getPositionName());
+
             model.addAttribute("currentDate", LocalDate.now());
             return "workers/newWorker";
         } finally {
             model.addAttribute("orgId", orgId);
+            model.addAttribute("employPositions", empPosService.getPositionName());
 
         }
         return "workers/workMain";

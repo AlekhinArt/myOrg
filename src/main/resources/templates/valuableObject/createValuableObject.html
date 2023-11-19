@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавляем работника</title>
+    <head th:insert="~{fragments/head :: head}"></head>
+</head>
+<body>
+<div th:insert="~{fragments/header :: header}"></div>
+<div th:insert="~{fragments/leftPanel :: leftPanel}"></div>
+
+<div class="container center">
+    <div class="text-center">
+        <p class="lead">Разные материальные ценности</p>
+    </div>
+    <div class="row">
+        <div class="col-md-7 col-lg-8">
+            <h4 class="mb-3">Чуть ниже введите данные</h4>
+            <form action="#" th:method="POST" th:action="@{'/obj/{orgId}'( orgId= ${orgId})}">
+
+                <div class="form-group">
+                    <input type="hidden" id="isUse" th:name="isUse" th:value="FALSE">
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-7">
+                        <label for="name" class="form-label">Название</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="name" placeholder="Бутылка"
+                                   th:name="name" maxlength="40" required>
+                            <div class="invalid-feedback">
+                                Пожалуйста, введите название предмета
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-7">
+                        <label for="price" class="form-label">Цена</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="price" placeholder="1000"
+                                   th:name="price" maxlength="40" required>
+                            <div class="invalid-feedback">
+                                Пожалуйста, введите цену предмета
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-7">
+                        <label for="dateOfPurchase" class="form-label">Дата покупки</label>
+                        <div class="input-group">
+                            <input type="date" class="form-control" id="dateOfPurchase"
+                                   th:name="dateOfPurchase" placeholder=" "
+                                   th:min="${currentDate.minusYears(120)}" th:max="${currentDate.minusYears(16)}"
+                                   required>
+                            <div class="invalid-feedback">
+                                Пожалуйста, укажите дату покупки.
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-sm-7">
+                        <label for="typeOfValue" class="form-label">Выберите тип</label>
+                        <select type="text" class="form-control" th:name="typeOfValue" id="typeOfValue" required>
+                            <option th:each="abc : ${types}" th:value="${abc}"
+                                    th:text="${abc.getTypeV()}"></option>
+
+                        </select>
+                    </div>
+
+                    <hr>
+
+
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                </div>
+            </form>
+            <hr>
+
+
+        </div>
+    </div>
+</div>
+</div>
+<footer class="my-5 pt-5 text-body-secondary text-center text-small">
+    <p class="mb-1">&copy; 2023 AlekhinArt </p>
+</footer>
+</div>
+
+</body>
+</html>

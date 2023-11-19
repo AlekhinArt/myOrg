@@ -1,8 +1,10 @@
 package ru.egar.myOrg.worker.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.annotation.Nullable;
 import jakarta.xml.bind.ValidationException;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +20,7 @@ import ru.egar.myOrg.worker.service.impl.WorkerHistoryService;
 import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 @Slf4j
 @Controller
@@ -49,9 +52,9 @@ public class WorkHistoryController {
 
     @GetMapping("/{orgId}/{whId}/bt")
     public String getNotWorkDaysByType(@PathVariable Long orgId, @PathVariable Long whId,
-                                       @ModelAttribute TypeOffDay typeOffDay, Model model,
-                                       @PathVariable LocalDate start, @PathVariable LocalDate end) {
-        log.info("getNotWorkDaysByType historyId {}, type {}", whId, typeOffDay);
+                                       @RequestParam String typeOffDay, Model model,
+                                       @RequestParam String start, @RequestParam String end) {
+        log.info("getNotWorkDaysByType historyId {}, type {}, start {} , end {}", whId, typeOffDay, start, end);
         WorkHistory workHistory = whs.getById(whId)
                 .orElseThrow(() -> new NotFoundException("История не найдена"));
         model.addAttribute("ndws", whs.notWorkDayByTypeAndDate(typeOffDay, whId, start, end));
@@ -61,8 +64,8 @@ public class WorkHistoryController {
         model.addAttribute("sum", whs.getAllNotWorkDays(whs.notWorkDayByTypeAndDate(typeOffDay, whId, start, end)));
         model.addAttribute("dateNow", LocalDate.now());
 
-
         return "notWorksDays/notWorksDays";
+
     }
 
 

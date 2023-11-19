@@ -14,6 +14,7 @@ import ru.egar.myOrg.worker.service.WorkHistoryService;
 
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
@@ -79,8 +80,18 @@ public class WorkerHistoryService implements WorkHistoryService {
     }
 
     @Override
-    public Collection<NotWorksDays> notWorkDayByTypeAndDate(TypeOffDay type, Long whId, LocalDate start, LocalDate end) {
-        return notWorksDaysRepository.findAllByWorkHistory_IdAndTypeDay(whId, type, start, end);
+    public Collection<NotWorksDays> notWorkDayByTypeAndDate(String type, Long whId, String start, String end) {
+        LocalDate maxDate;
+        LocalDate minDate;
+        if (start == null || start.isEmpty()) {
+            minDate = LocalDate.now().minusYears(50);
+        } else minDate = LocalDate.parse(start, DateTimeFormatter.ISO_LOCAL_DATE);
+        if (end == null || end.isEmpty()) {
+            maxDate = LocalDate.now().plusYears(50);
+        } else maxDate = LocalDate.parse(end, DateTimeFormatter.ISO_LOCAL_DATE);
+        log.info("max {} , min {}", maxDate, minDate);
+        return notWorksDaysRepository.findAllByWorkHistoryIdAndTypeDayAndStartAfterAndStartBefore(whId,
+                type, minDate, maxDate);
     }
 
     @Override

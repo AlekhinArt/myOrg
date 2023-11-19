@@ -63,12 +63,42 @@
 
         </table>
         <hr>
-
         <form action="#"
               th:action="@{'/wh/{orgId}/{workerId}/create/'( orgId = ${orgId}, workerId = ${worker.getId()} )}"
               method="GET">
             <input class="btn btn-primary" type="submit" value="Добавить"/>
         </form>
+
+        <h3><b>Материальные ценности</b></h3>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th style="width: 5%">№</th>
+                    <th style="width: 20%">Тип</th>
+                    <th style="width: 20%">Название</th>
+                    <th style="width: 20%">Стоимость</th>
+<!--                    <th style="width: 5%">Delete</th>-->
+                </tr>
+                </thead>
+
+                <tbody>
+
+                <tr th:each="obj, iterationStatus : ${worker.getValuableObjects()}">
+
+                    <td th:text="${iterationStatus.index+1}">№</td>
+                    <td th:text="${obj.typeOfValue.getTypeV}">Тип</td>
+                    <td th:text="${obj.name}">Название</td>
+                    <td th:text="${obj.price}">цена</td>
+
+<!--                    <td><a th:href="@{'/obj/del/{id}'(id=${obj.id})}"> Удалить </a></td>-->
+                </tr>
+                </tbody>
+
+
+            </table>
+
+
         <hr>
         <form action="#" th:action="@{'/worker/org/' + ${orgId}}" method="GET">
             <input class="btn btn-primary" type="submit" value="Назад"/>

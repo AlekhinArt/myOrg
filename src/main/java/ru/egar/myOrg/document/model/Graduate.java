@@ -9,6 +9,7 @@ import java.time.LocalDate;
 @Getter
 @AllArgsConstructor
 @Builder
+
 public class Graduate extends BasePaperDocument {
 //    private Long id;
 //    private static final int code= 2;

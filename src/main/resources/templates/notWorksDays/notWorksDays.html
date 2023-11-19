@@ -38,7 +38,7 @@
                     <td th:text="${iterationStatus.index}+1">workNow</td>
                     <td th:text="${nwd.getStart()}">старт</td>
                     <td th:text="${nwd.getEnd()}">конец</td>
-                    <td th:text="${nwd.getTypeDay()}">тип</td>
+                    <td th:text="${nwd.getTypeDay().getType()}">тип</td>
                     <td th:text="${nwd.getNote()}">пометка</td>
 
                     <td style="text-align: center"><a
@@ -52,43 +52,47 @@
 
 
             </table>
-            <form action="#" th:action="@{'/wh/{orgId}/{whId}/bt'  (whId=${whId}, orgId=${orgId})}" method="GET">
-                <div class="col-md-5">
-                    <input class="btn btn-primary" type="submit" value="Показать только"/>
-                    <select type="text" class="form" th:name="typeOffDay" id="typeOffDay" required>
-                        <option value="">-- Select Type--</option>
-                        <option th:value="SICK_DAY">Больничный</option>
-                        <option th:value="VACATION">Отпуск</option>
-                        <option th:value="DAY_OF">Прогул</option>
-                    </select>
-                </div>
-                <div class="col-sm-6">
 
-                    <div class="row">
-                        <div class="col-sm-5">
-                            <label for="start" class="form-label">Выбрать период с </label>
-                            <div class="input-group">
-                                <input type="date" class="form-control" id="start"
-                                       th:name="start" th:max ="${dateNow}" th:min = "${dateNow.minusYears(30)}"
-                                       required>
-                            </div>
+
+        </div>
+        <div class="container">
+            <form action="#" th:action="@{'/wh/{orgId}/{whId}/bt'  (whId=${whId}, orgId=${orgId})}" method="GET">
+
+                <div class="row">
+                    <div class="col-sm-2">
+                        <label for="start" class="form-label">Выбрать период с </label>
+                        <div class="input-group">
+                            <input type="date" class="form-control" id="start"
+                                   th:name="start" th:max="${dateNow}" th:min="${dateNow.minusYears(10)}">
                         </div>
                     </div>
-                </div>
-
-
-                <div class="col-sm-5">
-                    <label for="end" class="form-label">по какой день</label>
-                    <div class="input-group">
-                        <input type="date" class="form-control" id="end"
-                               th:name="end" th:max ="${dateNow}" th:min = "${dateNow.minusYears(30)}"
-                               required>
+                    <div class="col-sm-2">
+                        <label for="end" class="form-label">по какой день</label>
+                        <div class="input-group">
+                            <input type="date" class="form-control" id="end"
+                                   th:name="end" th:max="${dateNow}" th:min="${dateNow.minusYears(10)}">
+                        </div>
                     </div>
+
+
+                    <div class="col-sm-9">
+                        <hr>
+                        <select type="text" class="form" th:name="typeOffDay" id="typeOffDay">
+                            <option value="">-- Тип--</option>
+                            <option th:value="SICK_DAY">Больничный</option>
+                            <option th:value="VACATION">Отпуск</option>
+                            <option th:value="DAY_OF">Прогул</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4">
+                        <hr>
+
+                        <input class="btn btn-primary" type="submit" value="Подтвердить"/>
+                    </div>
+
                 </div>
-
-
             </form>
-
         </div>
         <hr>
         <div class="text-primary" style="color: #080808">

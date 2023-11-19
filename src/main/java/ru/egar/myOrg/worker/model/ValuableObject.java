@@ -1,7 +1,10 @@
 package ru.egar.myOrg.worker.model;
 
 import jakarta.persistence.*;;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.*;
+import ru.egar.myOrg.organization.model.Organization;
 
 import java.time.LocalDate;
 import java.util.Collection;
@@ -18,10 +21,23 @@ public class ValuableObject {
     @Column(name = "obg_id")
     private Long id;
     @Column(name = "is_use")
+    @NotNull
     private Boolean isUse;
+    @Size(min = 1, max = 40, message = "Должно быть не меньше одного и не более 40 символов")
+    @NotNull
     private String name;
+    @NotNull
     private float price;
-    @Column(name = "org_id")
+    @Column(name = "date_of_purchase")
     private LocalDate dateOfPurchase;
+    @Column(name = "type_of_value")
+    @Enumerated(EnumType.STRING)
     private TypeOfValue typeOfValue;
+    @ManyToOne
+    @JoinColumn(name = "worker_id")
+    private Worker worker;
+    @ManyToOne
+    @JoinColumn(name = "org_id")
+    private Organization organization;
+
 }

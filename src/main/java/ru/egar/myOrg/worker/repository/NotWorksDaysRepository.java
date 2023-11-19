@@ -1,5 +1,6 @@
 package ru.egar.myOrg.worker.repository;
 
+import org.aspectj.weaver.ast.Not;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import org.springframework.data.jpa.repository.Query;
@@ -11,11 +12,25 @@ import java.util.Collection;
 
 public interface NotWorksDaysRepository extends JpaRepository<NotWorksDays, Long> {
 
+    @Query(value = "select * from not_work_days " +
+            "where (end_date BETWEEN :start and :end) " +
+            "or (start_date BETWEEN :start and :end) " +
+            "or (start_date <:start and end_date >:end )" +
+            "and work_history_id = :whId " +
+            "or type_day = :type", nativeQuery = true)
+    Collection<NotWorksDays> findAllByWorkHistoryIdAndTypeDayAndStartAfterAndStartBefore(Long whId,
+                                                                                         String type,
+                                                                                         LocalDate start,
+                                                                                         LocalDate end);
 
-    Collection<NotWorksDays> findAllByWorkHistory_IdAndTypeDay(Long whId, TypeOffDay type);
+//    Collection <NotWorksDays>
 
-    @Query ("SELECT NotWorksDays from NotWorksDays as n" +
-            " where n.workHistory.id =:whId and n.typeDay = :type and n.start > :start and n.end < :end")
-    Collection<NotWorksDays> findAllByWorkHistory_IdAndTypeDay(Long whId, TypeOffDay type, LocalDate start, LocalDate end);
-//    Collection <NotWorksDays> findAllByWorkHistoryId(Long id);
+    @Query(value = "select * from not_work_days " +
+            "where (end_date BETWEEN :start and :end) " +
+            "or (start_date BETWEEN :start and :end) " +
+            "or (start_date <:start and end_date >:end )" +
+            "and work_history_id = :whId", nativeQuery = true)
+    Collection<NotWorksDays> findAllByWorkHistoryIdAndStartAfterAndStartBefore(Long whId,
+                                                                               LocalDate start,
+                                                                               LocalDate end);
 }

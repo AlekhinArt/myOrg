@@ -44,7 +44,11 @@ public class Worker {
             joinColumns = {@JoinColumn(name = "worker_id")},
             inverseJoinColumns = {@JoinColumn(name = "work_history_id")})
     private List<WorkHistory> workHistory = new ArrayList<>();
-//    private List <ValuableObject> valuableObjects;
+    @OneToMany
+    @JoinTable(name = "worker_valuable_object",
+            joinColumns = {@JoinColumn(name = "worker_id")},
+            inverseJoinColumns = {@JoinColumn(name = "obj_id")})
+    private List <ValuableObject> valuableObjects;
 
 
 }
