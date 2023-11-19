@@ -1,33 +1,40 @@
 package ru.egar.myOrg.worker.service.impl;
 
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import ru.egar.myOrg.exception.DataConflictException;
 import ru.egar.myOrg.exception.NotFoundException;
 import ru.egar.myOrg.exception.ValidException;
+import ru.egar.myOrg.worker.mapper.EmployPositionMapper;
+import ru.egar.myOrg.worker.mapper.WorkerMapper;
 import ru.egar.myOrg.worker.model.WorkHistory;
+import ru.egar.myOrg.worker.model.Worker;
 import ru.egar.myOrg.worker.model.notWorksDays.NotWorksDays;
 import ru.egar.myOrg.worker.repository.NotWorksDaysRepository;
 import ru.egar.myOrg.worker.repository.WorkHistoryRepository;
+import ru.egar.myOrg.worker.service.EmployPositionService;
 import ru.egar.myOrg.worker.service.WorkHistoryService;
+import ru.egar.myOrg.worker.service.WorkerService;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Slf4j
 @Service
+@AllArgsConstructor
 public class WorkerHistoryService implements WorkHistoryService {
     private final WorkHistoryRepository workHistoryRepository;
     private final NotWorksDaysRepository notWorksDaysRepository;
+    private final WorkerService ws;
+    private final EmployPositionService emps;
 
-    public WorkerHistoryService(WorkHistoryRepository workHistoryRepository, NotWorksDaysRepository notWorksDaysRepository) {
-        this.workHistoryRepository = workHistoryRepository;
-        this.notWorksDaysRepository = notWorksDaysRepository;
-    }
 
     @Override
     public List<WorkHistory> getAll() {
@@ -113,4 +120,21 @@ public class WorkerHistoryService implements WorkHistoryService {
         return sumDays;
     }
 
+    @CacheEvict(value = "worker", allEntries = true)
+    @Override
+    public void createNewWorkHistory(Long workerId, LocalDate startWork, Long emplPosId) {
+        Worker w = ws.getById(workerId).map(WorkerMapper::toWorker)
+                .orElseThrow(() -> new NotFoundException("Работник не найден"));
+        w.getWorkHistory().add(WorkHistory.builder()
+                .workNow(true)
+                .startWork(startWork)
+                .worker(w)
+                .employPosition(emps.getAll().stream()
+                        .filter(pos -> Objects.equals(pos.getId(), emplPosId))
+                        .map(EmployPositionMapper::toEmployPosition)
+                        .findFirst().orElseThrow(() -> new NotFoundException("Позиция не найдена")))
+                .build());
+        ws.createWorker(w);
+
+    }
 }

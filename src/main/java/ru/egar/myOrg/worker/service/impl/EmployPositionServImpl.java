@@ -1,7 +1,6 @@
 package ru.egar.myOrg.worker.service.impl;
 
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import ru.egar.myOrg.worker.dto.EmployPositionDto;
@@ -9,7 +8,6 @@ import ru.egar.myOrg.worker.mapper.EmployPositionMapper;
 import ru.egar.myOrg.worker.repository.EmployPositionRepository;
 import ru.egar.myOrg.worker.service.EmployPositionService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;

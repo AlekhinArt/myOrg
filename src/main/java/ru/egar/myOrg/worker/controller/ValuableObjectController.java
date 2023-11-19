@@ -53,13 +53,14 @@ public class ValuableObjectController {
         model.addAttribute("types", TypeOfValue.values());
         return "valuableObject/allValuableObject";
     }
+
     @GetMapping("/{orgId}/search")
     public String searchBy(@PathVariable Long orgId, Model model,
                            @RequestParam String word,
                            @RequestParam String type) {
-        log.info("searchBy orgId {}, word {}, type {}", orgId,word,type);
+        log.info("searchBy orgId {}, word {}, type {}", orgId, word, type);
         model.addAttribute("orgId", orgId);
-        model.addAttribute("objs", vos.searchBy(orgId,word,type));
+        model.addAttribute("objs", vos.searchBy(orgId, word, type));
         model.addAttribute("types", TypeOfValue.values());
         return "valuableObject/allValuableObject";
     }

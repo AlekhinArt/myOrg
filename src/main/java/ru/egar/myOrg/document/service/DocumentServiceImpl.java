@@ -1,13 +1,12 @@
 package ru.egar.myOrg.document.service;
 
 
-
 import ru.egar.myOrg.document.model.BasePaperDocument;
 
 import java.util.List;
 import java.util.Optional;
 
-public class DocumentServiceImpl implements DocumentService{
+public class DocumentServiceImpl implements DocumentService {
 
     @Override
     public List<BasePaperDocument> getAll() {

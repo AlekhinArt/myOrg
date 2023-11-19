@@ -1,7 +1,6 @@
 package ru.egar.myOrg.worker.model.notWorksDays;
 
 import lombok.Getter;
-import lombok.ToString;
 
 @Getter
 public enum TypeOffDay {

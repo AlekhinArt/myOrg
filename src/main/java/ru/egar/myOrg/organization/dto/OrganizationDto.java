@@ -6,9 +6,6 @@ import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Data;
-import ru.egar.myOrg.worker.model.Worker;
-
-import java.util.List;
 
 @Builder
 @Data

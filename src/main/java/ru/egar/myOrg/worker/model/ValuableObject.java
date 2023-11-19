@@ -1,6 +1,6 @@
 package ru.egar.myOrg.worker.model;
 
-import jakarta.persistence.*;;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -8,6 +8,8 @@ import lombok.*;
 import ru.egar.myOrg.organization.model.Organization;
 
 import java.time.LocalDate;
+
+;
 
 
 @Setter

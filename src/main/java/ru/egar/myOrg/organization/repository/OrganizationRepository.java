@@ -7,13 +7,11 @@ import org.springframework.data.jpa.repository.Query;
 import ru.egar.myOrg.organization.model.Organization;
 
 
-
 public interface OrganizationRepository extends JpaRepository<Organization, Long> {
     @Modifying
     @Query("update Organization  o set  o.name=?1, o.inn =?2, o.ogrn = ?3, o.address = ?4, o.phoneNumber = ?5 " +
             "where o.id = ?6")
     Organization updateOrg(String name, String inn, String ogrn, String address, String phoneNumber, Long id);
-
 
 
 }

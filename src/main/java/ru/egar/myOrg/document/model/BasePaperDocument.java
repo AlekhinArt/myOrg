@@ -9,7 +9,7 @@ import jakarta.validation.constraints.Size;
 public abstract class BasePaperDocument {
     @Size(min = 4, max = 4)
     private String codeTypeDocument;
-    @Size (max = 30)
+    @Size(max = 30)
     @NotNull
     @NotBlank
     private String nameDocument;

@@ -5,7 +5,7 @@ import ru.egar.myOrg.organization.model.Organization;
 
 public class OrganizationMapper {
 
-    public static OrganizationDto toOrganizationDto (Organization organization){
+    public static OrganizationDto toOrganizationDto(Organization organization) {
         return OrganizationDto.builder()
                 .id(organization.getId())
                 .address(organization.getAddress())
@@ -16,7 +16,8 @@ public class OrganizationMapper {
                 .zip(organization.getZip())
                 .build();
     }
-    public static Organization toOrganization(OrganizationDto organizationDto){
+
+    public static Organization toOrganization(OrganizationDto organizationDto) {
         return Organization.builder()
                 .id(organizationDto.getId())
                 .address(organizationDto.getAddress())

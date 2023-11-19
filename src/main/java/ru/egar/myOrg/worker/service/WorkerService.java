@@ -7,7 +7,6 @@ import ru.egar.myOrg.worker.dto.WorkerShowDto;
 import ru.egar.myOrg.worker.model.Worker;
 
 import java.util.Collection;
-import java.util.List;
 
 public interface WorkerService extends BaseService<WorkerDto, Long> {
     WorkerDto create(WorkerCreateDto workerDto);
@@ -15,6 +14,8 @@ public interface WorkerService extends BaseService<WorkerDto, Long> {
     Collection<WorkerShowDto> showWorkers(Long orgId);
 
     Collection<WorkerShowDto> searchWorkers(Long orgId, String word, String position);
+
+    Worker createWorker(Worker worker);
 
 
 }

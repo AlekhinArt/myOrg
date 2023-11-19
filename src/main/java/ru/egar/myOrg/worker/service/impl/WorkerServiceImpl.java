@@ -72,8 +72,6 @@ public class WorkerServiceImpl implements WorkerService {
         final var workerDto = workerRepository.findById(aLong)
                 .map(WorkerMapper::toWorkerDto);
         return workerDto;
-
-
     }
 
     @Caching(evict = {
@@ -142,8 +140,14 @@ public class WorkerServiceImpl implements WorkerService {
 
     }
 
+    @Override
+    public Worker createWorker(Worker worker) {
 
-    public void howLongTime(){
+        return workerRepository.save(worker);
+    }
+
+
+    public void howLongTime() {
 //        Worker worker;
 //        worker.getWorkHistory();
     }

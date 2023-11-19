@@ -1,7 +1,6 @@
 package ru.egar.myOrg.worker.dto;
 
 import lombok.*;
-import ru.egar.myOrg.worker.model.EmployPosition;
 
 import java.time.LocalDate;
 
@@ -18,10 +17,6 @@ public class WorkerShowDto {
     private LocalDate birthday;
     private String phoneNumber;
     private String employPosition;
-
-
-
-
 
 
 }

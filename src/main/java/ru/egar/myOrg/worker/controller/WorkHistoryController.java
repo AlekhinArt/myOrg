@@ -1,26 +1,18 @@
 package ru.egar.myOrg.worker.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.annotation.Nullable;
-import jakarta.xml.bind.ValidationException;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.egar.myOrg.exception.NotFoundException;
-import ru.egar.myOrg.exception.ValidException;
 import ru.egar.myOrg.worker.model.WorkHistory;
 import ru.egar.myOrg.worker.model.notWorksDays.NotWorksDays;
-import ru.egar.myOrg.worker.model.notWorksDays.TypeOffDay;
 import ru.egar.myOrg.worker.service.EmployPositionService;
-import ru.egar.myOrg.worker.service.NotWorksDayService;
 import ru.egar.myOrg.worker.service.impl.WorkerHistoryService;
-import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Slf4j
 @Controller
@@ -29,7 +21,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class WorkHistoryController {
 
-//    private final NotWorksDayService nwds;
+    //    private final NotWorksDayService nwds;
     private final WorkerHistoryService whs;
     private final EmployPositionService emps;
 
@@ -134,8 +126,22 @@ public class WorkHistoryController {
         model.addAttribute("employPositions", emps.getAll());
         model.addAttribute("workerId", workerId);
         model.addAttribute("orgId", orgId);
+        model.addAttribute("currentDate", LocalDate.now());
 
         return "workHistory/newWorkHistory";
     }
 
+    @PostMapping("/{orgId}/{workerId}/create")
+    public String createWorkHistory(@PathVariable Long workerId,
+                                    @PathVariable Long orgId,
+                                    @RequestParam LocalDate startWork,
+                                    @RequestParam Long emplPosId,
+                                    Model model) {
+        log.info("createWorkHistory workerId {}, orgId {}, wh.start {}, emplPosId {}",
+                workerId, orgId, startWork, emplPosId);
+        whs.createNewWorkHistory(workerId, startWork, emplPosId);
+
+
+        return "redirect:/worker/" + orgId + "/get/" + workerId;
+    }
 }

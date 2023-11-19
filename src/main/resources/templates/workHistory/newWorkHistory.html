@@ -22,18 +22,35 @@
             <form th:method="POST"
                   th:action="@{'/wh/{orgId}/{workerId}/create'(orgId=${orgId}, workerId = ${workerId})}">
 
+                <div class="form-group">
+                    <input type="hidden" id="workNow" th:name="workNow" th:value="TRUE"/>
+                </div>
+                <div class="col-md-5">
+                    <label for="emplPosId" class="form-label">Выберите должность</label>
+                    <select type="text" class="form-control" th:name="emplPosId" id="emplPosId">
+                        <option th:each="pos : ${employPositions}" th:value="${pos.id}"
+                                th:text="${pos.position}"></option>
+                    </select>
+                </div>
+                <label for="startWork" class="form-label">Укажите дату принятия на должность</label>
+                <div class="input-group">
+                    <input type="date" class="form-control" id="startWork"
+                           th:name="startWork" placeholder="1770-12-17"
+                           th:min="${currentDate.minusYears(1)}" th:max="${currentDate.plusYears(1)}"
+                           required>
 
+                </div>
                 <hr>
-                <button type="submit" class="btn btn-primary btn-lg">Нажмите для продолжения</button>
+                <button type="submit" class="btn btn-primary btn-lg">Сохранить</button>
                 <hr>
             </form>
 
-
         </div>
-        <footer class="my-5 pt-5 text-body-secondary text-center text-small">
-            <p class="mb-1">&copy; 2023 AlekhinArt </p>
-        </footer>
     </div>
+</div>
+<footer class="my-5 pt-5 text-body-secondary text-center text-small">
+    <p class="mb-1">&copy; 2023 AlekhinArt </p>
+</footer>
 
 
 </body>

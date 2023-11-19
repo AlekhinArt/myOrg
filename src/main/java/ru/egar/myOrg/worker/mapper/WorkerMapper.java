@@ -16,6 +16,7 @@ public class WorkerMapper {
                 .birthday(workerDto.getBirthday())
                 .phoneNumber(workerDto.getPhoneNumber())
                 .workNow(workerDto.getWorkNow())
+                .workHistory(workerDto.getWorkHistory())
                 .build();
 
     }
@@ -36,7 +37,7 @@ public class WorkerMapper {
 
     }
 
-    public static WorkerShowDto toShowWorker(Worker worker){
+    public static WorkerShowDto toShowWorker(Worker worker) {
         return WorkerShowDto.builder()
                 .id(worker.getId())
                 .name(worker.getName())
