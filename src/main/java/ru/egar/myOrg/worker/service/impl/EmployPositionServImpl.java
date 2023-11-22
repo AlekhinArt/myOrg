@@ -5,6 +5,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import ru.egar.myOrg.worker.dto.EmployPositionDto;
 import ru.egar.myOrg.worker.mapper.EmployPositionMapper;
+import ru.egar.myOrg.worker.model.EmployPosition;
 import ru.egar.myOrg.worker.repository.EmployPositionRepository;
 import ru.egar.myOrg.worker.service.EmployPositionService;
 
@@ -48,7 +49,13 @@ public class EmployPositionServImpl implements EmployPositionService {
 
     @Override
     public EmployPositionDto updateById(Long aLong, EmployPositionDto employPositionDto) {
-        return null;
+        employPositionRepository.save(EmployPosition.builder()
+                .position(employPositionDto.getPosition())
+                .codType(employPositionDto.getCodType())
+                .id(employPositionDto.getId())
+                .jobDescription(employPositionDto.getJobDescription())
+                .build());
+        return employPositionDto;
     }
 
     @CacheEvict(cacheNames = "emsdto", allEntries = true)
