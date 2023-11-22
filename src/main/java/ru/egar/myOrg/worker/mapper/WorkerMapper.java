@@ -18,6 +18,11 @@ public class WorkerMapper {
                 .birthday(workerDto.getBirthday())
                 .phoneNumber(workerDto.getPhoneNumber())
                 .workNow(workerDto.getWorkNow())
+                .minorChildren(workerDto.getMinorChildren())
+                .gender(workerDto.getGender())
+                .familyStatus(workerDto.getFamilyStatus())
+                .organization(workerDto.getOrganization())
+                .delete(false)
                 .build();
 
     }

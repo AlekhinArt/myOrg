@@ -18,6 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Data
 public class WorkerDto {
     private Long id;
     private Boolean workNow;
@@ -26,12 +27,11 @@ public class WorkerDto {
     private String patronymic;
     private LocalDate birthday;
     private String phoneNumber;
+    private Long orgId;
     private Organization organization;
     private FamilyStatus familyStatus;
     private Boolean minorChildren;
     private Gender gender;
-
-    private List<WorkHistory> workHistory = new ArrayList<>();
     private List<ValuableObject> valuableObjects = new ArrayList<>();
 
 }

@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.egar.myOrg.worker.dto.WorkerCreateDto;
+import ru.egar.myOrg.worker.dto.WorkerDto;
+import ru.egar.myOrg.worker.model.Worker;
 import ru.egar.myOrg.worker.service.EmployPositionService;
 import ru.egar.myOrg.worker.service.WorkerService;
 
@@ -39,6 +41,27 @@ public class WorkerController {
                 workerDto.getStartWork(), workerDto.getOrgId());
         workerService.create(workerDto);
         return "redirect:/worker/org/" + workerDto.getOrgId();
+    }
+
+    @Operation(summary = "Обновление Данных работника",
+            description = "Добавляем работника")
+    @PostMapping("/{orgId}/upd")
+    public String updWorker(@ModelAttribute @Valid WorkerDto workerDto,
+                            @PathVariable Long orgId) {
+        log.info("Create worker: {}, {}, {}, {}, {}, {}, {}, {}, {}, {}",
+                workerDto.getName(),
+                workerDto.getSurname(),
+                workerDto.getPatronymic(),
+                workerDto.getBirthday(),
+                workerDto.getPhoneNumber(),
+                workerDto.getWorkNow(),
+                workerDto.getGender(),
+                workerDto.getFamilyStatus(),
+                workerDto.getMinorChildren(),
+                workerDto.getOrgId());
+
+        workerService.create(workerDto);
+        return "redirect:/worker/org/" + orgId;
     }
 
     @Operation(summary = "Удаление",

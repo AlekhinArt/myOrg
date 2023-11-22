@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.egar.myOrg.exception.DataConflictException;
 import ru.egar.myOrg.exception.NotFoundException;
 import ru.egar.myOrg.worker.service.EmployPositionService;
 import ru.egar.myOrg.worker.service.WorkHistoryService;
@@ -34,11 +33,27 @@ public class WorkerControllerWeb {
         return "workers/newWorker";
     }
 
+    @GetMapping("/{orgId}/edit/{id}")
+    public String updWorker(@PathVariable Long id, @PathVariable Long orgId, Model model) {
+        model.addAttribute("employPositions", empPosService.getPositionName());
+        model.addAttribute("orgId", orgId);
+        model.addAttribute("currentDate", LocalDate.now());
+        model.addAttribute("workerId", id);
+        model.addAttribute("worker", workerService.getById(id)
+                .orElseThrow(() -> new NotFoundException("Работник не найден")));
+
+        return "workers/updateWorker";
+
+    }
+
+
     // TODO: 07.11.2023 поставить отлов ошибки на более нижний уровень
     @GetMapping("/org/{orgId}")
     public String workersByOrg(@PathVariable Long orgId, Model model) {
         log.info("Get workers by ORG orgID {}", orgId);
         try {
+
+
             model.addAttribute("workers", workerService.showWorkers(orgId));
 
 
@@ -67,7 +82,6 @@ public class WorkerControllerWeb {
 
         return "workers/workMain";
     }
-
 
     @Operation(summary = "Получить работника",
             description = "Получаем всю информацию о работнике")

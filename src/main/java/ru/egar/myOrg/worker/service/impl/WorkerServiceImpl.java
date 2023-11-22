@@ -33,10 +33,13 @@ public class WorkerServiceImpl implements WorkerService {
     private final WorkHistoryService workHistoryService;
     private final OrganizationRepository orgRep;
 
-
+    @Caching(evict = {
+            @CacheEvict(cacheNames = "workers", allEntries = true),
+            @CacheEvict(cacheNames = "worker", allEntries = true)
+    })
     @Override
     public WorkerDto create(WorkerDto workerDto) {
-
+        workerDto.setOrganization(orgRep.findById(workerDto.getOrgId()).orElseThrow(() -> new NotFoundException("Организация не найдена")));
         return WorkerMapper.toWorkerDto(workerRepository.save(WorkerMapper.toWorker(workerDto)));
     }
 
@@ -114,7 +117,6 @@ public class WorkerServiceImpl implements WorkerService {
     @Cacheable(cacheNames = "workers")
     @Override
     public List<WorkerShowDto> showWorkers(Long id) {
-
         final List<WorkerShowDto> wsh = workerRepository.getWorkerByOrganization_Id(id)
                 .stream()
                 .map(WorkerMapper::toShowWorker)

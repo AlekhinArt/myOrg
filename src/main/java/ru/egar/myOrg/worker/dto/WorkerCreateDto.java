@@ -16,6 +16,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class WorkerCreateDto {
+    private Long id;
     @Size(min = 1, max = 40, message = "Должно быть не меньше одного и не более 30 символов")
     private String name;
     @Size(min = 1, max = 40, message = "Должно быть не меньше одного и не более 30 символов")

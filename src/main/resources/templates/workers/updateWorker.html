@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавляем работника</title>
+    <head th:insert="~{fragments/head :: head}"></head>
+</head>
+<body>
+<div th:insert="~{fragments/header :: header}"></div>
+<div th:insert="~{fragments/leftPanel :: leftPanel}"></div>
+
+<div class="container center">
+    <div class="text-center">
+        <p class="lead">Работа без работников не работается</p>
+    </div>
+    <div class="row">
+        <div class="col-md-7 col-lg-8">
+            <h4 class="mb-3">Чуть ниже введите данные</h4>
+            <form action="#" th:method="POST" th:object=" ${worker}"
+                  th:action="@{'/worker/{orgId}/upd'(orgId = ${orgId})}">
+
+
+                <div class=" form-group ">
+                    <input type="hidden" id="id" th:name="id" th:value="${workerId}"/>
+                    <input type="hidden" id="orgId" th:name="orgId" th:value="${orgId}"/>
+                    <input type="hidden" id="workNow" th:name="workNow" th:value="TRUE"/>
+
+                </div>
+
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label for="name" class="form-label">Имя</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="name" th:value="*{name}"
+                                   th:placeholder="*{name}"
+                                   th:name="name" maxlength="40" required>
+                            <div class="invalid-feedback">
+                                Пожалуйста введите имя работника.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="surname" class="form-label">Фамилия</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="surname"
+                                   th:name="surname" th:value="*{surname}" th:placeholder="*{surname}" maxlength="40"
+                                   required>
+                            <div class="invalid-feedback">
+                                Пожалуйста введите фамилию работника.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-7">
+                        <label for="patronymic" class="form-label">Отчество</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="patronymic"
+                                   th:name="patronymic" maxlength="40" th:value="*{patronymic}"
+                                   th:placeholder="*{patronymic}"
+                                   required>
+                            <div class="invalid-feedback">
+                                Пожалуйста введите отчество работника.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-5">
+                        <label for="birthday" class="form-label">Дата рождения</label>
+                        <div class="input-group">
+                            <input type="date" class="form-control" id="birthday"
+                                   th:name="birthday" th:value="*{birthday}" th:placeholder="*{birthday}"
+                                   th:min="${currentDate.minusYears(120)}" th:max="${currentDate.minusYears(16)}"
+                                   required>
+                            <div class="invalid-feedback">
+                                Пожалуйста введите дату рождения работника.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-5">
+                        <label for="phoneNumber" class="form-label">Контактный телефон</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="phoneNumber" th:value="*{phoneNumber}"
+                                   th:placeholder="*{phoneNumber}"
+                                   th:name="phoneNumber"
+                                   pattern="\+7\s?[\(]{0,1}9[0-9]{2}[\)]{0,1}\s?\d{3}[-]{0,1}\d{2}[-]{0,1}\d{2}"
+                                   required>
+                            <div class="invalid-feedback">
+                                Пожалуйста введите контактный телефон работника.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <label for="gender" class="form-label">Пол</label>
+                        <select type="text" class="form-control" th:name="gender" id="gender" required>
+                            <option th:value="*{gender}">Прежнее значение</option>
+                            <option th:value="MALE">Мужской</option>
+                            <option th:value="FEMALE">Женский</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <label for="family_status" class="form-label">Семейное положение</label>
+                        <select type="text" class="form-control" th:name="familyStatus" id="family_status" required>
+                            <option th:value="*{familyStatus}">Прежнее значение</option>
+                            <option th:value="SINGLE">Холост</option>
+                            <option th:value="MARRIED">В браке</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <label for="minor_children" class="form-label">Не совершеннолетние дети</label>
+                        <select type="text" class="form-control" th:name="minorChildren" id="minor_children" required>
+                            <option th:value="*{minorChildren}">Прежнее значение</option>
+                            <option th:value="TRUE">Есть</option>
+                            <option th:value="FALSE">Нет</option>
+                        </select>
+                    </div>
+                </div>
+
+                <hr>
+
+                <hr>
+
+                <button type="submit" class="btn btn-primary">Сохранить</button>
+
+            </form>
+
+            <hr>
+
+
+        </div>
+    </div>
+</div>
+</div>
+<footer class="my-5 pt-5 text-body-secondary text-center text-small">
+    <p class="mb-1">&copy; 2023 AlekhinArt </p>
+</footer>
+</div>
+
+</body>
+</html>
