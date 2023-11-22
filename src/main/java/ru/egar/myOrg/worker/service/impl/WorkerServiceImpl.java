@@ -6,6 +6,9 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
+import ru.egar.myOrg.document.model.Passport;
+import ru.egar.myOrg.document.service.DocumentService;
+import ru.egar.myOrg.document.service.TypeDocumentService;
 import ru.egar.myOrg.exception.NotFoundException;
 import ru.egar.myOrg.organization.repository.OrganizationRepository;
 import ru.egar.myOrg.worker.dto.WorkerCreateDto;
@@ -32,6 +35,8 @@ public class WorkerServiceImpl implements WorkerService {
     private final EmployPositionRepository emlpRepository;
     private final WorkHistoryService workHistoryService;
     private final OrganizationRepository orgRep;
+    private final DocumentService ds;
+    TypeDocumentService tds;
 
     @Caching(evict = {
             @CacheEvict(cacheNames = "workers", allEntries = true),
@@ -88,7 +93,7 @@ public class WorkerServiceImpl implements WorkerService {
             @CacheEvict(cacheNames = "worker", allEntries = true)
     })
     @Override
-    public WorkerDto create(WorkerCreateDto workerDto) {
+    public WorkerDto create(WorkerCreateDto workerDto, Passport passport) {
         Worker newWorker = workerRepository.save(Worker.builder()
                 .name(workerDto.getName())
                 .surname(workerDto.getSurname())
@@ -111,6 +116,7 @@ public class WorkerServiceImpl implements WorkerService {
                 .workNow(workerDto.getWorkNow())
                 .employPosition(emlpRepository.getByPosition(workerDto.getEmployPosition()))
                 .build());
+        savePassport(newWorker, passport);
         return WorkerMapper.toWorkerDto(newWorker);
     }
 
@@ -155,6 +161,13 @@ public class WorkerServiceImpl implements WorkerService {
         return workerRepository.save(worker);
     }
 
+    private void savePassport(Worker worker, Passport passport) {
+        passport.setWorker(worker);
+        passport.setActual(true);
+        passport.setTypeDocument(tds.getById(1L));
+        ds.save(passport);
+
+    }
 
     public void howLongTime() {
 //        Worker worker;

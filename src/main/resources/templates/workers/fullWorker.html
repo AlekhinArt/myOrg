@@ -20,9 +20,10 @@
         <p><b>Семейное положение : </b><span th:text="${worker.familyStatus.getStatus()}"></span></p>
         <p th:if="${worker.minorChildren}"><b>Наличие не совершеннолетних детей : </b><span>Нет</span></p>
         <p th:unless="${worker.minorChildren}"><b>Наличие не совершеннолетних детей : </b><span>Есть</span></p>
-        <p><b>Серия паспорта </b><span th:text="${worker.phoneNumber}"></span></p>
-        <p><b>Номер паспорта </b><span th:text="${worker.phoneNumber}"></span></p>
-        <p><b>Кем и когда выдан: </b><span th:text="${worker.phoneNumber}"></span></p>
+        <p><b>Серия паспорта </b><span th:text="${passport.series}"></span></p>
+        <p><b>Номер паспорта </b><span th:text="${passport.number}"></span></p>
+        <p><b>Кем выдан: </b><span th:text="${passport.whoIssued}"></span></p>
+        <p><b>Когда выдан: </b><span th:text="${passport.issued}"></span></p>
     </div>
     <h3><b>История</b></h3>
     <div class="table-responsive">

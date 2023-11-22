@@ -7,12 +7,10 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.egar.myOrg.document.model.Passport;
 import ru.egar.myOrg.worker.dto.WorkerCreateDto;
 import ru.egar.myOrg.worker.dto.WorkerDto;
-import ru.egar.myOrg.worker.model.Worker;
-import ru.egar.myOrg.worker.service.EmployPositionService;
 import ru.egar.myOrg.worker.service.WorkerService;
 
 
@@ -24,12 +22,12 @@ import ru.egar.myOrg.worker.service.WorkerService;
 public class WorkerController {
 
     private final WorkerService workerService;
-    private final EmployPositionService empPosService;
 
     @Operation(summary = "Добавление",
             description = "Добавляем работника")
     @PostMapping
-    public String create(@ModelAttribute @Valid WorkerCreateDto workerDto) {
+    public String create(@ModelAttribute @Valid WorkerCreateDto workerDto,
+                         @ModelAttribute @Valid Passport passport) {
         log.info("Create worker: {}, {}, {}, {}, {}, {}, {}, {}, {}",
                 workerDto.getName(),
                 workerDto.getSurname(),
@@ -39,7 +37,12 @@ public class WorkerController {
                 workerDto.getWorkNow(),
                 workerDto.getEmployPosition(),
                 workerDto.getStartWork(), workerDto.getOrgId());
-        workerService.create(workerDto);
+        log.info("Create passport: {}, {}, {}, {}",
+                passport.getSeries(),
+                passport.getNumber(),
+                passport.getIssued(),
+                passport.getWhoIssued());
+        workerService.create(workerDto, passport);
         return "redirect:/worker/org/" + workerDto.getOrgId();
     }
 
@@ -59,7 +62,6 @@ public class WorkerController {
                 workerDto.getFamilyStatus(),
                 workerDto.getMinorChildren(),
                 workerDto.getOrgId());
-
         workerService.create(workerDto);
         return "redirect:/worker/org/" + orgId;
     }

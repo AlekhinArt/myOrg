@@ -1,9 +1,18 @@
 package ru.egar.myOrg.document.service;
 
 import ru.egar.myOrg.base.BaseService;
+import ru.egar.myOrg.document.dto.PassportDto;
 import ru.egar.myOrg.document.model.BasePaperDocument;
+import ru.egar.myOrg.document.model.Graduate;
+import ru.egar.myOrg.document.model.Passport;
+import ru.egar.myOrg.worker.model.enumerated.Gender;
 
-public interface DocumentService extends BaseService<BasePaperDocument, Long> {
+public interface DocumentService {
 
 
+    void save(Passport passport);
+
+    void save(Graduate graduate);
+
+   PassportDto getPassportByWorkerId(Long workerId);
 }

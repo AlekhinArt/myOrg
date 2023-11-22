@@ -2,9 +2,7 @@ package ru.egar.myOrg.worker.mapper;
 
 import ru.egar.myOrg.worker.dto.WorkerDto;
 import ru.egar.myOrg.worker.dto.WorkerShowDto;
-import ru.egar.myOrg.worker.model.EmployPosition;
 import ru.egar.myOrg.worker.model.Worker;
-import ru.egar.myOrg.worker.service.WorkHistoryService;
 
 public class WorkerMapper {
 
