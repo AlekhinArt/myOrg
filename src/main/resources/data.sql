@@ -11,9 +11,9 @@ VALUES (1, 'Москва, Пионерская д.2', '1234567891', 'Рога и копыта', '12345678912
 ON CONFLICT (org_id)
     DO NOTHING;
 
-INSERT INTO worker (worker_id, birthday, delete, name, patronymic, phone_number, surname, work_now, org_id)
-VALUES ('1', '2007-11-02', FALSE, 'Иван', 'Васильевич', '+79998885544', 'Пупкин', TRUE, 1),
-       ('2', '2000-11-02', FALSE, 'Максим', 'Валерьевич', '+79990005544', 'Приколдесов', TRUE, 1)
+INSERT INTO worker (worker_id, birthday, delete, name, patronymic, phone_number, surname, work_now, org_id, family_status,minor_children,gender)
+VALUES ('1', '2007-11-02', FALSE, 'Иван', 'Васильевич', '+79998885544', 'Пупкин', TRUE, 1, 'SINGLE', 'true', 'MALE'),
+       ('2', '2000-11-02', FALSE, 'Максим', 'Валерьевич', '+79990005544', 'Приколдесов', TRUE, 1,'MARRIED', 'true', 'MALE')
 ON CONFLICT (worker_id)
     DO NOTHING;
 
