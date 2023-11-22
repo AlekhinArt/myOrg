@@ -1,18 +1,22 @@
 package ru.egar.myOrg.document.model;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import ru.egar.myOrg.worker.model.Worker;
 
 @MappedSuperclass
+//Базовый класс документов
 public abstract class BasePaperDocument {
-    @Size(min = 4, max = 4)
-    private String codeTypeDocument;
-    @Size(max = 30)
+    @ManyToOne
+    @JoinColumn(name = "type_dock_id")
+    private TypeDocument typeDocument;
     @NotNull
-    @NotBlank
-    private String nameDocument;
-
+    @OneToOne
+    private Worker worker;
+    @NotNull
+    private Boolean actual;
 
 }

@@ -86,7 +86,38 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-5">
+                            <label for="gender" class="form-label">Пол</label>
+                            <select type="text" class="form-control" th:name="gender" id="gender" required>
+                                <option value="">-- Тип--</option>
+                                <option th:value="MALE">Мужской</option>
+                                <option th:value="FEMALE">Женский</option>
+                            </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <label for="family_status" class="form-label">Семейное положение</label>
+                        <select type="text" class="form-control" th:name="familyStatus" id="family_status" required>
+                            <option value="">-- Тип--</option>
+                            <option th:value="SINGLE">Холост</option>
+                            <option th:value="MARRIED">В браке</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                <div class="col-md-5">
+                    <label for="minor_children" class="form-label">Не совершеннолетние дети</label>
+                    <select type="text" class="form-control" th:name="minorChildren" id="minor_children" required>
+                        <option value="">-- Тип--</option>
+                        <option th:value="TRUE">Есть</option>
+                        <option th:value="FALSE">Нет</option>
+                    </select>
+                </div>
+        </div>
                 <hr>
+
 
                 <div class="row">
                     <div class="col-sm-5">

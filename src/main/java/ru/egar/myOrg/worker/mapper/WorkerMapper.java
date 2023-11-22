@@ -2,7 +2,9 @@ package ru.egar.myOrg.worker.mapper;
 
 import ru.egar.myOrg.worker.dto.WorkerDto;
 import ru.egar.myOrg.worker.dto.WorkerShowDto;
+import ru.egar.myOrg.worker.model.EmployPosition;
 import ru.egar.myOrg.worker.model.Worker;
+import ru.egar.myOrg.worker.service.WorkHistoryService;
 
 public class WorkerMapper {
 
@@ -16,7 +18,6 @@ public class WorkerMapper {
                 .birthday(workerDto.getBirthday())
                 .phoneNumber(workerDto.getPhoneNumber())
                 .workNow(workerDto.getWorkNow())
-                .workHistory(workerDto.getWorkHistory())
                 .build();
 
     }
@@ -30,9 +31,10 @@ public class WorkerMapper {
                 .birthday(worker.getBirthday())
                 .phoneNumber(worker.getPhoneNumber())
                 .workNow(worker.getWorkNow())
-                .workHistory(worker.getWorkHistory())
                 .organization(worker.getOrganization())
-                .valuableObjects(worker.getValuableObjects())
+                .familyStatus(worker.getFamilyStatus())
+                .gender(worker.getGender())
+                .minorChildren(worker.getMinorChildren())
                 .build();
 
     }
@@ -46,9 +48,8 @@ public class WorkerMapper {
                 .birthday(worker.getBirthday())
                 .phoneNumber(worker.getPhoneNumber())
                 .workNow(worker.getWorkNow())
-                .employPosition(worker.getWorkHistory().get(0).getEmployPosition().getPosition())
+//                .employPosition(workHistoryService.getCurrentPosition(worker).get(0).getEmployPosition().getPosition())
                 .build();
-
 
     }
 

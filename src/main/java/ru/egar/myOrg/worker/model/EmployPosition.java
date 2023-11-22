@@ -10,7 +10,10 @@ import lombok.*;
 @Getter
 @Builder
 @Entity
-@Table(name = "employ_pos")
+@Table(name = "employ_pos", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "cod_type"),
+        @UniqueConstraint(columnNames = "empl_id")
+})
 public class EmployPosition {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,6 +22,8 @@ public class EmployPosition {
     private String position;
     @Column(name = "job_description")
     private String jobDescription;
+    @Column(name = "cod_type")
+    private String codType;
 
 
 }

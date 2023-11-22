@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import ru.egar.myOrg.organization.model.Organization;
+import ru.egar.myOrg.worker.model.enumerated.TypeOfValue;
 
 import java.time.LocalDate;
 

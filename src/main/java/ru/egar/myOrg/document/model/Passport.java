@@ -11,6 +11,7 @@ import java.time.LocalDate;
 @Entity
 @Builder
 @NoArgsConstructor
+//Паспорт
 public class Passport extends BasePaperDocument {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,7 +19,9 @@ public class Passport extends BasePaperDocument {
     private Long id;
     private String number;
     private String series;
+    //Когда выдан
     private LocalDate issued;
+    // Кем выдан
     private String whoIssued;
 
 }

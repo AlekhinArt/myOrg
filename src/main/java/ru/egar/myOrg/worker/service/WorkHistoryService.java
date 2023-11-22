@@ -1,24 +1,28 @@
 package ru.egar.myOrg.worker.service;
 
 
-import jakarta.xml.bind.ValidationException;
 import ru.egar.myOrg.base.BaseService;
+import ru.egar.myOrg.worker.dto.WorkerShowDto;
 import ru.egar.myOrg.worker.model.WorkHistory;
-import ru.egar.myOrg.worker.model.notWorksDays.NotWorksDays;
+import ru.egar.myOrg.worker.model.Worker;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.List;
 
 
 public interface WorkHistoryService extends BaseService<WorkHistory, Long> {
-    WorkHistory saveNotWorksDay(NotWorksDays nwd, Long id) throws ValidationException;
+
+
+    Collection<WorkHistory> getByWorkerId(Long workerId);
 
     void layOffWorker(WorkHistory wh, Long whId);
 
-    Collection<NotWorksDays> notWorkDayByTypeAndDate(String type, Long whId, String start, String end);
-
-    Long getAllNotWorkDays(Collection<NotWorksDays> nwds);
 
     void createNewWorkHistory(Long workerId, LocalDate startWork, Long emplPosId);
 
+
+    List<WorkHistory> getCurrentPosition(Worker worker);
 }
+
+

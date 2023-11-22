@@ -3,6 +3,7 @@ package ru.egar.myOrg.worker.model.notWorksDays;
 import jakarta.persistence.*;
 import lombok.*;
 import ru.egar.myOrg.worker.model.WorkHistory;
+import ru.egar.myOrg.worker.model.enumerated.TypeOffDay;
 
 import java.time.LocalDate;
 

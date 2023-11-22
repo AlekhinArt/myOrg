@@ -1,4 +1,4 @@
-package ru.egar.myOrg.worker.model;
+package ru.egar.myOrg.worker.model.enumerated;
 
 import lombok.Getter;
 

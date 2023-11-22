@@ -5,10 +5,10 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import ru.egar.myOrg.organization.model.Organization;
+import ru.egar.myOrg.worker.model.enumerated.FamilyStatus;
+import ru.egar.myOrg.worker.model.enumerated.Gender;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 @Setter
 @Getter
@@ -17,12 +17,14 @@ import java.util.List;
 @Builder
 @Entity
 @Table(name = "worker")
+//Работник
 public class Worker {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "worker_id")
     private Long id;
     @Column(name = "work_now")
+    //Работает сейчас
     private Boolean workNow;
     @Size(min = 1, max = 40, message = "Должно быть не меньше одного и не более 40 символов")
     private String name;
@@ -34,20 +36,20 @@ public class Worker {
     private LocalDate birthday;
     @Pattern(regexp = "[0-9]{11}", message = "Укажите телефонный номер в правильном формате")
     private String phoneNumber;
+    //пометка удаления
+    private Boolean delete;
+    //Семейный статус
+    @Enumerated(EnumType.STRING)
+    private FamilyStatus familyStatus;
+    //несовершеннолетние дети
+    private Boolean minorChildren;
+    //Пол
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
     @ManyToOne
     @JoinColumn(name = "org_id")
     private Organization organization;
-    @OneToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER)
-    @JoinTable(name = "worker_work_history",
-            joinColumns = {@JoinColumn(name = "worker_id")},
-            inverseJoinColumns = {@JoinColumn(name = "work_history_id")})
-    private List<WorkHistory> workHistory = new ArrayList<>();
-    @OneToMany
-    @JoinTable(name = "worker_valuable_object",
-            joinColumns = {@JoinColumn(name = "worker_id")},
-            inverseJoinColumns = {@JoinColumn(name = "obj_id")})
-    private List<ValuableObject> valuableObjects;
 
 
 }

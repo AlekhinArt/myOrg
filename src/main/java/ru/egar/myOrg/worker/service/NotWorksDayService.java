@@ -11,4 +11,10 @@ public interface NotWorksDayService extends BaseService<NotWorksDays, Long> {
     Collection<NotWorksDays> getAllByWhId(Long id);
 
     Collection<NotWorksDays> getAllByWhIdAndType();
+
+    NotWorksDays saveNotWorksDay(NotWorksDays nwd, Long whId);
+
+    Collection<NotWorksDays> notWorkDayByTypeAndDate(String type, Long whId, String start, String end);
+
+    Long getSumNotWorkDays(Collection<NotWorksDays> nwds);
 }

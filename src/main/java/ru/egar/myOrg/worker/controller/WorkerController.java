@@ -27,8 +27,8 @@ public class WorkerController {
     @Operation(summary = "Добавление",
             description = "Добавляем работника")
     @PostMapping
-    public String create(@ModelAttribute @Valid WorkerCreateDto workerDto, Model model) {
-        log.info("Create worker: {}, {}, {}, {}, {}, {}, {}, {}",
+    public String create(@ModelAttribute @Valid WorkerCreateDto workerDto) {
+        log.info("Create worker: {}, {}, {}, {}, {}, {}, {}, {}, {}",
                 workerDto.getName(),
                 workerDto.getSurname(),
                 workerDto.getPatronymic(),
@@ -36,7 +36,7 @@ public class WorkerController {
                 workerDto.getPhoneNumber(),
                 workerDto.getWorkNow(),
                 workerDto.getEmployPosition(),
-                workerDto.getStartWork());
+                workerDto.getStartWork(), workerDto.getOrgId());
         workerService.create(workerDto);
         return "redirect:/worker/org/" + workerDto.getOrgId();
     }

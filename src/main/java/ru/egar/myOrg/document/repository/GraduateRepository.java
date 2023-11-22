@@ -1,4 +1,8 @@
 package ru.egar.myOrg.document.repository;
 
-public interface GraduateRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import ru.egar.myOrg.document.model.Graduate;
+
+public interface GraduateRepository extends JpaRepository<Graduate, Long> {
+
 }

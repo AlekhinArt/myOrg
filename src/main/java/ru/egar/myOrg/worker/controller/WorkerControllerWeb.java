@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.egar.myOrg.exception.DataConflictException;
 import ru.egar.myOrg.exception.NotFoundException;
 import ru.egar.myOrg.worker.service.EmployPositionService;
+import ru.egar.myOrg.worker.service.WorkHistoryService;
 import ru.egar.myOrg.worker.service.WorkerService;
 
 import java.time.LocalDate;
@@ -22,6 +24,7 @@ import java.time.LocalDate;
 public class WorkerControllerWeb {
     private final WorkerService workerService;
     private final EmployPositionService empPosService;
+    private final WorkHistoryService whs;
 
     @GetMapping("/newWorker/{id}")
     public String newWorker(@PathVariable Long id, Model model) {
@@ -34,13 +37,15 @@ public class WorkerControllerWeb {
     // TODO: 07.11.2023 поставить отлов ошибки на более нижний уровень
     @GetMapping("/org/{orgId}")
     public String workersByOrg(@PathVariable Long orgId, Model model) {
-        log.info("Get workers by ORG orgID{}", orgId);
+        log.info("Get workers by ORG orgID {}", orgId);
         try {
             model.addAttribute("workers", workerService.showWorkers(orgId));
+
 
         } catch (Exception e) {
 
             model.addAttribute("currentDate", LocalDate.now());
+            log.info("Что-то пошло не так {} ", e.getMessage());
             return "workers/newWorker";
         } finally {
             model.addAttribute("orgId", orgId);
@@ -53,7 +58,7 @@ public class WorkerControllerWeb {
     @GetMapping("/org/{orgId}/search")
     public String searchByOrgAndParam(@PathVariable Long orgId, Model model,
                                       @RequestParam String word,
-                                      @RequestParam (defaultValue = " ") String workNow,
+                                      @RequestParam(defaultValue = " ") String workNow,
                                       @RequestParam String pos) {
         log.info("Search workers by ORG orgID{}, search {}, pos {}, workNow {}", orgId, word, pos, workNow);
         model.addAttribute("workers", workerService.searchWorkers(orgId, word, pos, workNow));
@@ -71,6 +76,7 @@ public class WorkerControllerWeb {
         log.info("get worker {}", id);
         model.addAttribute("worker", workerService.getById(id)
                 .orElseThrow(() -> new NotFoundException("Работник не найден")));
+        model.addAttribute("whs", whs.getByWorkerId(id));
         model.addAttribute("orgId", orgId);
         return "workers/fullWorker";
     }

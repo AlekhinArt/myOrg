@@ -1,7 +1,7 @@
 package ru.egar.myOrg.worker.dto;
 
 import lombok.*;
-import ru.egar.myOrg.worker.model.TypeOfValue;
+import ru.egar.myOrg.worker.model.enumerated.TypeOfValue;
 
 import java.time.LocalDate;
 

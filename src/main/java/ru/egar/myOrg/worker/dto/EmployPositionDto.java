@@ -11,4 +11,5 @@ public class EmployPositionDto {
     private Long id;
     private String position;
     private String jobDescription;
+    private String codType;
 }

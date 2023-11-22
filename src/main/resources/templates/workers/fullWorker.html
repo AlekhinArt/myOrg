@@ -17,6 +17,9 @@
         <p><b>Отчество: </b><span th:text="${worker.patronymic}"></span></p>
         <p><b>Дата рождения: </b><span th:text="${worker.birthday}"></span></p>
         <p><b>Телефон: </b><span th:text="${worker.phoneNumber}"></span></p>
+        <p><b>Семейное положение : </b><span th:text="${worker.familyStatus.getStatus()}"></span></p>
+        <p th:if="${worker.minorChildren}"><b>Наличие не совершеннолетних детей : </b><span>Нет</span></p>
+        <p th:unless="${worker.minorChildren}"><b>Наличие не совершеннолетних детей : </b><span>Есть</span></p>
         <p><b>Серия паспорта </b><span th:text="${worker.phoneNumber}"></span></p>
         <p><b>Номер паспорта </b><span th:text="${worker.phoneNumber}"></span></p>
         <p><b>Кем и когда выдан: </b><span th:text="${worker.phoneNumber}"></span></p>
@@ -39,7 +42,7 @@
 
             <tbody>
 
-            <tr th:each="history, iterationStatus : ${worker.getWorkHistory()}">
+            <tr th:each="history, iterationStatus : ${whs}">
 
                 <td th:text="${history.workNow}">workNow</td>
                 <td th:text="${history.employPosition.position}">employPosition</td>
@@ -78,7 +81,7 @@
                     <th style="width: 20%">Тип</th>
                     <th style="width: 20%">Название</th>
                     <th style="width: 20%">Стоимость</th>
-<!--                    <th style="width: 5%">Delete</th>-->
+                    <!--                    <th style="width: 5%">Delete</th>-->
                 </tr>
                 </thead>
 
@@ -91,7 +94,7 @@
                     <td th:text="${obj.name}">Название</td>
                     <td th:text="${obj.price}">цена</td>
 
-<!--                    <td><a th:href="@{'/obj/del/{id}'(id=${obj.id})}"> Удалить </a></td>-->
+                    <!--                    <td><a th:href="@{'/obj/del/{id}'(id=${obj.id})}"> Удалить </a></td>-->
                 </tr>
                 </tbody>
 
@@ -99,15 +102,15 @@
             </table>
 
 
-        <hr>
-        <form action="#" th:action="@{'/worker/org/' + ${orgId}}" method="GET">
-            <input class="btn btn-primary" type="submit" value="Назад"/>
-        </form>
+            <hr>
+            <form action="#" th:action="@{'/worker/org/' + ${orgId}}" method="GET">
+                <input class="btn btn-primary" type="submit" value="Назад"/>
+            </form>
+
+        </div>
+
 
     </div>
-
-
-</div>
 
 
 </body>

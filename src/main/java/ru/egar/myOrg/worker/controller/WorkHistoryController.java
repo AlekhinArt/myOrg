@@ -10,9 +10,11 @@ import ru.egar.myOrg.exception.NotFoundException;
 import ru.egar.myOrg.worker.model.WorkHistory;
 import ru.egar.myOrg.worker.model.notWorksDays.NotWorksDays;
 import ru.egar.myOrg.worker.service.EmployPositionService;
+import ru.egar.myOrg.worker.service.NotWorksDayService;
 import ru.egar.myOrg.worker.service.impl.WorkerHistoryService;
 
 import java.time.LocalDate;
+import java.util.Collection;
 
 @Slf4j
 @Controller
@@ -21,7 +23,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class WorkHistoryController {
 
-    //    private final NotWorksDayService nwds;
+    private final NotWorksDayService nwds;
     private final WorkerHistoryService whs;
     private final EmployPositionService emps;
 
@@ -31,11 +33,12 @@ public class WorkHistoryController {
         log.info("getAllNotWorkDayByWh historyId {} ", whId);
         WorkHistory workHistory = whs.getById(whId)
                 .orElseThrow(() -> new NotFoundException("История не найдена"));
-        model.addAttribute("ndws", workHistory.getNotWorksDays());
+        Collection<NotWorksDays> notWorksDays = nwds.getAllByWhId(whId);
+        model.addAttribute("ndws", notWorksDays);
         model.addAttribute("whId", whId);
         model.addAttribute("workerId", workHistory.getWorker().getId());
         model.addAttribute("orgId", orgId);
-        model.addAttribute("sum", whs.getAllNotWorkDays(workHistory.getNotWorksDays()));
+        model.addAttribute("sum", nwds.getSumNotWorkDays(notWorksDays));
         model.addAttribute("dateNow", LocalDate.now());
 
 
@@ -49,11 +52,11 @@ public class WorkHistoryController {
         log.info("getNotWorkDaysByType historyId {}, type {}, start {} , end {}", whId, typeOffDay, start, end);
         WorkHistory workHistory = whs.getById(whId)
                 .orElseThrow(() -> new NotFoundException("История не найдена"));
-        model.addAttribute("ndws", whs.notWorkDayByTypeAndDate(typeOffDay, whId, start, end));
+        model.addAttribute("ndws", nwds.notWorkDayByTypeAndDate(typeOffDay, whId, start, end));
         model.addAttribute("whId", whId);
         model.addAttribute("workerId", workHistory.getWorker().getId());
         model.addAttribute("orgId", orgId);
-        model.addAttribute("sum", whs.getAllNotWorkDays(whs.notWorkDayByTypeAndDate(typeOffDay, whId, start, end)));
+        model.addAttribute("sum", nwds.getSumNotWorkDays(nwds.notWorkDayByTypeAndDate(typeOffDay, whId, start, end)));
         model.addAttribute("dateNow", LocalDate.now());
 
         return "notWorksDays/notWorksDays";
@@ -78,7 +81,7 @@ public class WorkHistoryController {
     public String saveNotWorkDay(@ModelAttribute NotWorksDays nwd, @PathVariable Long whId,
                                  @PathVariable Long orgId, Model model) {
         log.info("Добавили не рабочий день {}, {}, {}, {},{}", nwd.getNwdId(), nwd.getStart(), nwd.getEnd(), nwd.getTypeDay(), nwd.getNote());
-        whs.saveNotWorksDay(nwd, whId);
+        nwds.saveNotWorksDay(nwd, whId);
 
 
         return "redirect:/wh/" + orgId + "/" + whId;
@@ -89,8 +92,8 @@ public class WorkHistoryController {
                                    @PathVariable Long whId,
                                    @PathVariable Long orgId) {
         log.info("delete not work day id {}", id);
-//        nwds.deleteById(id);
-        return "redirect:/" + orgId + "/" + whId;
+        nwds.deleteById(id);
+        return "redirect:/wh/" + orgId + "/" + whId;
 
     }
 
