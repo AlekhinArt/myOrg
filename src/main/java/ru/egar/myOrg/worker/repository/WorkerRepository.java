@@ -26,14 +26,14 @@ public interface WorkerRepository extends JpaRepository<Worker, Long> {
             "left join work_history wh ON w.id =wh.worker_id " +
             "left join employ_pos ep on wh.empl_id  = ep.id " +
             "where (w.delete =false " +
-            "and wh.work_now = :workNow )" +
-            "and (w.org_id = :orgId  " +
-            "or ep.position ilike %:word% " +
+            "and wh.work_now = :workNow " +
+            "and w.org_id = :orgId )  " +
+            "and ( ep.position ilike %:word% " +
             "or w.gender ilike  %:word% " +
             "or w.name ilike %:word% " +
             "or w.surname  ilike %:word% " +
             "or w.patronymic ilike %:word% " +
             "or w.phone_number like %:word%) "
             , nativeQuery = true)
-    Collection<Worker> searchWorkerByParam(@Param("orgId") long id, @Param("word") String word,  @Param("workNow") Boolean workNow);
+    Collection<Worker> searchWorkerByParam(@Param("orgId") long id, @Param("word") String word, @Param("workNow") Boolean workNow);
 }
