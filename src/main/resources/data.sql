@@ -36,4 +36,4 @@ ON CONFLICT (type_dock_id)
 
 insert into passport (passport_id, actual, issued, number, series, who_issued, type_dock_id, worker_worker_id)
 VALUES (1, true,'2023-10-15', '5615', '123456', 'Best police department from south BUTOVO', 1,1),
- (2, true,'2023-10-15', '5614', '123457', 'Best police department from north BUTOVO', 1,1)
+ (2, true,'2023-10-15', '5614', '123457', 'Best police department from north BUTOVO', 1,2)

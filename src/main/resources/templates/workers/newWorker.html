@@ -147,7 +147,8 @@
                         <div class="input-group">
                             <input type="date" class="form-control" id="issued"
                                    th:name="issued" placeholder="2010-10-10"
-                                   th:min="${currentDate}" th:max="${currentDate}" required>
+                                   th:min="${currentDate.minusYears(100)}" th:max="${currentDate.plusYears(100)}"
+                                   required>
                         </div>
                     </div>
                 </div>
