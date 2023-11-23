@@ -164,7 +164,7 @@ public class WorkerServiceImpl implements WorkerService {
     private void savePassport(Worker worker, Passport passport) {
         passport.setWorker(worker);
         passport.setActual(true);
-        passport.setTypeDocument(tds.getById(1L));
+        passport.setTypeDocument("001");
         ds.save(passport);
 
     }

@@ -140,7 +140,17 @@
                     </div>
                 </div>
                 <hr>
-                <h4 class="mb-3">Добавьте паспортные данные</h4>
+                <h4 class="mb-3">Добавьте документ удостоверяющий личность</h4>
+                <div class="row">
+                    <div class="col-md-5">
+                            <label for="typeDocument" class="form-label">Тип документа</label>
+                            <select type="text" class="form-control" th:name="typeDocument" id="typeDocument" required>
+                                <option th:each="type : ${docktype}" th:value="${type.codeTypeDocument}" th:text="${type.nameDocument}" ></option>
+                            </select>
+                    </div>
+                </div>
+                <hr>
+
                 <div class="row">
                     <div class="col-sm-5">
                         <label for="issued" class="form-label">Дата выдачи паспорта</label>

@@ -37,11 +37,12 @@ public class WorkerController {
                 workerDto.getWorkNow(),
                 workerDto.getEmployPosition(),
                 workerDto.getStartWork(), workerDto.getOrgId());
-        log.info("Create passport: {}, {}, {}, {}",
+        log.info("Create passport: {}, {}, {}, {}, {}",
                 passport.getSeries(),
                 passport.getNumber(),
                 passport.getIssued(),
-                passport.getWhoIssued());
+                passport.getWhoIssued(),
+                passport.getTypeDocument());
         workerService.create(workerDto, passport);
         return "redirect:/worker/org/" + workerDto.getOrgId();
     }

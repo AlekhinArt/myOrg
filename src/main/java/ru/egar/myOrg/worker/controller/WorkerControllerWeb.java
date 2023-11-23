@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.egar.myOrg.document.service.DocumentService;
+import ru.egar.myOrg.document.service.TypeDocumentService;
 import ru.egar.myOrg.exception.NotFoundException;
 import ru.egar.myOrg.worker.service.EmployPositionService;
 import ru.egar.myOrg.worker.service.WorkHistoryService;
@@ -26,12 +27,14 @@ public class WorkerControllerWeb {
     private final EmployPositionService empPosService;
     private final WorkHistoryService whs;
     private final DocumentService ds;
+    private final TypeDocumentService tds;
 
     @GetMapping("/newWorker/{id}")
     public String newWorker(@PathVariable Long id, Model model) {
         model.addAttribute("employPositions", empPosService.getPositionName());
         model.addAttribute("orgId", id);
         model.addAttribute("currentDate", LocalDate.now());
+        model.addAttribute("docktype", tds.getAllByIdentity(true));
         return "workers/newWorker";
     }
 
@@ -94,7 +97,7 @@ public class WorkerControllerWeb {
                 .orElseThrow(() -> new NotFoundException("Работник не найден")));
         model.addAttribute("whs", whs.getByWorkerId(workerId));
         model.addAttribute("orgId", orgId);
-        model.addAttribute("passport", ds.getPassportByWorkerId(workerId) );
+        model.addAttribute("passport", ds.findByWorkerIdAndActualTrue(workerId));
         return "workers/fullWorker";
     }
 

@@ -12,11 +12,10 @@ import ru.egar.myOrg.worker.model.Worker;
 @MappedSuperclass
 //Базовый класс документов
 public abstract class BasePaperDocument {
-    @ManyToOne
-    @JoinColumn(name = "type_dock_id")
-    private TypeDocument typeDocument;
     @NotNull
-    @OneToOne
+    private String typeDocument;
+    @NotNull
+    @ManyToOne
     private Worker worker;
     @NotNull
     private Boolean actual;

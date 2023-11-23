@@ -11,6 +11,7 @@ import ru.egar.myOrg.document.repository.GraduateRepository;
 import ru.egar.myOrg.document.repository.PassportRepository;
 import ru.egar.myOrg.exception.DataConflictException;
 
+
 @Service
 @AllArgsConstructor
 public class DocumentServiceImpl implements DocumentService {
@@ -35,12 +36,18 @@ public class DocumentServiceImpl implements DocumentService {
             throw new DataConflictException("Данные Диплома не сохранены не сохранены");
 
         }
-
-
     }
 
     @Override
-    public PassportDto getPassportByWorkerId(Long workerId) {
-        return PassportMapper.toPassportDto(pr.findByWorkerId(workerId));
+    public PassportDto findByWorkerIdAndActualTrue(Long workerId) {
+        return PassportMapper.toPassportDto(pr.findByWorkerIdAndActualTrue(workerId));
     }
+
+    public void updPas(PassportDto passportDto, String whatDo){
+
+
+
+    }
+
+
 }

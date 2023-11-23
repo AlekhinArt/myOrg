@@ -6,6 +6,8 @@ import ru.egar.myOrg.document.model.TypeDocument;
 import ru.egar.myOrg.document.repository.TypeDocumentRepository;
 import ru.egar.myOrg.exception.NotFoundException;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class TypeDocumentServiceImpl implements TypeDocumentService {
@@ -14,5 +16,9 @@ public class TypeDocumentServiceImpl implements TypeDocumentService {
     @Override
     public TypeDocument getById(Long id) {
         return tdr.findById(id).orElseThrow(() -> new NotFoundException("Документ не найден"));
+    }
+    @Override
+    public List<TypeDocument> getAllByIdentity(Boolean identity){
+    return tdr.findAllByIdentity(identity);
     }
 }

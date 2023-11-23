@@ -30,4 +30,8 @@ public class TypeDocument {
     private String nameDocument;
     @NotNull
     private Boolean actual;
+    @NotNull
+    //удостоверяющий личность
+    private Boolean identity;
+
 }

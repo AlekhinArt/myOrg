@@ -28,12 +28,12 @@ insert into work_history (work_history_id, end_work, start_work, work_now, empl_
 VALUES (3, '2023-10-15', '2022-01-15', false, 3, 1)
 ON CONFLICT (work_history_id)
     DO NOTHING;
-insert into type_document (type_dock_id, actual, code_type_document, name_document)
-VALUES (1, true, '001', 'Паспорт'),
-       (2, true, '002', 'Диплом о высшем образовании')
+insert into type_document (type_dock_id, actual, code_type_document, name_document, identity)
+VALUES (1, true, '001', 'Паспорт',true),
+       (2, true, '002', 'Диплом о высшем образовании', false)
 ON CONFLICT (type_dock_id)
     DO NOTHING;
 
-insert into passport (passport_id, actual, issued, number, series, who_issued, type_dock_id, worker_worker_id)
-VALUES (1, true,'2023-10-15', '5615', '123456', 'Best police department from south BUTOVO', 1,1),
- (2, true,'2023-10-15', '5614', '123457', 'Best police department from north BUTOVO', 1,2)
+insert into passport (passport_id, actual, issued, number, series, who_issued, type_document, worker_worker_id)
+VALUES (1, true,'2023-10-15', '5615', '123456', 'Best police department from south BUTOVO', '001',1),
+ (2, true,'2023-10-15', '5614', '123457', 'Best police department from north BUTOVO', '001',2)

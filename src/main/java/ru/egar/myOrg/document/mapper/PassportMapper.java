@@ -8,6 +8,7 @@ public class PassportMapper {
     public static PassportDto toPassportDto(Passport passport) {
 
         return PassportDto.builder()
+                .id(passport.getId())
                 .series(passport.getSeries())
                 .number(passport.getSeries())
                 .issued(passport.getIssued())

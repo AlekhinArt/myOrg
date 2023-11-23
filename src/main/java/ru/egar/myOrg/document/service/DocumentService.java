@@ -14,5 +14,5 @@ public interface DocumentService {
 
     void save(Graduate graduate);
 
-   PassportDto getPassportByWorkerId(Long workerId);
+   PassportDto findByWorkerIdAndActualTrue(Long workerId);
 }

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!--    <meta charset="UTF-8">-->
+    <title>New org</title>
+    <head th:insert="~{fragments/head :: head}"></head>
+</head>
+<body>
+<div th:insert="~{fragments/header :: header}"></div>
+<div th:insert="~{fragments/leftPanel :: leftPanel}"></div>
+
+
+<div class="container">
+
+    <div class="py-5 text-center  ">
+        <h4 class="mb-3">Изменение паспортных данных </h4>
+    </div>
+
+    <form action="#" th:method="POST" th:action="@{/worker}">
+
+        <div class="row">
+            <div class="col-sm-5">
+                <label for="issued" class="form-label">Дата выдачи паспорта</label>
+                <div class="input-group">
+                    <input type="date" class="form-control" id="issued"
+                           th:value="${oldPassport.issued}" th:placeholder="${oldPassport.issued}"
+                           th:name="issued"
+                           th:min="${currentDate.minusYears(100)}" th:max="${currentDate.plusYears(100)}"
+                           required>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-5">
+                <label for="series" class="form-label">Серия паспорта</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="series"
+                           th:value="${oldPassport.series}" th:placeholder="${oldPassport.series}"
+                           th:name="series"
+                           pattern="[0-9]{4}"
+                           required>
+                </div>
+            </div>
+            <div class="col-sm-5">
+                <label for="series" class="form-label">Номер паспорта</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="number"
+                           th:value="${oldPassport.number}" th:placeholder="${oldPassport.number}"
+                           th:name="number"
+                           pattern="[0-9]{6}"
+                           required>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-5">
+                <label for="whoIssued" class="form-label">Кем выдан</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="whoIssued"
+                           th:value="${oldPassport.whoIssued}" th:placeholder="${oldPassport.whoIssued}"
+                           th:name="whoIssued"
+                           required>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-5">
+                <label for="whatDo" class="form-label">Заменить или обновить</label>
+                <select type="text" class="form-control" th:name="whatDo" id="whatDo" required>
+                    <option value="">-- выберите--</option>
+                    <option th:value="true">Обновить паспорт</option>
+                    <option th:value="false">Заменить паспорт</option>
+                </select>
+            </div>
+        </div>
+
+        <hr>
+        <button type="submit" class="btn btn-primary btn-lg">Нажмите для продолжения</button>
+        <hr>
+    </form>
+
+</div>
+</div>
+</div>
+<footer class="my-5 pt-5 text-body-secondary text-center text-small">
+    <p class="mb-1">&copy; 2023 AlekhinArt </p>
+</footer>
+</div>
+
+
+</body>
+</html>
