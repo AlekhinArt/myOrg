@@ -130,7 +130,7 @@ public class WorkHistoryController {
                                @PathVariable Long orgId) {
 
         whs.layOffWorker(workHistory, whId);
-        return "redirect:/worker/" + workerId + "/get/" + whId;
+        return "redirect:/worker/" + orgId + "/get/" + workerId;
     }
 
     @GetMapping("/{orgId}/{workerId}/create/")

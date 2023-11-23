@@ -64,8 +64,9 @@ public class WorkerHistoryService implements WorkHistoryService {
         WorkHistory whOld = workHistoryRepository.findById(whId).orElseThrow(() -> new NotFoundException("История не найдена"));
         whOld.setEndWork(wh.getEndWork());
         whOld.setWorkNow(false);
+        log.info("worker id {} ", whOld.getWorker().getId());
         workHistoryRepository.save(whOld);
-        changeWorkerStatus(whOld.getId());
+        changeWorkerStatus(whOld.getWorker().getId());
     }
 
 

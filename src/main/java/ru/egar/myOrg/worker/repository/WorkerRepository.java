@@ -13,14 +13,6 @@ public interface WorkerRepository extends JpaRepository<Worker, Long> {
     @Query
     Collection<Worker> getWorkerByOrganization_Id(Long Id);
 
-    @Query(value = "select * " +
-            "from Worker w " +
-            "where (w.name ilike %:word% or w.phone_number ilike %:word% " +
-            "or w.patronymic ilike %:word% " +
-            "or w.surname ilike %:word%) and w.org_id = :orgId and w.delete = FALSE", nativeQuery = true)
-    Collection<Worker> searchWorkerByOrgAndParam(@Param("orgId") long id, @Param("word") String word);
-
-
     @Query(value = "select w.* " +
             "from worker w " +
             "left join work_history wh ON w.id =wh.worker_id " +
