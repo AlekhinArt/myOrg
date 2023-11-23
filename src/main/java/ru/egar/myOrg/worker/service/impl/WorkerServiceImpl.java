@@ -72,7 +72,6 @@ public class WorkerServiceImpl implements WorkerService {
     @Cacheable(cacheNames = "worker")
     @Override
     public Optional<WorkerDto> getById(Long aLong) {
-
         final var workerDto = workerRepository.findById(aLong)
                 .map(WorkerMapper::toWorkerDto);
         return workerDto;

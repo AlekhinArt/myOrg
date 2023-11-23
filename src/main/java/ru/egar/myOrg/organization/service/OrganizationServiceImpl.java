@@ -6,6 +6,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import ru.egar.myOrg.organization.dto.OrganizationDto;
 import ru.egar.myOrg.organization.mapper.OrganizationMapper;
+import ru.egar.myOrg.organization.model.Organization;
 import ru.egar.myOrg.organization.repository.OrganizationRepository;
 import ru.egar.myOrg.worker.model.Worker;
 
@@ -46,20 +47,14 @@ public class OrganizationServiceImpl implements OrganizationService {
     @CacheEvict(cacheNames = "organizathion", allEntries = true)
     @Override
     public OrganizationDto updateById(Long aLong, OrganizationDto organization) {
-        return OrganizationMapper.toOrganizationDto(organizationRepository.updateOrg(organization.getName(), organization.getInn(),
-                organization.getOgrn(), organization.getAddress(),
-                organization.getPhoneNumber(), aLong));
+        organization.setId(aLong);
+        return OrganizationMapper.toOrganizationDto(organizationRepository.save(OrganizationMapper.toOrganization(organization)));
     }
 
     @CacheEvict(cacheNames = "organizathion", allEntries = true)
     @Override
     public void deleteById(Long aLong) {
         organizationRepository.deleteById(aLong);
-    }
-
-    @Override
-    public List<Worker> getWorkers(Long id) {
-        return null;
     }
 
 

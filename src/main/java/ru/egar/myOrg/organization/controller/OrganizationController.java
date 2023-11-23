@@ -57,16 +57,6 @@ public class OrganizationController {
 
     }
 
-    @Operation(summary = "Получение работников",
-            description = "Получение работников организации по id")
-    @GetMapping("/organization/workers/{id}")
-    public String getWorkers(@PathVariable Long id, Model model) {
-        log.info("getWorkers organization with id {}", id);
-        model.addAttribute("workers", organizationService.getWorkers(id));
-        model.addAttribute("org", id);
-        return "workers/workMain";
-    }
-
     @GetMapping("/organization/upd/{id}")
     public String updateOrg(@PathVariable Long id, Model model) {
         model.addAttribute("organization", organizationService.getById(id)
