@@ -25,6 +25,13 @@
         <p><b>Кем выдан: </b><span th:text="${passport.whoIssued}"></span></p>
         <p><b>Когда выдан: </b><span th:text="${passport.issued}"></span></p>
     </div>
+    <form action="#" th:method="GET"
+          th:action="@{'/doc/{orgId}/{workerId}'(orgId = ${orgId}, workerId = ${workerId})}">
+
+    <button type="submit" class="btn ">Изменить паспортные данные</button>
+    <hr>
+    </form>
+
     <h3><b>История</b></h3>
     <div class="table-responsive">
         <table class="table table-striped">

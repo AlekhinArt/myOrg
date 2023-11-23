@@ -13,6 +13,7 @@ public class PassportMapper {
                 .number(passport.getSeries())
                 .issued(passport.getIssued())
                 .whoIssued(passport.getWhoIssued())
+                .codeType(passport.getTypeDocument())
                 .build();
     }
 }

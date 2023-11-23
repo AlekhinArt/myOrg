@@ -5,15 +5,16 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import ru.egar.myOrg.worker.service.WorkerService;
 
 import static org.junit.jupiter.api.Assertions.*;
-@RequiredArgsConstructor
+
 @SpringBootTest
 class WorkerServiceImplTest {
-
-private final WorkerService workerService;
+    @Autowired
+    private WorkerService workerService;
 
     @BeforeEach
     void setUp() {
@@ -26,12 +27,13 @@ private final WorkerService workerService;
 
     @Test
     void create() {
-        Assertions.assertEquals(1,2);
+
 
     }
 
     @Test
     void deleteById() {
+
     }
 
     @Test

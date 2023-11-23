@@ -15,4 +15,7 @@ public interface DocumentService {
     void save(Graduate graduate);
 
    PassportDto findByWorkerIdAndActualTrue(Long workerId);
+
+    //true - обновляем false - меняем
+    void updPas(PassportDto passportDto, String whatDo);
 }

@@ -13,4 +13,5 @@ public class PassportDto {
     private String series;
     private LocalDate issued;
     private String whoIssued;
+    private String codeType;
 }

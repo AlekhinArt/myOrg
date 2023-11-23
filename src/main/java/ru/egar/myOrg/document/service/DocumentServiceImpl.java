@@ -10,6 +10,7 @@ import ru.egar.myOrg.document.model.Passport;
 import ru.egar.myOrg.document.repository.GraduateRepository;
 import ru.egar.myOrg.document.repository.PassportRepository;
 import ru.egar.myOrg.exception.DataConflictException;
+import ru.egar.myOrg.exception.NotFoundException;
 
 
 @Service
@@ -43,10 +44,29 @@ public class DocumentServiceImpl implements DocumentService {
         return PassportMapper.toPassportDto(pr.findByWorkerIdAndActualTrue(workerId));
     }
 
-    public void updPas(PassportDto passportDto, String whatDo){
-
-
-
+    //true - обновляем false - меняем
+    @Override
+    public void updPas(PassportDto passportDto, String whatDo) {
+        Passport oldPas = pr.findById(passportDto.getId()).orElseThrow(() -> new NotFoundException("Паспорт не найден"));
+        if (Boolean.valueOf(whatDo)) {
+            oldPas.setIssued(passportDto.getIssued());
+            oldPas.setWhoIssued(passportDto.getWhoIssued());
+            oldPas.setSeries(passportDto.getSeries());
+            oldPas.setNumber(passportDto.getNumber());
+            pr.save(oldPas);
+        } else {
+            oldPas.setActual(false);
+            pr.save(oldPas);
+            Passport newPas = new Passport();
+            newPas.setWorker(oldPas.getWorker());
+            newPas.setActual(true);
+            newPas.setIssued(passportDto.getIssued());
+            newPas.setWhoIssued(passportDto.getWhoIssued());
+            newPas.setSeries(passportDto.getSeries());
+            newPas.setNumber(passportDto.getNumber());
+            newPas.setTypeDocument(passportDto.getCodeType());
+            pr.save(newPas);
+        }
     }
 
 

@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.egar.myOrg.document.dto.PassportDto;
 import ru.egar.myOrg.document.service.DocumentService;
 
+import java.time.LocalDate;
+
 @Slf4j
 @Controller
 @RequestMapping("/doc")
@@ -17,13 +19,14 @@ import ru.egar.myOrg.document.service.DocumentService;
 public class DocumentController {
     private final DocumentService ds;
 
-    @GetMapping("/{orgId}/{workerId}/{docTypeId}")
+    @GetMapping("/{orgId}/{workerId}")
     private String updPassportMVC(@PathVariable Long workerId,
                                   @PathVariable Long orgId,
-                                  @PathVariable Long docTypeId, Model model) {
+                                  Model model) {
         model.addAttribute("oldPassport", ds.findByWorkerIdAndActualTrue(workerId));
         model.addAttribute("workerId", workerId);
         model.addAttribute("orgId", orgId);
+        model.addAttribute("currentDate", LocalDate.now());
         return "documents/updDocument";
     }
 
@@ -33,11 +36,10 @@ public class DocumentController {
                                @ModelAttribute PassportDto passport,
                                @RequestParam String whatDo,
                                Model model) {
-        if (Boolean.valueOf(whatDo)){
-
-        }else {
-
-        }
+        log.info("PassportDto {}, {},{}, {}, {},{},{}", passport.getId(),
+                passport.getIssued(), passport.getWhoIssued(), passport.getNumber(), passport.getSeries(), passport.getCodeType(),
+                whatDo);
+        ds.updPas(passport, whatDo);
 
         return "redirect:/worker/" + orgId + "/get/" + workerId;
     }

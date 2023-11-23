@@ -17,8 +17,14 @@
         <h4 class="mb-3">Изменение паспортных данных </h4>
     </div>
 
-    <form action="#" th:method="POST" th:action="@{/worker}">
+    <form action="#" th:method="POST"
+          th:action="@{'/doc/{orgId}/{workerId}'(orgId = ${orgId}, workerId = ${workerId})}">
 
+        <div class=" form-group ">
+            <input type="hidden" id="id" th:name="id" th:value="${oldPassport.id}"/>
+            <input type="hidden" th:name="codeType" th:value="${oldPassport.codeType}"/>
+
+        </div>
         <div class="row">
             <div class="col-sm-5">
                 <label for="issued" class="form-label">Дата выдачи паспорта</label>
