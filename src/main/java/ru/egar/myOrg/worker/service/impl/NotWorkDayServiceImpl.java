@@ -11,6 +11,7 @@ import ru.egar.myOrg.worker.repository.NotWorksDaysRepository;
 import ru.egar.myOrg.worker.service.NotWorksDayService;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.List;
@@ -53,16 +54,13 @@ public class NotWorkDayServiceImpl implements NotWorksDayService {
         return nwdRep.findAllByWorkHistoryId(id);
     }
 
-    @Override
-    public Collection<NotWorksDays> getAllByWhIdAndType() {
-        return null;
-    }
 
     @Override
     public NotWorksDays saveNotWorksDay(NotWorksDays nwd, Long whId) {
         if (nwd.getEnd().isBefore(nwd.getStart()) || nwd.getStart().isAfter(nwd.getEnd())) {
             throw new ValidException("Не корректно указаны даты начала и окончания не рабочих дней");
         }
+
         for (NotWorksDays oldNwd : nwdRep.findAllByWorkHistoryId(whId)) {
             if (oldNwd.getStart().isBefore(nwd.getStart()) && oldNwd.getEnd().isAfter(nwd.getEnd())
                     || oldNwd.getStart().isBefore(nwd.getStart()) && oldNwd.getEnd().isBefore(nwd.getEnd())
@@ -71,8 +69,15 @@ public class NotWorkDayServiceImpl implements NotWorksDayService {
                 throw new DataConflictException(" Не корректно указаны даты");
             }
         }
-        nwd.setWorkHistory(WorkHistory.builder().id(whId).build());
+
+
+        nwd.setWorkHistory(WorkHistory.builder().
+
+                id(whId).
+
+                build());
         return nwdRep.save(nwd);
+
 
     }
 
