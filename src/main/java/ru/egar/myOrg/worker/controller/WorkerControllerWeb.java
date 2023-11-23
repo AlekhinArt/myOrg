@@ -57,13 +57,8 @@ public class WorkerControllerWeb {
     public String workersByOrg(@PathVariable Long orgId, Model model) {
         log.info("Get workers by ORG orgID {}", orgId);
         try {
-
-
             model.addAttribute("workers", workerService.showWorkers(orgId));
-
-
         } catch (Exception e) {
-
             model.addAttribute("currentDate", LocalDate.now());
             log.info("Что-то пошло не так {} ", e.getMessage());
             return "workers/newWorker";
@@ -78,13 +73,11 @@ public class WorkerControllerWeb {
     @GetMapping("/org/{orgId}/search")
     public String searchByOrgAndParam(@PathVariable Long orgId, Model model,
                                       @RequestParam String word,
-                                      @RequestParam(defaultValue = " ") String workNow,
-                                      @RequestParam String pos) {
-        log.info("Search workers by ORG orgID{}, search {}, pos {}, workNow {}", orgId, word, pos, workNow);
-        model.addAttribute("workers", workerService.searchWorkers(orgId, word, pos, workNow));
+                                      @RequestParam(defaultValue = "true") String workNow) {
+        log.info("Search workers by ORG orgID{}, search {}, workNow {}", orgId, word, workNow);
+        model.addAttribute("workers", workerService.searchWorkers(orgId, word, workNow));
         model.addAttribute("employPositions", empPosService.getPositionName());
         model.addAttribute("orgId", orgId);
-
         return "workers/workMain";
     }
 

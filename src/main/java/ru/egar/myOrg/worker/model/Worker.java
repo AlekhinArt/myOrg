@@ -21,7 +21,7 @@ import java.time.LocalDate;
 public class Worker {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "worker_id")
+    @Column(name = "id")
     private Long id;
     @Column(name = "work_now")
     //Работает сейчас

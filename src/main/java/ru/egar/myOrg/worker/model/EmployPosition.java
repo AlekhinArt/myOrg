@@ -12,12 +12,12 @@ import lombok.*;
 @Entity
 @Table(name = "employ_pos", uniqueConstraints = {
         @UniqueConstraint(columnNames = "cod_type"),
-        @UniqueConstraint(columnNames = "empl_id")
+        @UniqueConstraint(columnNames = "id")
 })
 public class EmployPosition {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "empl_id")
+    @Column(name = "id")
     private Long id;
     private String position;
     @Column(name = "job_description")

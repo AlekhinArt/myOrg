@@ -14,7 +14,7 @@ public interface WorkerService extends BaseService<WorkerDto, Long> {
 
     Collection<WorkerShowDto> showWorkers(Long orgId);
 
-    Collection<WorkerShowDto> searchWorkers(Long orgId, String word, String position, String workNow);
+    Collection<WorkerShowDto> searchWorkers(Long orgId, String word, String workNow);
 
     Worker createWorker(Worker worker);
 

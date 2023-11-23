@@ -16,7 +16,7 @@ import java.time.LocalDate;
 public class WorkHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "work_history_id")
+    @Column(name = "id")
     private Long id;
     @Column(name = "work_now")
     //работает ли сейчас
