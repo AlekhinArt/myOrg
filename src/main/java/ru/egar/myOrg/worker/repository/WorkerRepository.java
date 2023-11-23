@@ -26,7 +26,7 @@ public interface WorkerRepository extends JpaRepository<Worker, Long> {
             "left join work_history wh ON w.id =wh.worker_id " +
             "left join employ_pos ep on wh.empl_id  = ep.id " +
             "where (w.delete =false " +
-            "and wh.work_now = :workNow " +
+            "and w.work_now = :workNow " +
             "and w.org_id = :orgId )  " +
             "and ( ep.position ilike %:word% " +
             "or w.gender ilike  %:word% " +

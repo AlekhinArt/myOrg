@@ -23,7 +23,6 @@ public class WorkHistory {
     private boolean workNow;
     @ManyToOne
     @JoinColumn(name = "empl_id")
-
     private EmployPosition employPosition;
     @Column(name = "start_work")
     //Дата начала работы на должности

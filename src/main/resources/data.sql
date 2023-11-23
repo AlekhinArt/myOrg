@@ -11,21 +11,21 @@ VALUES (1, 'Москва, Пионерская д.2', '1234567891', 'Рога и копыта', '12345678912
 ON CONFLICT (org_id)
     DO NOTHING;
 
-INSERT INTO worker (id, birthday, delete, name, patronymic, phone_number, surname, work_now, org_id,
+INSERT INTO worker ( birthday, delete, name, patronymic, phone_number, surname, work_now, org_id,
                     family_status, minor_children, gender)
-VALUES ('1', '2007-11-02', FALSE, 'Иван', 'Васильевич', '+79998885544', 'Пупкин', TRUE, 1, 'SINGLE', 'true', 'MALE'),
-       ('2', '2000-11-02', FALSE, 'Максим', 'Валерьевич', '+79990005544', 'Приколдесов', TRUE, 1, 'MARRIED', 'true',
+VALUES ( '2007-11-02', FALSE, 'Иван', 'Васильевич', '+79998885544', 'Пупкин', TRUE, 1, 'SINGLE', 'true', 'MALE'),
+       ( '2000-11-02', FALSE, 'Максим', 'Валерьевич', '+79990005544', 'Приколдесов', TRUE, 1, 'MARRIED', 'true',
         'MALE')
 ON CONFLICT (id)
     DO NOTHING;
 
-insert into work_history (id, start_work, work_now, empl_id, worker_id)
-VALUES (1, '2023-10-15', True, 3, 1),
-       (2, '2023-11-15', True, 3, 2)
+insert into work_history (start_work, work_now, empl_id, worker_id)
+VALUES ( '2023-10-15', True, 3, 1),
+       ( '2023-11-15', True, 3, 2)
 ON CONFLICT (id)
     DO NOTHING;
-insert into work_history (id, end_work, start_work, work_now, empl_id, worker_id)
-VALUES (3, '2023-10-15', '2022-01-15', false, 3, 1)
+insert into work_history ( end_work, start_work, work_now, empl_id, worker_id)
+VALUES ( '2023-10-15', '2022-01-15', false, 3, 1)
 ON CONFLICT (id)
     DO NOTHING;
 insert into type_document (type_dock_id, actual, code_type_document, name_document, identity)

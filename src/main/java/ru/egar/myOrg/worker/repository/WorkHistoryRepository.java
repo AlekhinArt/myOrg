@@ -13,4 +13,5 @@ public interface WorkHistoryRepository extends JpaRepository<WorkHistory, Long> 
     List<WorkHistory> findAllByWorkerAndWorkNow(Worker workers, Boolean workNow);
 
 
+
 }
