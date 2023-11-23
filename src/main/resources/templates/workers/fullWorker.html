@@ -28,8 +28,8 @@
     <form action="#" th:method="GET"
           th:action="@{'/doc/{orgId}/{workerId}'(orgId = ${orgId}, workerId = ${workerId})}">
 
-    <button type="submit" class="btn ">Изменить паспортные данные</button>
-    <hr>
+        <button type="submit" class="btn ">Изменить паспортные данные</button>
+        <hr>
     </form>
 
     <h3><b>История</b></h3>
@@ -66,7 +66,9 @@
 
                     </div>
                 </td>
-                <td><a th:href="@{'/wh/{id}'(id=${history.id})}"> Удалить </a></td>
+                <td>
+                    <a th:href="@{'/wh/{orgId}/{workerId}/delete/wh/{whId}'(whId=${history.id}, orgId = ${orgId}, workerId = ${worker.id} )}">Удалить </a>
+                </td>
 
             </tr>
             </tbody>

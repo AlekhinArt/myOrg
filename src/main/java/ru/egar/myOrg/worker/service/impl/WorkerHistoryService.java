@@ -13,7 +13,6 @@ import ru.egar.myOrg.worker.repository.WorkHistoryRepository;
 import ru.egar.myOrg.worker.repository.WorkerRepository;
 import ru.egar.myOrg.worker.service.EmployPositionService;
 import ru.egar.myOrg.worker.service.WorkHistoryService;
-import ru.egar.myOrg.worker.service.WorkerService;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -50,6 +49,7 @@ public class WorkerHistoryService implements WorkHistoryService {
 
     @Override
     public void deleteById(Long aLong) {
+
         workHistoryRepository.deleteById(aLong);
 
     }
@@ -65,20 +65,14 @@ public class WorkerHistoryService implements WorkHistoryService {
         whOld.setEndWork(wh.getEndWork());
         whOld.setWorkNow(false);
         workHistoryRepository.save(whOld);
-        Boolean workNow;
-        Worker worker = whOld.getWorker();
-        if (workHistoryRepository.findAllByWorkerAndWorkNow(whOld.getWorker(), true).size() < 1) {
-            worker.setWorkNow(false);
-            wr.save(worker);
-        }
-
+        changeWorkerStatus(whOld.getId());
     }
 
 
     @CacheEvict(value = "worker", allEntries = true)
     @Override
     public void createNewWorkHistory(Long workerId, LocalDate startWork, Long emplPosId) {
-        Worker worker = wr.findById(workerId).orElseThrow(()->new NotFoundException("Работник не найден"));
+        Worker worker = wr.findById(workerId).orElseThrow(() -> new NotFoundException("Работник не найден"));
         workHistoryRepository.save(WorkHistory.builder()
                 .workNow(true)
                 .startWork(startWork)
@@ -88,13 +82,16 @@ public class WorkerHistoryService implements WorkHistoryService {
                         .map(EmployPositionMapper::toEmployPosition)
                         .findFirst().orElseThrow(() -> new NotFoundException("Позиция не найдена")))
                 .build());
-            worker.setWorkNow(true);
-            wr.save(worker);
+        worker.setWorkNow(true);
+        wr.save(worker);
 
     }
-
-    @Override
-    public List<WorkHistory> getCurrentPosition(Worker worker) {
-        return workHistoryRepository.findAllByWorkerAndWorkNow(worker, Boolean.TRUE);
+@Override
+    public void changeWorkerStatus(Long workerId) {
+        if (workHistoryRepository.findAllByWorkerIdAndWorkNow(workerId, true).size() < 1) {
+            Worker worker = wr.findById(workerId).orElseThrow(() -> new NotFoundException("Работник не найден"));
+            worker.setWorkNow(false);
+            wr.save(worker);
+        }
     }
 }

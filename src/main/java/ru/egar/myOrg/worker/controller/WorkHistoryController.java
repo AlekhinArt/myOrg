@@ -97,6 +97,17 @@ public class WorkHistoryController {
 
     }
 
+    @GetMapping("/{orgId}/{workerId}/delete/wh/{whId}")
+    public String deleteWorkHistory(@PathVariable Long whId,
+                                    @PathVariable Long workerId,
+                                    @PathVariable Long orgId) {
+        log.info("delete workHistory {}", whId);
+        whs.deleteById(whId);
+        whs.changeWorkerStatus(workerId);
+        return "redirect:/worker/" + orgId + "/get/" + workerId;
+
+    }
+
     @GetMapping("/{orgId}/{workerId}/edit/{whId}")
     public String layOffWorkerMVC(@PathVariable Long whId,
                                   @PathVariable Long workerId,

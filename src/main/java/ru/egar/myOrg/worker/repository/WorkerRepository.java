@@ -33,7 +33,8 @@ public interface WorkerRepository extends JpaRepository<Worker, Long> {
             "or w.name ilike %:word% " +
             "or w.surname  ilike %:word% " +
             "or w.patronymic ilike %:word% " +
-            "or w.phone_number like %:word%) "
+            "or w.phone_number like %:word%) " +
+            "group by w.id  "
             , nativeQuery = true)
     Collection<Worker> searchWorkerByParam(@Param("orgId") long id, @Param("word") String word, @Param("workNow") Boolean workNow);
 }
