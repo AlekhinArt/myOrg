@@ -87,66 +87,6 @@ public class NotWorkDayServiceImplTest {
 
     @Test
     void getAllByWhIdAndType() {
-        LocalDate start = LocalDate.parse("2022-10-10");
-        LocalDate end = LocalDate.parse("2022-10-20");
-        LocalDate periodStart = LocalDate.parse("2022-10-05");
-        LocalDate periodEnd = LocalDate.parse("2022-10-15");
-        LocalDate startNon = LocalDate.parse("2022-10-01");
-        LocalDate endNon = LocalDate.parse("2022-10-05");
-
-
-        Duration duration = Duration.between(periodStart, periodEnd);
-        Long dperiod = duration.toDays();
-
-//        if (startNon.isAfter())
-
-        Calendar calendar ;
-
-
-        Long a = start.toEpochDay();
-        Long b = end.toEpochDay();
-        Long ps = periodStart.toEpochDay();
-        Long pe = periodEnd.toEpochDay();
-        Long sn = startNon.toEpochDay();
-        Long en = endNon.toEpochDay();
-
-
-        System.out.println("a = " + a);
-        System.out.println("b = = " + b);
-        System.out.println("ps = " + ps);
-        System.out.println("pe = " + pe);
-        System.out.println("sn = " + sn);
-        System.out.println("en = " + en);
-
-
-        long sums = a + b;
-        long sump = ps + pe;
-        long r = b - a;//длина периода в днях
-
-
-        long k = pe - ps; //длина периода в днях
-
-
-        System.out.println(r);
-        System.out.println(sump);
-        System.out.println(sums);
-        System.out.println(k);
-
-
-        if ((a < ps && b < ps) || (a > pe && b > pe)) {
-
-        }
-
-
-        Period psas = Period.between(startNon, endNon);
-        Period period = Period.between(start, end);
-        Period period1 = Period.between(periodStart, periodEnd);
-        System.out.println(period.equals(period1));
-        System.out.println(psas.equals(period1));
-        System.out.println(psas);
-        System.out.println(period);
-        System.out.println(period1);
-
 
     }
 

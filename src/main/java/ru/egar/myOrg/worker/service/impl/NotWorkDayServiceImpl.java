@@ -62,10 +62,7 @@ public class NotWorkDayServiceImpl implements NotWorksDayService {
         }
 
         for (NotWorksDays oldNwd : nwdRep.findAllByWorkHistoryId(whId)) {
-            if (oldNwd.getStart().isBefore(nwd.getStart()) && oldNwd.getEnd().isAfter(nwd.getEnd())
-                    || oldNwd.getStart().isBefore(nwd.getStart()) && oldNwd.getEnd().isBefore(nwd.getEnd())
-                    || oldNwd.getStart().isAfter(nwd.getStart()) && oldNwd.getEnd().isAfter(nwd.getEnd())
-                    || oldNwd.getStart().isAfter(nwd.getStart()) && oldNwd.getEnd().isBefore(nwd.getEnd())) {
+            if (!(nwd.getEnd().isBefore(oldNwd.getStart()) || nwd.getStart().isAfter(oldNwd.getEnd()))) {
                 throw new DataConflictException(" Не корректно указаны даты");
             }
         }
