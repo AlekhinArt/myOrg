@@ -5,12 +5,25 @@ spring:
     username: postgres
     password: 1234
     driver-class-name: org.postgresql.Driver
+
   sql:
     init:
       mode: never
       data-locations: classpath:data.sql
 
-
+  mail:
+    default-encoding: UTF-8
+    host: smtp.mail.ru
+    username: teman94@mail.ru
+    password: cRDMYerMPjkebmuEhurF
+    port: 465
+    protocol: smtps
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 
   jpa:
     hibernate:
@@ -34,6 +47,8 @@ logging:
           DEBUG
       type:
         trace
+
+
 
 
 

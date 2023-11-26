@@ -17,6 +17,7 @@
         <p><b>Отчество: </b><span th:text="${worker.patronymic}"></span></p>
         <p><b>Дата рождения: </b><span th:text="${worker.birthday}"></span></p>
         <p><b>Телефон: </b><span th:text="${worker.phoneNumber}"></span></p>
+        <p><b>Электронная почта: </b><span th:text="${worker.email}"></span></p>
         <p><b>Семейное положение : </b><span th:text="${worker.familyStatus.getStatus()}"></span></p>
         <p th:if="${worker.minorChildren}"><b>Наличие не совершеннолетних детей : </b><span>Нет</span></p>
         <p th:unless="${worker.minorChildren}"><b>Наличие не совершеннолетних детей : </b><span>Есть</span></p>

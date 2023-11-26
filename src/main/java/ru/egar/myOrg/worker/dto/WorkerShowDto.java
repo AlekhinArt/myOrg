@@ -18,6 +18,7 @@ public class WorkerShowDto {
     private String phoneNumber;
     private String employPosition;
     private Boolean workNow;
+    private String email;
 
 
 }

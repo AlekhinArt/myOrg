@@ -20,6 +20,7 @@ public class WorkerMapper {
                 .gender(workerDto.getGender())
                 .familyStatus(workerDto.getFamilyStatus())
                 .organization(workerDto.getOrganization())
+                .email(workerDto.getEmail())
                 .delete(false)
                 .build();
 
@@ -38,6 +39,7 @@ public class WorkerMapper {
                 .familyStatus(worker.getFamilyStatus())
                 .gender(worker.getGender())
                 .minorChildren(worker.getMinorChildren())
+                .email(worker.getEmail())
                 .build();
 
     }
@@ -51,6 +53,7 @@ public class WorkerMapper {
                 .birthday(worker.getBirthday())
                 .phoneNumber(worker.getPhoneNumber())
                 .workNow(worker.getWorkNow())
+                .email(worker.getEmail())
 //                .employPosition(workHistoryService.getCurrentPosition(worker).get(0).getEmployPosition().getPosition())
                 .build();
 

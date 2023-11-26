@@ -29,6 +29,7 @@ public class WorkerDto {
     private FamilyStatus familyStatus;
     private Boolean minorChildren;
     private Gender gender;
+    private String email;
     private List<ValuableObject> valuableObjects = new ArrayList<>();
 
 }

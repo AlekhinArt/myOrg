@@ -12,10 +12,10 @@ ON CONFLICT (org_id)
     DO NOTHING;
 
 INSERT INTO worker ( birthday, delete, name, patronymic, phone_number, surname, work_now, org_id,
-                    family_status, minor_children, gender)
-VALUES ( '2007-11-02', FALSE, 'Иван', 'Васильевич', '+79998885544', 'Пупкин', TRUE, 1, 'SINGLE', 'true', 'MALE'),
+                    family_status, minor_children, gender, email)
+VALUES ( '2007-11-02', FALSE, 'Иван', 'Васильевич', '+79998885544', 'Пупкин', TRUE, 1, 'SINGLE', 'true', 'MALE', 'superMan@mail.ru'),
        ( '2000-11-02', FALSE, 'Максим', 'Валерьевич', '+79990005544', 'Приколдесов', TRUE, 1, 'MARRIED', 'true',
-        'MALE')
+        'MALE', 'bigBoss@mail.ru')
 ON CONFLICT (id)
     DO NOTHING;
 

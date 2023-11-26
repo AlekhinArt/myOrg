@@ -87,6 +87,20 @@
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-sm-5">
+                        <label for="email" class="form-label">Электронная почта</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="email" placeholder="as@Mail.ru"
+                                   th:name="email"
+
+                                   required>
+                            <div class="invalid-feedback">
+                                Пожалуйста введите адрес элетронной почты  работника.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-md-5">
                         <label for="gender" class="form-label">Пол</label>
                         <select type="text" class="form-control" th:name="gender" id="gender" required>

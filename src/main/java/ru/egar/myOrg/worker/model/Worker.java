@@ -33,6 +33,7 @@ public class Worker {
     @Size(min = 1, max = 40, message = "Должно быть не меньше одного и не более 40 символов")
     private String patronymic;
 
+    private String email;
     private LocalDate birthday;
     @Pattern(regexp = "[0-9]{11}", message = "Укажите телефонный номер в правильном формате")
     private String phoneNumber;
