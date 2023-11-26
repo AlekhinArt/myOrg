@@ -19,6 +19,7 @@ public class WorkerShowDto {
     private String employPosition;
     private Boolean workNow;
     private String email;
+    private Long orgId;
 
 
 }

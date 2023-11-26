@@ -29,4 +29,14 @@ public interface WorkerRepository extends JpaRepository<Worker, Long> {
             "group by w.id  "
             , nativeQuery = true)
     Collection<Worker> searchWorkerByParam(@Param("orgId") long id, @Param("word") String word, @Param("workNow") Boolean workNow);
+
+    @Query(value = "select * " +
+            "from worker w  " +
+            "where w.org_id in :orgs and " +
+            "DATE_PART('day', w.birthday) = date_part('day', CURRENT_DATE)" +
+            "AND " +
+            "    DATE_PART('month', w.birthday) = date_part('month', CURRENT_DATE)", nativeQuery = true)
+    Collection<Worker> findAllByOrganizationInAndBirthday(Collection<Long> orgs);
+
+
 }

@@ -25,6 +25,6 @@ public class OrganizationDto {
     private String phoneNumber;
     @Pattern(regexp = "[0-9]{6}", message = "Укажите почтовый кода в правильном формате")
     private String zip;
-
+    private String email;
 
 }

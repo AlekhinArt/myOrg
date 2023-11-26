@@ -10,6 +10,7 @@ import ru.egar.myOrg.document.model.PaperDocument;
 import ru.egar.myOrg.document.service.DocumentService;
 import ru.egar.myOrg.document.service.TypeDocumentService;
 import ru.egar.myOrg.exception.NotFoundException;
+import ru.egar.myOrg.organization.model.Organization;
 import ru.egar.myOrg.organization.repository.OrganizationRepository;
 import ru.egar.myOrg.worker.dto.WorkerCreateDto;
 import ru.egar.myOrg.worker.dto.WorkerDto;
@@ -22,6 +23,7 @@ import ru.egar.myOrg.worker.repository.WorkerRepository;
 import ru.egar.myOrg.worker.service.WorkHistoryService;
 import ru.egar.myOrg.worker.service.WorkerService;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -144,6 +146,16 @@ public class WorkerServiceImpl implements WorkerService {
         return workerRepository.save(worker);
     }
 
+    @Override
+    public Collection<WorkerShowDto> getForSendMail(Collection<Long> orgs) {
+        log.info("Готовим работников");
+        return workerRepository.findAllByOrganizationInAndBirthday(orgs)
+                .stream()
+                .map(WorkerMapper::toShowWorker)
+                .collect(Collectors.toList());
+
+    }
+
     private void savePassport(Worker worker, PaperDocument paperDocument) {
         paperDocument.setWorker(worker);
         paperDocument.setActual(true);
@@ -152,9 +164,5 @@ public class WorkerServiceImpl implements WorkerService {
 
     }
 
-    public void howLongTime() {
-//        Worker worker;
-//        worker.getWorkHistory();
-    }
 
 }

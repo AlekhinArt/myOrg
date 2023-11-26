@@ -54,6 +54,7 @@ public class WorkerMapper {
                 .phoneNumber(worker.getPhoneNumber())
                 .workNow(worker.getWorkNow())
                 .email(worker.getEmail())
+                .orgId(worker.getOrganization().getId())
 //                .employPosition(workHistoryService.getCurrentPosition(worker).get(0).getEmployPosition().getPosition())
                 .build();
 

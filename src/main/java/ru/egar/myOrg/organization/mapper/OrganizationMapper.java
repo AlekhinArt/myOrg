@@ -14,6 +14,7 @@ public class OrganizationMapper {
                 .phoneNumber(organization.getPhoneNumber())
                 .name(organization.getName())
                 .zip(organization.getZip())
+                .email(organization.getEmail())
                 .build();
     }
 
@@ -26,6 +27,7 @@ public class OrganizationMapper {
                 .phoneNumber(organizationDto.getPhoneNumber())
                 .name(organizationDto.getName())
                 .zip(organizationDto.getZip())
+                .email(organizationDto.getEmail())
                 .build();
     }
 

@@ -8,8 +8,8 @@ import ru.egar.myOrg.organization.dto.OrganizationDto;
 import ru.egar.myOrg.organization.mapper.OrganizationMapper;
 import ru.egar.myOrg.organization.model.Organization;
 import ru.egar.myOrg.organization.repository.OrganizationRepository;
-import ru.egar.myOrg.worker.model.Worker;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -58,4 +58,8 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
 
+    @Override
+    public Collection<Organization> getAllSentBirthday() {
+        return organizationRepository.getAllBySupportOrg_SendEmailBirthday(true);
+    }
 }

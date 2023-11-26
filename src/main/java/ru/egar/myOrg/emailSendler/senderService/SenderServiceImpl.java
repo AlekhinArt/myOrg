@@ -61,13 +61,12 @@ public class SenderServiceImpl implements SenderService {
                 MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
                 StandardCharsets.UTF_8.name());
 
-        helper.addAttachment("email_pict.jpg", new ClassPathResource("static/email_pict.jpg"));
 
         Context context = new Context();
         context.setVariables(mail.getModel());
 
         //при добавлении формы письма меняем тут тии
-        final String template = "mailBirthday";
+        final String template = "mail/mailBirthday";
         String html = templateEngine.process(template, context);
 
         helper.setTo(mail.getMailTo());

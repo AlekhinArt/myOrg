@@ -37,4 +37,7 @@ public class Organization {
     @Pattern(regexp = "[0-9]{11}", message = "Укажите телефонный номер в правильном формате")
     @Column(name = "phone_number")
     private String phoneNumber;
+    @OneToOne
+    private SupportOrg supportOrg;
+    private String email;
 }

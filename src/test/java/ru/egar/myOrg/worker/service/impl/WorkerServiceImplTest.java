@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import ru.egar.myOrg.document.model.PaperDocument;
 import ru.egar.myOrg.document.repository.PassportRepository;
+import ru.egar.myOrg.organization.dto.OrganizationDto;
 import ru.egar.myOrg.organization.mapper.OrganizationMapper;
 import ru.egar.myOrg.organization.model.Organization;
 import ru.egar.myOrg.organization.service.OrganizationService;
@@ -25,6 +26,7 @@ import static org.unitils.reflectionassert.ReflectionAssert.assertReflectionEqua
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 
@@ -235,4 +237,19 @@ class WorkerServiceImplTest {
         assertEquals(worker.getGender(), newWorker.getGender());
         assertEquals(worker.getDelete(), newWorker.getDelete());
     }
+
+
+    @Order(11)
+    @Test
+    void findAllByOrganizationInAndBirthday(){
+        Worker w1 = workerRepository.findById(1L).orElseThrow();
+        w1.setBirthday(LocalDate.now());
+        workerRepository.save(w1);
+        List<OrganizationDto> orgs = organizationService.getAll();
+        System.out.println(orgs.size());
+
+
+    }
+
+
 }

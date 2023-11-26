@@ -2,6 +2,7 @@ package ru.egar.myOrg.worker.service;
 
 import ru.egar.myOrg.base.BaseService;
 import ru.egar.myOrg.document.model.PaperDocument;
+import ru.egar.myOrg.organization.model.Organization;
 import ru.egar.myOrg.worker.dto.WorkerCreateDto;
 import ru.egar.myOrg.worker.dto.WorkerDto;
 import ru.egar.myOrg.worker.dto.WorkerShowDto;
@@ -19,4 +20,5 @@ public interface WorkerService extends BaseService<WorkerDto, Long> {
     Worker createWorker(Worker worker);
 
 
+    Collection<WorkerShowDto> getForSendMail(Collection<Long> orgs);
 }
