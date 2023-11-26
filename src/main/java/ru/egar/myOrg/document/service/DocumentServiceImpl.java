@@ -5,9 +5,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.egar.myOrg.document.dto.PassportDto;
 import ru.egar.myOrg.document.mapper.PassportMapper;
-import ru.egar.myOrg.document.model.Graduate;
-import ru.egar.myOrg.document.model.Passport;
-import ru.egar.myOrg.document.repository.GraduateRepository;
+import ru.egar.myOrg.document.model.PaperDocument;
 import ru.egar.myOrg.document.repository.PassportRepository;
 import ru.egar.myOrg.exception.DataConflictException;
 import ru.egar.myOrg.exception.NotFoundException;
@@ -17,24 +15,13 @@ import ru.egar.myOrg.exception.NotFoundException;
 @AllArgsConstructor
 public class DocumentServiceImpl implements DocumentService {
     private final PassportRepository pr;
-    private final GraduateRepository gr;
 
     @Override
-    public void save(Passport passport) {
+    public void save(PaperDocument paperDocument) {
         try {
-            pr.save(passport);
+            pr.save(paperDocument);
         } catch (Exception e) {
             throw new DataConflictException("Паспортные данные не сохранены");
-
-        }
-    }
-
-    @Override
-    public void save(Graduate graduate) {
-        try {
-            gr.save(graduate);
-        } catch (Exception e) {
-            throw new DataConflictException("Данные Диплома не сохранены не сохранены");
 
         }
     }
@@ -47,7 +34,7 @@ public class DocumentServiceImpl implements DocumentService {
     //true - обновляем false - меняем
     @Override
     public void updPas(PassportDto passportDto, String whatDo) {
-        Passport oldPas = pr.findById(passportDto.getId()).orElseThrow(() -> new NotFoundException("Паспорт не найден"));
+        PaperDocument oldPas = pr.findById(passportDto.getId()).orElseThrow(() -> new NotFoundException("Паспорт не найден"));
         if (Boolean.valueOf(whatDo)) {
             oldPas.setIssued(passportDto.getIssued());
             oldPas.setWhoIssued(passportDto.getWhoIssued());
@@ -57,7 +44,7 @@ public class DocumentServiceImpl implements DocumentService {
         } else {
             oldPas.setActual(false);
             pr.save(oldPas);
-            Passport newPas = new Passport();
+            PaperDocument newPas = new PaperDocument();
             newPas.setWorker(oldPas.getWorker());
             newPas.setActual(true);
             newPas.setIssued(passportDto.getIssued());

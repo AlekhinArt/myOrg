@@ -1,8 +1,6 @@
 package ru.egar.myOrg.document.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -13,25 +11,26 @@ import java.time.LocalDate;
 @Entity
 @Builder
 @NoArgsConstructor
-//Паспорт
-public class Passport extends BasePaperDocument {
+//Документ
+public class PaperDocument extends BasePaperDocument {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "passport_id")
+    @Column(name = "id")
     private Long id;
-    @NotNull
-    @NotBlank
+
     private String number;
-    @NotNull
-    @NotBlank
+
     private String series;
     //Когда выдан
-    @NotNull
+
     private LocalDate issued;
     // Кем выдан
-    @NotNull
-    @NotBlank
+
     private String whoIssued;
+
+    //дополнительные поля
+    private String additionalOne;
+    private String additionalTwo;
 
 
 }

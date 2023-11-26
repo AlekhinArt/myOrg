@@ -6,7 +6,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
-import ru.egar.myOrg.document.model.Passport;
+import ru.egar.myOrg.document.model.PaperDocument;
 import ru.egar.myOrg.document.service.DocumentService;
 import ru.egar.myOrg.document.service.TypeDocumentService;
 import ru.egar.myOrg.exception.NotFoundException;
@@ -92,7 +92,7 @@ public class WorkerServiceImpl implements WorkerService {
             @CacheEvict(cacheNames = "worker", allEntries = true)
     })
     @Override
-    public WorkerDto create(WorkerCreateDto workerDto, Passport passport) {
+    public WorkerDto create(WorkerCreateDto workerDto, PaperDocument paperDocument) {
         Worker newWorker = workerRepository.save(Worker.builder()
                 .name(workerDto.getName())
                 .surname(workerDto.getSurname())
@@ -115,7 +115,7 @@ public class WorkerServiceImpl implements WorkerService {
                 .workNow(workerDto.getWorkNow())
                 .employPosition(emlpRepository.getByPosition(workerDto.getEmployPosition()))
                 .build());
-        savePassport(newWorker, passport);
+        savePassport(newWorker, paperDocument);
         return WorkerMapper.toWorkerDto(newWorker);
     }
 
@@ -144,11 +144,11 @@ public class WorkerServiceImpl implements WorkerService {
         return workerRepository.save(worker);
     }
 
-    private void savePassport(Worker worker, Passport passport) {
-        passport.setWorker(worker);
-        passport.setActual(true);
-        passport.setTypeDocument("001");
-        ds.save(passport);
+    private void savePassport(Worker worker, PaperDocument paperDocument) {
+        paperDocument.setWorker(worker);
+        paperDocument.setActual(true);
+        paperDocument.setTypeDocument("001");
+        ds.save(paperDocument);
 
     }
 

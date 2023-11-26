@@ -8,7 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import ru.egar.myOrg.document.model.Passport;
+import ru.egar.myOrg.document.model.PaperDocument;
 import ru.egar.myOrg.worker.dto.WorkerCreateDto;
 import ru.egar.myOrg.worker.dto.WorkerDto;
 import ru.egar.myOrg.worker.service.WorkerService;
@@ -27,7 +27,7 @@ public class WorkerController {
             description = "Добавляем работника")
     @PostMapping
     public String create(@ModelAttribute @Valid WorkerCreateDto workerDto,
-                         @ModelAttribute @Valid Passport passport) {
+                         @ModelAttribute @Valid PaperDocument paperDocument) {
         log.info("Create worker: {}, {}, {}, {}, {}, {}, {}, {}, {}",
                 workerDto.getName(),
                 workerDto.getSurname(),
@@ -38,12 +38,12 @@ public class WorkerController {
                 workerDto.getEmployPosition(),
                 workerDto.getStartWork(), workerDto.getOrgId());
         log.info("Create passport: {}, {}, {}, {}, {}",
-                passport.getSeries(),
-                passport.getNumber(),
-                passport.getIssued(),
-                passport.getWhoIssued(),
-                passport.getTypeDocument());
-        workerService.create(workerDto, passport);
+                paperDocument.getSeries(),
+                paperDocument.getNumber(),
+                paperDocument.getIssued(),
+                paperDocument.getWhoIssued(),
+                paperDocument.getTypeDocument());
+        workerService.create(workerDto, paperDocument);
         return "redirect:/worker/org/" + workerDto.getOrgId();
     }
 

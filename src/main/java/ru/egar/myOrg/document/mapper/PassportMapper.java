@@ -1,19 +1,20 @@
 package ru.egar.myOrg.document.mapper;
 
 import ru.egar.myOrg.document.dto.PassportDto;
-import ru.egar.myOrg.document.model.Passport;
+import ru.egar.myOrg.document.model.PaperDocument;
 
 public class PassportMapper {
 
-    public static PassportDto toPassportDto(Passport passport) {
+    public static PassportDto toPassportDto(PaperDocument paperDocument) {
 
         return PassportDto.builder()
-                .id(passport.getId())
-                .series(passport.getSeries())
-                .number(passport.getSeries())
-                .issued(passport.getIssued())
-                .whoIssued(passport.getWhoIssued())
-                .codeType(passport.getTypeDocument())
+                .id(paperDocument.getId())
+                .series(paperDocument.getSeries())
+                .number(paperDocument.getSeries())
+                .issued(paperDocument.getIssued())
+                .whoIssued(paperDocument.getWhoIssued())
+                .codeType(paperDocument.getTypeDocument())
+
                 .build();
     }
 }

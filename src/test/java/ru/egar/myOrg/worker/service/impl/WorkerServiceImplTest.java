@@ -3,7 +3,7 @@ package ru.egar.myOrg.worker.service.impl;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import ru.egar.myOrg.document.model.Passport;
+import ru.egar.myOrg.document.model.PaperDocument;
 import ru.egar.myOrg.document.repository.PassportRepository;
 import ru.egar.myOrg.organization.mapper.OrganizationMapper;
 import ru.egar.myOrg.organization.model.Organization;
@@ -45,7 +45,7 @@ class WorkerServiceImplTest {
     Worker worker;
     Organization organization;
     Organization organization2;
-    Passport passport;
+    PaperDocument paperDocument;
     WorkHistory workHistory;
     WorkerCreateDto workerCreateDto;
     EmployPosition employPosition;
@@ -57,7 +57,7 @@ class WorkerServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        passport = Passport.builder()
+        paperDocument = PaperDocument.builder()
                 .number("1234")
                 .series("123224")
                 .issued(LocalDate.parse("2020-10-11"))
@@ -190,7 +190,7 @@ class WorkerServiceImplTest {
     @Order(7)
     @Test
     void testCreate() {
-        WorkerDto workerDto1 = workerService.create(workerCreateDto, passport);
+        WorkerDto workerDto1 = workerService.create(workerCreateDto, paperDocument);
 
         assertEquals(workerDto.getSurname(), workerDto1.getSurname());
         assertEquals(workerDto.getBirthday(), workerDto1.getBirthday());
