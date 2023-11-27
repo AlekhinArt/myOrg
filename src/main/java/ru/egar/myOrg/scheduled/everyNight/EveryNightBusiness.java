@@ -38,6 +38,7 @@ public class EveryNightBusiness {
             ogrgsId.add(org.getId());
         }
         Collection<WorkerShowDto> workers = workerService.getForSendMail(ogrgsId);
+        log.info("Длина списка сотрудников для поздравления {}", workers.size());
         for (WorkerShowDto worker : workers) {
             Organization org = orgs.stream()
                     .filter(i -> i.getId() == worker.getOrgId())

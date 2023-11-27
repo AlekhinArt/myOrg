@@ -17,8 +17,7 @@ public class ScheduledTaskService {
     EveryNightBusiness everyNightBusiness;
 
 
-    @Scheduled(cron = "0 0 1 * * *", zone = "Europe/Moscow")
-
+    @Scheduled(cron = "0 10 1 * * *", zone = "Europe/Moscow")
     public void everyNight() throws MessagingException {
         log.info("Запустили ночные дела");
         everyNightBusiness.run();

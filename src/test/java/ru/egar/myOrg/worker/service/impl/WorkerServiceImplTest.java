@@ -8,9 +8,11 @@ import ru.egar.myOrg.document.repository.PassportRepository;
 import ru.egar.myOrg.organization.dto.OrganizationDto;
 import ru.egar.myOrg.organization.mapper.OrganizationMapper;
 import ru.egar.myOrg.organization.model.Organization;
+import ru.egar.myOrg.organization.model.SupportOrg;
 import ru.egar.myOrg.organization.service.OrganizationService;
 import ru.egar.myOrg.worker.dto.WorkerCreateDto;
 import ru.egar.myOrg.worker.dto.WorkerDto;
+import ru.egar.myOrg.worker.dto.WorkerShowDto;
 import ru.egar.myOrg.worker.model.EmployPosition;
 import ru.egar.myOrg.worker.model.WorkHistory;
 import ru.egar.myOrg.worker.model.Worker;
@@ -26,6 +28,8 @@ import static org.unitils.reflectionassert.ReflectionAssert.assertReflectionEqua
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -51,6 +55,7 @@ class WorkerServiceImplTest {
     WorkHistory workHistory;
     WorkerCreateDto workerCreateDto;
     EmployPosition employPosition;
+    SupportOrg supportOrg;
 
     @BeforeAll
     public static void start() {
@@ -59,6 +64,9 @@ class WorkerServiceImplTest {
 
     @BeforeEach
     void setUp() {
+        supportOrg = SupportOrg.builder()
+                .sendEmailBirthday(true)
+                .build();
         paperDocument = PaperDocument.builder()
                 .number("1234")
                 .series("123224")
@@ -77,6 +85,7 @@ class WorkerServiceImplTest {
                 .ogrn("1234567891234")
                 .phoneNumber("89998887766")
                 .zip("111000")
+                .supportOrg(supportOrg)
                 .build();
         organization2 = Organization.builder()
                 .id(2L)
@@ -86,6 +95,7 @@ class WorkerServiceImplTest {
                 .ogrn("22222222")
                 .phoneNumber("89998887766")
                 .zip("111000")
+                .supportOrg(supportOrg)
                 .build();
         workerDto = WorkerDto.builder()
                 .organization(organization)
@@ -241,14 +251,22 @@ class WorkerServiceImplTest {
 
     @Order(11)
     @Test
-    void findAllByOrganizationInAndBirthday(){
+    void findAllByOrganizationInAndBirthday() {
+        //сложности с проверкой метода
+        // h2 не понимает синтаксиса пострге
         Worker w1 = workerRepository.findById(1L).orElseThrow();
         w1.setBirthday(LocalDate.now());
         workerRepository.save(w1);
+
         List<OrganizationDto> orgs = organizationService.getAll();
+        List<Long> orgsId = new ArrayList<>();
+        for (OrganizationDto org : orgs) {
+            orgsId.add(org.getId());
+        }
         System.out.println(orgs.size());
-
-
+//        Collection<WorkerShowDto> forSendMail = workerService.getForSendMail(orgsId);
+//        System.out.println(forSendMail.size());
+//        assertEquals(1, forSendMail.size());
     }
 
 

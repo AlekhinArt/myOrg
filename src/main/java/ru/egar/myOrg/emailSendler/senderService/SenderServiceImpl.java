@@ -3,7 +3,7 @@ package ru.egar.myOrg.emailSendler.senderService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.AllArgsConstructor;
-import org.springframework.core.io.ClassPathResource;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -17,6 +17,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 @Service
 @AllArgsConstructor
 public class SenderServiceImpl implements SenderService {
@@ -46,7 +47,7 @@ public class SenderServiceImpl implements SenderService {
         model.put("type", form.getMailType());
         model.put("text", form.getText());
 
-
+        log.info("Send mail to name {}, from {}, sign {} , type {}", name, from, sign, mailType);
         sendEmail(mail);
 
 
