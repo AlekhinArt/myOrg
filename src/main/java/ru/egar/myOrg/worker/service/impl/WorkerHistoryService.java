@@ -7,9 +7,11 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import ru.egar.myOrg.exception.NotFoundException;
 import ru.egar.myOrg.worker.mapper.EmployPositionMapper;
+import ru.egar.myOrg.worker.mapper.NotWorksDaysMapper;
 import ru.egar.myOrg.worker.model.WorkHistory;
 import ru.egar.myOrg.worker.model.WorkTableInfo;
 import ru.egar.myOrg.worker.model.Worker;
+import ru.egar.myOrg.worker.model.notWorksDays.NotWorksDaysWithDaysList;
 import ru.egar.myOrg.worker.repository.WorkHistoryRepository;
 import ru.egar.myOrg.worker.repository.WorkerRepository;
 import ru.egar.myOrg.worker.service.EmployPositionService;
@@ -17,6 +19,7 @@ import ru.egar.myOrg.worker.service.WorkHistoryService;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -25,6 +28,7 @@ public class WorkerHistoryService implements WorkHistoryService {
     private final WorkHistoryRepository workHistoryRepository;
     private final WorkerRepository wr;
     private final EmployPositionService emps;
+    private final NotWorkDayServiceImpl nwds;
 
 
     @Override
@@ -98,18 +102,42 @@ public class WorkerHistoryService implements WorkHistoryService {
         }
     }
 
-
     @Override
-    public WorkTableInfo[][] getCalendar() {
-        LocalDate localDate = LocalDate.parse("2023-11-01");
-        log.info("День месяца {}", localDate.getDayOfWeek().getValue());
+    public WorkTableInfo[][] getNotWorksDayInCalendar(Long whId, String start, String end) {
+        log.info("начал гиблое дело");
+//        List<NotWorksDaysWithDaysList> nwdssad = getNotWorksDay(1L, "2023-11-01", "2023-11-30");
 
-        int daysInMonth = (int) (localDate.plusMonths(1).toEpochDay() - localDate.toEpochDay());
+        List<NotWorksDaysWithDaysList> nwdsList = nwds.notWorkDayByTypeAndDate("", whId, start, end)
+                .stream()
+                .map(NotWorksDaysMapper::toList)
+                .collect(Collectors.toList());
+        LocalDate localDate = LocalDate.parse(start);
+
+        return addToCalendar(getCalendar(  localDate.minusDays(localDate.getDayOfMonth()-1L)), nwdsList);
+
+    }
+
+    private WorkTableInfo[][] getCalendar(LocalDate firstDayMonth) {
+//        LocalDate localDate = LocalDate.parse("2023-11-01");
+        log.info("День месяца {}", firstDayMonth.getDayOfWeek().getValue());
+        int daysInMonth = (int) (firstDayMonth.plusMonths(1).toEpochDay() - firstDayMonth.toEpochDay());
         WorkTableInfo[][] tableInfos = new WorkTableInfo[6][7];
         int date = 1;
+
         for (int i = 0; i < tableInfos.length; i++) {
             for (int j = 0; j < tableInfos[0].length; j++) {
-                if ((localDate.getDayOfWeek().getValue()-1 <= j || i > 0) && (date <= daysInMonth)) {
+                //5 and 6 day of week
+                if ((j == 5 || j == 6) && (date <= daysInMonth)) {
+
+                    tableInfos[i][j] = WorkTableInfo
+                            .builder()
+                            .dateMonth(date)
+                            .show(true)
+                            .whereBe("ВЫХОДНОЙ")
+                            .build();
+                    ++date;
+
+                } else if (((firstDayMonth.getDayOfWeek().getValue() - 1 <= j && j <= 5) || i > 0) && (date <= daysInMonth)) {
                     tableInfos[i][j] = WorkTableInfo
                             .builder()
                             .hours(8)
@@ -128,8 +156,37 @@ public class WorkerHistoryService implements WorkHistoryService {
 
             }
         }
-
         return tableInfos;
+
+    }
+
+
+    private WorkTableInfo[][] addToCalendar(WorkTableInfo[][] calendar, List<NotWorksDaysWithDaysList> nwds) {
+        log.info("list size {}", nwds.size());
+        for (int i = 0; i < calendar.length; i++) {
+            for (int j = 0; j < calendar[0].length; j++) {
+                for (NotWorksDaysWithDaysList nwd : nwds) {
+                    for (LocalDate notWorksDay : nwd.getNotWorksDays()) {
+
+                        if (calendar[i][j].getDateMonth() == notWorksDay.getDayOfMonth()) {
+                            log.info("{} = {}, {} ", calendar[0][j].getDateMonth(), notWorksDay.getDayOfMonth(), nwd.getNwdId());
+                            log.info("тут был");
+                            WorkTableInfo wti = calendar[i][j];
+                            wti.setHours(0);
+                            wti.setWhereBe("Не был на работе(" + nwd.getTypeDay().getType() + ")");
+                            calendar[i][j] = wti;
+
+                        }
+                    }
+
+
+                }
+
+            }
+
+        }
+        return calendar;
+
 
     }
 

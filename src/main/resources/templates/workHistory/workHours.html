@@ -16,7 +16,11 @@
 
 
 <div class="container">
-
+    <h3><b>Табель учета рабочего времени </b></h3>
+    <p><b>Фамилия: </b><span th:text="${worker.surname}"></span></p>
+    <p><b>Имя: </b><span th:text="${worker.name}"></span></p>
+    <p><b>Отчество: </b><span th:text="${worker.patronymic}"></span></p>
+    <h4><b> <span th:text="${month}"></span> </b></h4>
     <table class="table table-striped">
         <thead>
         <tr>
@@ -33,11 +37,13 @@
 
         <tr th:each="row, iterray : ${table}">
 
-            <td th:each="column : ${row}"  >
+            <td th:each="column : ${row}">
+                <div></div>
                 <div th:if="*{column.isShow()}">
-                    <p> <strong th:text="*{column.getDateMonth()}"></strong></p>
-                    <p> Отработано часов <strong th:text="*{column.getHours()}"></strong></p>
-                    <p> Email: <strong th:text="*{column.getHours()}"></strong></p>
+                    <p><strong th:text="*{column.getDateMonth()}"></strong></p>
+                    <p><strong th:text="*{column.getWhereBe()}"></strong></p>
+                    <p> Отработано часов:<strong th:text="*{column.getHours()}"></strong></p>
+                    <!--                    <p> Email: <strong th:text="*{column.getHours()}"></strong></p>-->
 
                 </div>
 
@@ -49,6 +55,9 @@
 
 
     </table>
+    <p>Всего отработано часов : <strong>?</strong></p>
+    <p>Ставка : <strong>?</strong></p>
+    <p>Ставка : <strong>?</strong></p>
 
 
 </div>

@@ -89,6 +89,10 @@ public class NotWorkDayServiceImpl implements NotWorksDayService {
             maxDate = LocalDate.now().plusYears(50);
         } else maxDate = LocalDate.parse(end, DateTimeFormatter.ISO_LOCAL_DATE);
         log.info("max {} , min {}", maxDate, minDate);
+        if (type == null || type.isBlank()) {
+            return nwdRep.findAllByWorkHistoryIdDayAndStartAfterAndStartBefore(whId,
+                    minDate, maxDate);
+        }
         return nwdRep.findAllByWorkHistoryIdAndTypeDayAndStartAfterAndStartBefore(whId,
                 type, minDate, maxDate);
     }

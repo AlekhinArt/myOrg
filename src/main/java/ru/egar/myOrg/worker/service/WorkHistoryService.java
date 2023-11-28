@@ -22,9 +22,8 @@ public interface WorkHistoryService extends BaseService<WorkHistory, Long> {
 
     void changeWorkerStatus(Long workerId);
 
-    WorkTableInfo[][] getCalendar();
 
-
+    WorkTableInfo[][] getNotWorksDayInCalendar(Long whId, String start, String end);
 }
 
 
