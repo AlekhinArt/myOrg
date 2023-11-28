@@ -158,4 +158,15 @@ public class WorkHistoryController {
 
         return "redirect:/worker/" + orgId + "/get/" + workerId;
     }
+
+    @GetMapping("/workHours/")
+    public String workHours(Model model) {
+
+
+        model.addAttribute("table", whs.getCalendar());
+
+        return "workHistory/workHours";
+    }
+
+
 }

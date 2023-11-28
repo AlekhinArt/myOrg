@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import ru.egar.myOrg.exception.NotFoundException;
 import ru.egar.myOrg.worker.mapper.EmployPositionMapper;
 import ru.egar.myOrg.worker.model.WorkHistory;
+import ru.egar.myOrg.worker.model.WorkTableInfo;
 import ru.egar.myOrg.worker.model.Worker;
 import ru.egar.myOrg.worker.repository.WorkHistoryRepository;
 import ru.egar.myOrg.worker.repository.WorkerRepository;
@@ -87,7 +88,8 @@ public class WorkerHistoryService implements WorkHistoryService {
         wr.save(worker);
 
     }
-@Override
+
+    @Override
     public void changeWorkerStatus(Long workerId) {
         if (workHistoryRepository.findAllByWorkerIdAndWorkNow(workerId, true).size() < 1) {
             Worker worker = wr.findById(workerId).orElseThrow(() -> new NotFoundException("Работник не найден"));
@@ -95,4 +97,41 @@ public class WorkerHistoryService implements WorkHistoryService {
             wr.save(worker);
         }
     }
+
+
+    @Override
+    public WorkTableInfo[][] getCalendar() {
+        LocalDate localDate = LocalDate.parse("2023-11-01");
+        log.info("День месяца {}", localDate.getDayOfWeek().getValue());
+
+        int daysInMonth = (int) (localDate.plusMonths(1).toEpochDay() - localDate.toEpochDay());
+        WorkTableInfo[][] tableInfos = new WorkTableInfo[6][7];
+        int date = 1;
+        for (int i = 0; i < tableInfos.length; i++) {
+            for (int j = 0; j < tableInfos[0].length; j++) {
+                if ((localDate.getDayOfWeek().getValue()-1 <= j || i > 0) && (date <= daysInMonth)) {
+                    tableInfos[i][j] = WorkTableInfo
+                            .builder()
+                            .hours(8)
+                            .dateMonth(date)
+                            .show(true)
+                            .build();
+                    ++date;
+                } else {
+                    tableInfos[i][j] = WorkTableInfo
+                            .builder()
+                            .show(false)
+                            .build();
+
+                }
+
+
+            }
+        }
+
+        return tableInfos;
+
+    }
+
+
 }

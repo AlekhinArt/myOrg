@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+
+<head>
+    <!--    <meta charset="UTF-8">-->
+    <title>New org</title>
+    <head th:insert="~{fragments/head :: head}"></head>
+</head>
+
+
+<body>
+<div th:insert="~{fragments/header :: header}"></div>
+<div th:insert="~{fragments/leftPanel :: leftPanel}"></div>
+
+
+<div class="container">
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th style="width: 14%">Понедельник</th>
+            <th style="width: 14%">Вторник</th>
+            <th style="width: 14%">Среда</th>
+            <th style="width: 14%">Четверг</th>
+            <th style="width: 14%">Пятница</th>
+            <th style="width: 14%">Суббота</th>
+            <th style="width: 14%">Воскресенье</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="row, iterray : ${table}">
+
+            <td th:each="column : ${row}"  >
+                <div th:if="*{column.isShow()}">
+                    <p> <strong th:text="*{column.getDateMonth()}"></strong></p>
+                    <p> Отработано часов <strong th:text="*{column.getHours()}"></strong></p>
+                    <p> Email: <strong th:text="*{column.getHours()}"></strong></p>
+
+                </div>
+
+            </td>
+        </tr>
+
+
+        </tbody>
+
+
+    </table>
+
+
+</div>
+<footer class="my-5 pt-5 text-body-secondary text-center text-small">
+    <p class="mb-1">&copy; 2023 AlekhinArt </p>
+</footer>
+
+
+</body>
+</html>
+
