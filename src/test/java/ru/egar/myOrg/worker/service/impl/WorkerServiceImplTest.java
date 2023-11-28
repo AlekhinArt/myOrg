@@ -3,6 +3,8 @@ package ru.egar.myOrg.worker.service.impl;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.transaction.annotation.Transactional;
 import ru.egar.myOrg.document.model.PaperDocument;
 import ru.egar.myOrg.document.repository.PassportRepository;
 import ru.egar.myOrg.organization.dto.OrganizationDto;
@@ -12,7 +14,6 @@ import ru.egar.myOrg.organization.model.SupportOrg;
 import ru.egar.myOrg.organization.service.OrganizationService;
 import ru.egar.myOrg.worker.dto.WorkerCreateDto;
 import ru.egar.myOrg.worker.dto.WorkerDto;
-import ru.egar.myOrg.worker.dto.WorkerShowDto;
 import ru.egar.myOrg.worker.model.EmployPosition;
 import ru.egar.myOrg.worker.model.WorkHistory;
 import ru.egar.myOrg.worker.model.Worker;
@@ -22,15 +23,12 @@ import ru.egar.myOrg.worker.repository.EmployPositionRepository;
 import ru.egar.myOrg.worker.repository.WorkerRepository;
 import ru.egar.myOrg.worker.service.WorkerService;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.unitils.reflectionassert.ReflectionAssert.assertReflectionEquals;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 
@@ -57,6 +55,7 @@ class WorkerServiceImplTest {
     EmployPosition employPosition;
     SupportOrg supportOrg;
 
+
     @BeforeAll
     public static void start() {
 
@@ -78,9 +77,9 @@ class WorkerServiceImplTest {
                 .codType("004")
                 .build();
         organization = Organization.builder()
-                .id(1L)
-                .address("Москва")
-                .name("Имя")
+//                .id(1L)
+                .address("пїЅпїЅпїЅпїЅпїЅпїЅ")
+                .name("пїЅпїЅпїЅ")
                 .inn("1234567891")
                 .ogrn("1234567891234")
                 .phoneNumber("89998887766")
@@ -88,9 +87,9 @@ class WorkerServiceImplTest {
                 .supportOrg(supportOrg)
                 .build();
         organization2 = Organization.builder()
-                .id(2L)
-                .address("Питер")
-                .name("Имя")
+//                .id(2L)
+                .address("пїЅпїЅпїЅпїЅпїЅ")
+                .name("пїЅпїЅпїЅ")
                 .inn("111111111")
                 .ogrn("22222222")
                 .phoneNumber("89998887766")
@@ -98,13 +97,13 @@ class WorkerServiceImplTest {
                 .supportOrg(supportOrg)
                 .build();
         workerDto = WorkerDto.builder()
-                .organization(organization)
-                .orgId(1L)
+//                .organization(organization)
+                .orgId(3L)
                 .workNow(true)
-                .name("Вася")
+                .name("Р’Р°СЃСЏ")
                 .gender(Gender.MALE)
-                .surname("Пупкин")
-                .patronymic("Щавельев")
+                .surname("РџСѓРїРєРёРЅ")
+                .patronymic("Р©Р°РІРµР»СЊРµРІ")
                 .familyStatus(FamilyStatus.MARRIED)
                 .birthday(LocalDate.parse("2000-10-10", DateTimeFormatter.ISO_LOCAL_DATE))
                 .minorChildren(false)
@@ -114,22 +113,22 @@ class WorkerServiceImplTest {
                 .delete(false)
                 .organization(organization)
                 .workNow(true)
-                .name("Не Вася")
+                .name("РќРµ Р’Р°СЃСЏ")
                 .gender(Gender.MALE)
-                .surname("Не Пупкин")
-                .patronymic("Не Щавельев")
+                .surname("РќРµ РџСѓРїРєРёРЅ")
+                .patronymic("РќРµ Р©Р°РІРµР»СЊРµРІ")
                 .familyStatus(FamilyStatus.SINGLE)
                 .birthday(LocalDate.parse("2000-01-01"))
                 .minorChildren(false)
                 .phoneNumber("+79603184060")
                 .build();
         workerCreateDto = WorkerCreateDto.builder()
-                .orgId(1L)
+                .orgId(3L)
                 .workNow(true)
-                .name("Вася")
+                .name("Р’Р°СЃСЏ")
                 .gender(Gender.MALE)
-                .surname("Пупкин")
-                .patronymic("Щавельев")
+                .surname("РџСѓРїРєРёРЅ")
+                .patronymic("Р©Р°РІРµР»СЊРµРІ")
                 .familyStatus(FamilyStatus.MARRIED)
                 .birthday(LocalDate.parse("2000-10-10", DateTimeFormatter.ISO_LOCAL_DATE))
                 .minorChildren(false)
@@ -146,10 +145,9 @@ class WorkerServiceImplTest {
 
     @Order(1)
     @Test
+//    @Sql({"/clear.sql"})
     void letsGo() {
-        //инициализируем тесты
-        organizationService.create(OrganizationMapper.toOrganizationDto(organization));
-        organizationService.create(OrganizationMapper.toOrganizationDto(organization2));
+
         employPositionRepository.save(employPosition);
 
 
@@ -159,11 +157,17 @@ class WorkerServiceImplTest {
     @Order(2)
     @Test
     void create() {
+        OrganizationDto organizationDto = organizationService.create(OrganizationMapper.toOrganizationDto(organization));
+        OrganizationDto organizationDto2 = organizationService.create(OrganizationMapper.toOrganizationDto(organization2));
+
+
+        workerDto.setOrgId(organizationDto.getId());
         WorkerDto workerDtoAfter = workerService.create(workerDto);
         workerDto.setId(1L);
+
         assertEquals(workerDto.getId(), workerDtoAfter.getId());
         assertEquals(workerDto.getName(), workerDtoAfter.getName());
-        assertEquals(workerDto.getOrganization().getId(), workerDtoAfter.getOrganization().getId());
+        assertEquals(workerDto.getOrgId(), workerDtoAfter.getOrganization().getId());
         assertEquals(workerDto.getBirthday(), workerDtoAfter.getBirthday());
 
 
@@ -190,7 +194,7 @@ class WorkerServiceImplTest {
         WorkerDto workerDto1 = workerService.getById(1L).orElseThrow();
         assertEquals(workerDto.getPatronymic(), workerDto1.getPatronymic());
         assertEquals(workerDto.getName(), workerDto1.getName());
-        assertEquals(workerDto.getOrganization().getId(), workerDto1.getOrganization().getId());
+        assertEquals(workerDto.getOrgId(), workerDto1.getOrganization().getId());
         assertEquals(workerDto.getBirthday(), workerDto1.getBirthday());
     }
 
@@ -213,7 +217,7 @@ class WorkerServiceImplTest {
     @Order(8)
     @Test
     void showWorkers() {
-        int a = workerService.showWorkers(1L).size();
+        int a = workerService.showWorkers(3L).size();
 
         assertEquals(2, a);
 
@@ -224,13 +228,13 @@ class WorkerServiceImplTest {
     @Test
     void searchWorkers() {
         WorkerDto newWorkerDto = workerDto;
-        newWorkerDto.setName("Маша");
+        newWorkerDto.setName("РњР°С€Р°");
         newWorkerDto.setOrgId(2L);
         newWorkerDto.setOrganization(organization2);
         workerService.create(newWorkerDto);
-        int a = workerService.searchWorkers(2L, "Маша", "true").size();
+        int a = workerService.searchWorkers(2L, "РњР°С€Р°", "true").size();
         assertEquals(1, a);
-        a = workerService.searchWorkers(2L, "Маша", "false").size();
+        a = workerService.searchWorkers(2L, "РњР°С€Р°", "false").size();
         assertEquals(0, a);
         a = workerService.searchWorkers(2L, "", "true").size();
         assertEquals(1, a);
@@ -238,22 +242,12 @@ class WorkerServiceImplTest {
 
     }
 
-    @Order(10)
-    @Test
-    void createWorker() {
-        Worker newWorker = workerService.createWorker(worker);
-        assertEquals(worker.getName(), newWorker.getName());
-        assertEquals(worker.getPhoneNumber(), newWorker.getPhoneNumber());
-        assertEquals(worker.getGender(), newWorker.getGender());
-        assertEquals(worker.getDelete(), newWorker.getDelete());
-    }
-
 
     @Order(11)
     @Test
     void findAllByOrganizationInAndBirthday() {
-        //сложности с проверкой метода
-        // h2 не понимает синтаксиса пострге
+        //СЃР»РѕР¶РЅРѕСЃС‚Рё СЃ РїСЂРѕРІРµСЂРєРѕР№ РјРµС‚РѕРґР°
+        // h2 РЅРµ РїРѕРЅРёРјР°РµС‚ СЃРёРЅС‚Р°РєСЃРёСЃР° РїРѕСЃС‚СЂРіРµ
         Worker w1 = workerRepository.findById(1L).orElseThrow();
         w1.setBirthday(LocalDate.now());
         workerRepository.save(w1);

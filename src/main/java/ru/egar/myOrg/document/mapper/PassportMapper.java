@@ -10,7 +10,7 @@ public class PassportMapper {
         return PassportDto.builder()
                 .id(paperDocument.getId())
                 .series(paperDocument.getSeries())
-                .number(paperDocument.getSeries())
+                .number(paperDocument.getNumber())
                 .issued(paperDocument.getIssued())
                 .whoIssued(paperDocument.getWhoIssued())
                 .codeType(paperDocument.getTypeDocument())

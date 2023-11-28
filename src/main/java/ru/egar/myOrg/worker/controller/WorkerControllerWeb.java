@@ -90,7 +90,7 @@ public class WorkerControllerWeb {
                 .orElseThrow(() -> new NotFoundException("Работник не найден")));
         model.addAttribute("whs", whs.getByWorkerId(workerId));
         model.addAttribute("orgId", orgId);
-        model.addAttribute("passport", ds.findByWorkerIdAndActualTrue(workerId));
+        model.addAttribute("paperDocument", ds.findByWorkerIdAndActualTrue(workerId));
         return "workers/fullWorker";
     }
 

@@ -9,7 +9,7 @@ public enum TypeOfValue {
     NOTEBOOK("Компьютерная техника"),
     DIGITAL_PRODUCT("Электронный продукт");
 
-    private String typeV;
+    private final String typeV;
 
     TypeOfValue(String typeV) {
         this.typeV = typeV;

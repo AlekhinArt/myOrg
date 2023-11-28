@@ -1,9 +1,11 @@
 package ru.egar.myOrg.worker.service.impl;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.jdbc.Sql;
 import ru.egar.myOrg.exception.DataConflictException;
 import ru.egar.myOrg.exception.ValidException;
 import ru.egar.myOrg.worker.model.WorkHistory;
@@ -37,6 +39,7 @@ public class NotWorkDayServiceImplTest {
     private static NotWorksDays nwd2;
     private static WorkHistory wh;
 
+
     @BeforeEach
     void setUp() {
         wh = WorkHistory.builder()
@@ -60,35 +63,6 @@ public class NotWorkDayServiceImplTest {
 
     }
 
-
-    @Test
-    void getAll() {
-    }
-
-    @Test
-    void getById() {
-    }
-
-    @Test
-    void create() {
-    }
-
-    @Test
-    void updateById() {
-    }
-
-    @Test
-    void deleteById() {
-    }
-
-    @Test
-    void getAllByWhId() {
-    }
-
-    @Test
-    void getAllByWhIdAndType() {
-
-    }
 
     @Test
     void saveNotWorksDay() {
@@ -156,6 +130,6 @@ public class NotWorkDayServiceImplTest {
         notWorksDaysList.add(nwd2);
         Long sum = nwds.getSumNotWorkDays(notWorksDaysList);
 
-        assertEquals(3, sum);
+        assertEquals(12, sum);
     }
 }

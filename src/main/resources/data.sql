@@ -33,7 +33,7 @@ VALUES ('2023-10-15', '2022-01-15', false, 3, 1)
 ON CONFLICT (id)
     DO NOTHING;
 insert into type_document (type_dock_id, actual, code_type_document, name_document, identity)
-VALUES (1, true, '001', 'Паспорт', true),
+VALUES (1, true, '001', 'Паспорт РФ', true),
        (2, true, '002', 'Диплом о высшем образовании', false)
 ON CONFLICT (type_dock_id)
     DO NOTHING;
