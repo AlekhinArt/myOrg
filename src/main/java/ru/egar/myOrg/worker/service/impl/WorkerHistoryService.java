@@ -4,6 +4,8 @@ package ru.egar.myOrg.worker.service.impl;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import ru.egar.myOrg.exception.NotFoundException;
 import ru.egar.myOrg.worker.mapper.EmployPositionMapper;
@@ -101,7 +103,7 @@ public class WorkerHistoryService implements WorkHistoryService {
             wr.save(worker);
         }
     }
-
+    @Cacheable(cacheNames = "table")
     @Override
     public WorkTableInfo[][] getNotWorksDayInCalendar(Long whId, String start, String end) {
         log.info("начал гиблое дело");
@@ -114,6 +116,11 @@ public class WorkerHistoryService implements WorkHistoryService {
         LocalDate localDate = LocalDate.parse(start);
 
         return addToCalendar(getCalendar(  localDate.minusDays(localDate.getDayOfMonth()-1L)), nwdsList);
+
+    }
+
+
+    public void getWorkHours(Long whId, String start, String end){
 
     }
 

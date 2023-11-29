@@ -38,6 +38,7 @@
         <table class="table table-striped">
             <thead>
             <tr>
+                <th style="width: 5%">№</th>
                 <th style="width: 5%">Работает на этой должности</th>
                 <th style="width: 20%">Должность</th>
                 <th style="width: 20%">Описание должности</th>
@@ -53,6 +54,7 @@
 
             <tr th:each="history, iterationStatus : ${whs}">
 
+                <td th:text="${iterationStatus.index +1}">workNow</td>
                 <td th:text="${history.workNow}">workNow</td>
                 <td th:text="${history.employPosition.position}">employPosition</td>
                 <td th:text="${history.employPosition.jobDescription}">jobDescription</td>
@@ -83,6 +85,46 @@
             <input class="btn btn-primary" type="submit" value="Добавить"/>
         </form>
 
+        <div class="container">
+            <h3><b>Просмотреть табель рабочего времени за месяц</b></h3>
+            <form action="#"
+                  th:action="@{'/wh/{orgId}/{workerId}/calendar'( orgId = ${orgId}, workerId = ${worker.getId()} )}"
+                  method="GET">
+                <div class="row">
+                    <div class="col-md-3">
+                        <select type="text" class="form-control" th:name="whId" id="tableForm">
+                            <option th:each="history, iter : ${whs}" th:value="${history.getId()}"
+                                    th:text="${iter.index+1}"></option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Выберите номер истории из таблички выше.
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <select type="text" class="form-control" th:name="month" id="month">
+                            <option th:each="mon : ${Months}" th:value="${mon.getValue()}"
+                                    th:text="${mon.name()}"></option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Выберите месяц.
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+
+                        <input type="text" class="form-control" name="year" required>
+                        <!--                               pattern="[0-9]{1,2}/[0-9]{1,2}/[0-9]{4}"-->
+
+                        <div class="invalid-feedback">
+                            Введите год.
+                        </div>
+                    </div>
+                </div>
+                <input class="btn btn-primary" type="submit" value="Найти"/>
+            </form>
+
+
+        </div>
+
         <h3><b>Материальные ценности</b></h3>
         <div class="table-responsive">
             <table class="table table-striped">
@@ -105,7 +147,6 @@
                     <td th:text="${obj.name}">Название</td>
                     <td th:text="${obj.price}">цена</td>
 
-                    <!--                    <td><a th:href="@{'/obj/del/{id}'(id=${obj.id})}"> Удалить </a></td>-->
                 </tr>
                 </tbody>
 

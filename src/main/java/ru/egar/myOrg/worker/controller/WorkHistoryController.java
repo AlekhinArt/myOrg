@@ -16,6 +16,8 @@ import ru.egar.myOrg.worker.service.WorkerService;
 import ru.egar.myOrg.worker.service.impl.WorkerHistoryService;
 
 import java.time.LocalDate;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.util.Collection;
 import java.util.Locale;
@@ -164,20 +166,25 @@ public class WorkHistoryController {
         return "redirect:/worker/" + orgId + "/get/" + workerId;
     }
 
-    @GetMapping("/{orgId}/{workerId}/{whId}/calendar")
+    @GetMapping("/{orgId}/{workerId}/calendar")
     public String workHours(@PathVariable Long workerId,
                             @PathVariable Long orgId,
-                            @PathVariable Long whId,
-//                            @RequestParam String start,
-//                            @RequestParam String end,
+                            @RequestParam Long whId,
+                            @RequestParam String year,
+                            @RequestParam String month,
                             Model model) {
-
+        log.info("{} {} {}", year, month, whId);
+        LocalDate start = LocalDate.of(Integer.parseInt(year), Integer.parseInt(month), 01);
+        LocalDate end = start.plusDays(start.lengthOfMonth() - 1);
+        log.info("start : {} , end : {}", start, end);
 
         model.addAttribute("workerId", workerId);
         model.addAttribute("orgId", orgId);
-        model.addAttribute("month", LocalDate.parse("2023-11-01").getMonth().getDisplayName(TextStyle.FULL, Locale.ENGLISH));
+        model.addAttribute("month", start.getMonth().name());
         model.addAttribute("worker", ws.getById(orgId).orElseThrow(() -> new NotFoundException("Работник не найден")));
-        model.addAttribute("table", whs.getNotWorksDayInCalendar(whId, "2023-11-01", "2023-11-30"));
+        model.addAttribute("table", whs.getNotWorksDayInCalendar(whId,
+                start.format(DateTimeFormatter.ISO_LOCAL_DATE), end.format(DateTimeFormatter.ISO_LOCAL_DATE)));
+
 
         return "workHistory/workHours";
     }

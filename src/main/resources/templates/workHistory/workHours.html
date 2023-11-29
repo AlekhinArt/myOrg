@@ -38,13 +38,10 @@
         <tr th:each="row, iterray : ${table}">
 
             <td th:each="column : ${row}">
-                <div></div>
                 <div th:if="*{column.isShow()}">
                     <p><strong th:text="*{column.getDateMonth()}"></strong></p>
                     <p><strong th:text="*{column.getWhereBe()}"></strong></p>
                     <p> Отработано часов:<strong th:text="*{column.getHours()}"></strong></p>
-                    <!--                    <p> Email: <strong th:text="*{column.getHours()}"></strong></p>-->
-
                 </div>
 
             </td>

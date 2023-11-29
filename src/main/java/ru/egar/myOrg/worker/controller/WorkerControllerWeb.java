@@ -17,6 +17,8 @@ import ru.egar.myOrg.worker.service.WorkHistoryService;
 import ru.egar.myOrg.worker.service.WorkerService;
 
 import java.time.LocalDate;
+import java.time.Month;
+import java.time.Year;
 
 @Slf4j
 @Controller
@@ -91,6 +93,8 @@ public class WorkerControllerWeb {
         model.addAttribute("whs", whs.getByWorkerId(workerId));
         model.addAttribute("orgId", orgId);
         model.addAttribute("paperDocument", ds.findByWorkerIdAndActualTrue(workerId));
+        model.addAttribute("Months", Month.values());
+
         return "workers/fullWorker";
     }
 
