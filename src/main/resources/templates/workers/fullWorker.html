@@ -86,7 +86,7 @@
         </form>
 
         <div class="container">
-            <h3><b>Просмотреть табель рабочего времени за месяц</b></h3>
+            <h3><b>Просмотреть табель рабочего времени и начисленной зарплаты за месяц</b></h3>
             <form action="#"
                   th:action="@{'/wh/{orgId}/{workerId}/calendar'( orgId = ${orgId}, workerId = ${worker.getId()} )}"
                   method="GET">

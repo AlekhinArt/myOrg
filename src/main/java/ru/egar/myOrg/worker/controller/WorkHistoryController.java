@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.thymeleaf.expression.Strings;
 import ru.egar.myOrg.exception.NotFoundException;
 import ru.egar.myOrg.worker.model.WorkHistory;
 import ru.egar.myOrg.worker.model.notWorksDays.NotWorksDays;
@@ -16,11 +15,8 @@ import ru.egar.myOrg.worker.service.WorkerService;
 import ru.egar.myOrg.worker.service.impl.WorkerHistoryService;
 
 import java.time.LocalDate;
-import java.time.Month;
 import java.time.format.DateTimeFormatter;
-import java.time.format.TextStyle;
 import java.util.Collection;
-import java.util.Locale;
 
 @Slf4j
 @Controller
@@ -157,10 +153,12 @@ public class WorkHistoryController {
                                     @PathVariable Long orgId,
                                     @RequestParam LocalDate startWork,
                                     @RequestParam Long emplPosId,
+                                    @RequestParam String baseRate,
+                                    @RequestParam String indexRate,
                                     Model model) {
-        log.info("createWorkHistory workerId {}, orgId {}, wh.start {}, emplPosId {}",
-                workerId, orgId, startWork, emplPosId);
-        whs.createNewWorkHistory(workerId, startWork, emplPosId);
+        log.info("createWorkHistory workerId {}, orgId {}, wh.start {}, emplPosId {}, baseRate {}, indexRate {}",
+                workerId, orgId, startWork, emplPosId, baseRate, indexRate);
+        whs.createNewWorkHistory(workerId, startWork, emplPosId, baseRate, indexRate);
 
 
         return "redirect:/worker/" + orgId + "/get/" + workerId;
@@ -183,6 +181,8 @@ public class WorkHistoryController {
         model.addAttribute("month", start.getMonth().name());
         model.addAttribute("worker", ws.getById(orgId).orElseThrow(() -> new NotFoundException("Работник не найден")));
         model.addAttribute("table", whs.getNotWorksDayInCalendar(whId,
+                start.format(DateTimeFormatter.ISO_LOCAL_DATE), end.format(DateTimeFormatter.ISO_LOCAL_DATE)));
+        model.addAttribute("paymentInfo", whs.getPaymentInfo(whId,
                 start.format(DateTimeFormatter.ISO_LOCAL_DATE), end.format(DateTimeFormatter.ISO_LOCAL_DATE)));
 
 

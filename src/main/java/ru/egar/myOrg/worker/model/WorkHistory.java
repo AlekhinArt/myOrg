@@ -2,6 +2,7 @@ package ru.egar.myOrg.worker.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import ru.egar.myOrg.worker.model.salary.Salary;
 
 import java.time.LocalDate;
 
@@ -33,4 +34,6 @@ public class WorkHistory {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "worker_id")
     private Worker worker;
+    @OneToOne
+    private Salary salary;
 }

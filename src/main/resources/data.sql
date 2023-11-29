@@ -7,11 +7,12 @@ ON CONFLICT (id)
     DO NOTHING;
 
 
-insert into support_org( send_email_birthday)
+insert into support_org(send_email_birthday)
 VALUES (true);
 
-insert into organization (address, inn, name, ogrn, phone_number, zip,support_org_sup_id, email)
-VALUES ('Москва, Пионерская д.2', '1234567891', 'Рога и копыта', '1234567891234', '89998887766', '111000',1, 'teman94@mail.ru')
+insert into organization (address, inn, name, ogrn, phone_number, zip, support_org_sup_id, email)
+VALUES ('Москва, Пионерская д.2', '1234567891', 'Рога и копыта', '1234567891234', '89998887766', '111000', 1,
+        'teman94@mail.ru')
 ;
 
 INSERT INTO worker (birthday, delete, name, patronymic, phone_number, surname, work_now, org_id,
@@ -22,16 +23,22 @@ VALUES ('2007-11-02', FALSE, 'Иван', 'Васильевич', '+79998885544', 'Пупкин', TRU
         'MALE', 'bigBoss@mail.ru')
 ON CONFLICT (id)
     DO NOTHING;
+insert into salary(base_rate, index_rate)
+VALUES (100000, 1.25),
+       (140000, 1.15),
+       (102000, 1.25);
+insert into work_history (start_work, work_now, empl_id, worker_id, salary_id)
+VALUES ('2023-10-15', True, 3, 1, 1),
+       ('2023-11-15', True, 3, 2, 2)
+ON CONFLICT (id)
+    DO NOTHING;
 
-insert into work_history (start_work, work_now, empl_id, worker_id)
-VALUES ('2023-10-15', True, 3, 1),
-       ('2023-11-15', True, 3, 2)
+
+insert into work_history (end_work, start_work, work_now, empl_id, worker_id, salary_id)
+VALUES ('2023-10-15', '2022-01-15', false, 3, 1, 3)
 ON CONFLICT (id)
     DO NOTHING;
-insert into work_history (end_work, start_work, work_now, empl_id, worker_id)
-VALUES ('2023-10-15', '2022-01-15', false, 3, 1)
-ON CONFLICT (id)
-    DO NOTHING;
+
 insert into type_document (type_dock_id, actual, code_type_document, name_document, identity)
 VALUES (1, true, '001', 'Паспорт РФ', true),
        (2, true, '002', 'Диплом о высшем образовании', false)

@@ -52,13 +52,15 @@
 
 
     </table>
-    <p>Всего отработано часов : <strong>?</strong></p>
-    <p>Ставка : <strong>?</strong></p>
-    <p>Ставка : <strong>?</strong></p>
+    <p>Всего отработано часов : <strong th:text="*{paymentInfo.getSumHours()}"></strong></p>
+    <p>Ставка : <strong th:text="*{paymentInfo.getBaseRate()}"></strong></p>
+    <p>Коэффициент : <strong th:text="*{paymentInfo.getIndexRate()}"></strong></p>
+    <p>Суммарная оплата : <strong th:text="*{paymentInfo.getSum()}"></strong></p>
+
 
 
 </div>
-<footer class="my-5 pt-5 text-body-secondary text-center text-small">
+<footer class=" my-5 pt-5 text-body-secondary text-center text-small">
     <p class="mb-1">&copy; 2023 AlekhinArt </p>
 </footer>
 

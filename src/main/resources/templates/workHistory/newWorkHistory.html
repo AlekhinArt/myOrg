@@ -40,6 +40,24 @@
                            required>
 
                 </div>
+                <!--        </div>-->
+                <label for="baseRate" class="form-label">Укажите базовую ставку</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="baseRate"
+                           th:name="baseRate" placeholder="10000"
+                           min="0"
+                           required>
+
+                </div>
+                <!--    </div>-->
+                <label for="indexRate" class="form-label">Укажите коэфицент</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="indexRate"
+                           th:name="indexRate" placeholder="1.25"
+                           min="0"
+                           required>
+
+                </div>
                 <hr>
                 <button type="submit" class="btn btn-primary btn-lg">Сохранить</button>
                 <hr>
