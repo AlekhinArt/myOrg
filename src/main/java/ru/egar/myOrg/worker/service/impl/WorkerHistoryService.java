@@ -4,16 +4,17 @@ package ru.egar.myOrg.worker.service.impl;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import ru.egar.myOrg.exception.NotFoundException;
 import ru.egar.myOrg.worker.mapper.EmployPositionMapper;
 import ru.egar.myOrg.worker.mapper.NotWorksDaysMapper;
-import ru.egar.myOrg.worker.model.salary.Salary;
-import ru.egar.myOrg.worker.model.salary.SalaryShow;
 import ru.egar.myOrg.worker.model.WorkHistory;
 import ru.egar.myOrg.worker.model.WorkTableInfo;
 import ru.egar.myOrg.worker.model.Worker;
 import ru.egar.myOrg.worker.model.notWorksDays.NotWorksDaysWithDaysList;
+import ru.egar.myOrg.worker.model.salary.Salary;
+import ru.egar.myOrg.worker.model.salary.SalaryShow;
 import ru.egar.myOrg.worker.repository.SalaryRepository;
 import ru.egar.myOrg.worker.repository.WorkHistoryRepository;
 import ru.egar.myOrg.worker.repository.WorkerRepository;
@@ -114,7 +115,7 @@ public class WorkerHistoryService implements WorkHistoryService {
         }
     }
 
-    //    @Cacheable(cacheNames = "table")
+    @Cacheable(cacheNames = "table")
     @Override
     public WorkTableInfo[][] getNotWorksDayInCalendar(Long whId, String startPeriod, String endPeriod) {
         log.info("начал гиблое дело");
@@ -137,6 +138,7 @@ public class WorkerHistoryService implements WorkHistoryService {
 
     }
 
+
     @Override
     public SalaryShow getPaymentInfo(Long whId, String start, String end) {
         int sumHours = 0;
@@ -149,6 +151,7 @@ public class WorkerHistoryService implements WorkHistoryService {
             }
         }
         WorkHistory workHistory = getById(whId).orElseThrow(() -> new NotFoundException("История не найдена"));
+        clearCash();
         return SalaryShow.builder()
                 .sumHours(sumHours)
                 .indexRate(workHistory.getSalary().getIndexRate())
@@ -157,6 +160,10 @@ public class WorkerHistoryService implements WorkHistoryService {
                 .build();
     }
 
+    @CacheEvict(cacheNames = "table", allEntries = true)
+    public void clearCash() {
+
+    }
 
     //метод создания календаря
     private WorkTableInfo[][] getCalendar(LocalDate firstDayMonth) {
@@ -197,6 +204,7 @@ public class WorkerHistoryService implements WorkHistoryService {
         return tableInfos;
 
     }
+
 
     //Добавляем в календарь не рабочие дни и проверяем на принадлежность к истории
     private WorkTableInfo[][] addToCalendar(WorkTableInfo[][] calendar,
