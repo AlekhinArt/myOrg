@@ -17,5 +17,6 @@ public class WorkTableInfo {
     private String whereBe;
     private int dateMonth;
     private boolean show;
+    private boolean workDay;
 
 }

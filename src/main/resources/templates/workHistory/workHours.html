@@ -52,10 +52,11 @@
 
 
     </table>
+    <p>Всего рабочих часов : <strong th:text="*{paymentInfo.getAllWorkHours()}"></strong></p>
     <p>Всего отработано часов : <strong th:text="*{paymentInfo.getSumHours()}"></strong></p>
     <p>Ставка : <strong th:text="*{paymentInfo.getBaseRate()}"></strong></p>
     <p>Коэффициент : <strong th:text="*{paymentInfo.getIndexRate()}"></strong></p>
-    <p>Суммарная оплата : <strong th:text="*{paymentInfo.getSum()}"></strong></p>
+    <p>Суммарная оплата : <strong th:text="*{paymentInfo.getSumMoney()}"></strong></p>
 
 
 

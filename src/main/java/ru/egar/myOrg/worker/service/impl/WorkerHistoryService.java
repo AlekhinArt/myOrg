@@ -142,21 +142,33 @@ public class WorkerHistoryService implements WorkHistoryService {
     @Override
     public SalaryShow getPaymentInfo(Long whId, String start, String end) {
         int sumHours = 0;
+        int sumWorkHours = 0;
+        double pay = 0;
         WorkTableInfo[][] nwdcal = getNotWorksDayInCalendar(whId, start, end);
         for (WorkTableInfo[] workTableInfos : nwdcal) {
             for (int j = 0; j < nwdcal[0].length; j++) {
                 if (workTableInfos[j].getHours() != null) {
                     sumHours = sumHours + workTableInfos[j].getHours();
+                    if (workTableInfos[j].isWorkDay()) {
+                        sumWorkHours = sumWorkHours + workTableInfos[j].getHours();
+                    }
                 }
+
             }
         }
+
+
         WorkHistory workHistory = getById(whId).orElseThrow(() -> new NotFoundException("История не найдена"));
+        if (sumHours > 0)
+            pay = (workHistory.getSalary().getBaseRate() * workHistory.getSalary().getIndexRate()) * (sumHours / sumWorkHours);
+
         clearCash();
         return SalaryShow.builder()
+                .allWorkHours(sumWorkHours)
                 .sumHours(sumHours)
                 .indexRate(workHistory.getSalary().getIndexRate())
                 .baseRate(workHistory.getSalary().getBaseRate())
-                .sum(workHistory.getSalary().getBaseRate() * workHistory.getSalary().getIndexRate())
+                .sumMoney(pay)
                 .build();
     }
 
@@ -167,7 +179,6 @@ public class WorkerHistoryService implements WorkHistoryService {
 
     //метод создания календаря
     private WorkTableInfo[][] getCalendar(LocalDate firstDayMonth) {
-//        LocalDate localDate = LocalDate.parse("2023-11-01");
         log.info("День месяца {}", firstDayMonth.getDayOfWeek().getValue());
         int daysInMonth = (int) (firstDayMonth.plusMonths(1).toEpochDay() - firstDayMonth.toEpochDay());
         WorkTableInfo[][] tableInfos = new WorkTableInfo[6][7];
@@ -182,6 +193,7 @@ public class WorkerHistoryService implements WorkHistoryService {
                             .builder()
                             .dateMonth(date)
                             .show(true)
+                            .workDay(false)
                             .whereBe("ВЫХОДНОЙ")
                             .build();
                     ++date;
@@ -191,6 +203,7 @@ public class WorkerHistoryService implements WorkHistoryService {
                             .builder()
                             .dateMonth(date)
                             .show(true)
+                            .workDay(true)
                             .build();
                     ++date;
                 } else {
