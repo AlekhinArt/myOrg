@@ -1,11 +1,13 @@
 package ru.egar.myOrg.document.mapper;
 
+import org.springframework.stereotype.Component;
 import ru.egar.myOrg.document.dto.PassportDto;
 import ru.egar.myOrg.document.model.PaperDocument;
 
+@Component
 public class PassportMapper {
 
-    public static PassportDto toPassportDto(PaperDocument paperDocument) {
+    public PassportDto toPassportDto(PaperDocument paperDocument) {
 
         return PassportDto.builder()
                 .id(paperDocument.getId())

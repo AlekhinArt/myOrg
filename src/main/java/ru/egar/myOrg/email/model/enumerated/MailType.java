@@ -1,4 +1,4 @@
-package ru.egar.myOrg.emailSendler.model.enumerated;
+package ru.egar.myOrg.email.model.enumerated;
 
 public enum MailType {
     CONGRATULATION_BIRTHDAY,

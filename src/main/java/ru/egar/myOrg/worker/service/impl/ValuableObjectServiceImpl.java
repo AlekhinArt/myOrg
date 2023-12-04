@@ -16,6 +16,7 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class ValuableObjectServiceImpl implements ValuableObjectsService {
+    private final OrganizationMapper orgMap;
     private final ValuableObjectsRepository vorRep;
     private final OrganizationService orgSer;
 
@@ -48,7 +49,7 @@ public class ValuableObjectServiceImpl implements ValuableObjectsService {
     @Override
     public ValuableObject create(ValuableObject vo, Long orgId) {
         vo.setOrganization(orgSer.getById(orgId)
-                .map(OrganizationMapper::toOrganization)
+                .map(orgMap::toOrganization)
                 .orElseThrow(() -> new NotFoundException("Организация не найдена")));
 
         return vorRep.save(vo);

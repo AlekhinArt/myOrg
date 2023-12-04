@@ -19,6 +19,8 @@ import static org.unitils.reflectionassert.ReflectionAssert.assertReflectionEqua
 @SpringBootTest
 class OrganizationServiceImplTest {
     @Autowired
+    private OrganizationMapper orgMap;
+    @Autowired
     private OrganizationService orgSer;
     Organization organization;
     OrganizationDto organizationDto;
@@ -54,7 +56,6 @@ class OrganizationServiceImplTest {
     }
 
 
-
     @AfterEach
     void tearDown() {
     }
@@ -63,8 +64,8 @@ class OrganizationServiceImplTest {
     @Order(1)
     @DisplayName("Check mapper ")
     void mapperTest() {
-        OrganizationDto organizationDtoAfter = OrganizationMapper.toOrganizationDto(organization);
-        Organization organizationAfter = OrganizationMapper.toOrganization(organizationDto);
+        OrganizationDto organizationDtoAfter = orgMap.toOrganizationDto(organization);
+        Organization organizationAfter = orgMap.toOrganization(organizationDto);
 
         assertEquals(organization.getName(), organizationAfter.getName());
         assertEquals(organizationDto.getName(), organizationDtoAfter.getName());

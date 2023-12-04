@@ -1,8 +1,8 @@
-package ru.egar.myOrg.emailSendler.senderService;
+package ru.egar.myOrg.email.senderService;
 
 import jakarta.mail.MessagingException;
-import ru.egar.myOrg.emailSendler.model.Mail;
-import ru.egar.myOrg.emailSendler.model.enumerated.MailType;
+import ru.egar.myOrg.email.model.Mail;
+import ru.egar.myOrg.email.model.enumerated.MailType;
 
 public interface SenderService {
 

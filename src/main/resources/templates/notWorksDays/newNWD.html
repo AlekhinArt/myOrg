@@ -23,9 +23,6 @@
             <h4 class="mb-3">Чуть ниже введите данные</h4>
 
             <form th:method="POST" th:object="${whs}" th:action="@{'/wh/{orgId}/{whId}'(whId=${id}, orgId = ${orgId} )}">
-<!--                <div class="form-group">-->
-<!--                    <input type="hidden" id="orgId"  th:name="workHistory" th:value="{whs}"/>-->
-<!--                </div>-->
 
 
                 <div class="row">
@@ -44,7 +41,6 @@
 
                             <div class="row">
                                 <div class="col-sm-5">
-<!--                                    <li class="checkbox" th:text="${err}">Input is incorrect</li>-->
                                     <label for="start" class="form-label">Дата начала</label>
                                     <div class="input-group">
                                         <input type="date" class="form-control" id="start"

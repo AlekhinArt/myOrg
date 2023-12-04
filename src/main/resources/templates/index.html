@@ -48,12 +48,10 @@
 
 
     <div class="justify-center">
-        <!--            <div class="col-md-5">-->
         <label for="click" class="form-label center ">Создать новую организацию </label>
         <form th:method="GET" th:action="@{/organization/newOrg}">
             <button type="submit" class="btn btn-primary " id=click> Создание</button>
         </form>
-        <!--            </div>-->
     </div>
     <div th:if="${#lists.isEmpty(orgs)}">
         <form th:method="GET" th:action="@{/organization/newOrg}">

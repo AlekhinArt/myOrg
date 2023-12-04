@@ -1,14 +1,14 @@
-package ru.egar.myOrg.scheduled.everyNight;
+package ru.egar.myOrg.scheduled.atnight;
 
 import jakarta.mail.MessagingException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.egar.myOrg.emailSendler.model.enumerated.MailType;
-import ru.egar.myOrg.emailSendler.senderService.SenderService;
+import ru.egar.myOrg.email.model.enumerated.MailType;
+import ru.egar.myOrg.email.senderService.SenderService;
 import ru.egar.myOrg.exception.NotFoundException;
 import ru.egar.myOrg.organization.model.Organization;
-import ru.egar.myOrg.organization.service.OrganizationServiceImpl;
+import ru.egar.myOrg.organization.service.impl.OrganizationServiceImpl;
 import ru.egar.myOrg.worker.dto.WorkerShowDto;
 import ru.egar.myOrg.worker.service.WorkerService;
 
@@ -25,12 +25,6 @@ public class EveryNightBusiness {
 
 
     public void run() throws MessagingException {
-        sendBirthDayGrad();
-
-
-    }
-
-    public void sendBirthDayGrad() throws MessagingException {
         log.info("Запустили программу поздравления с днем рождения");
         Collection<Organization> orgs = orgServ.getAllSentBirthday();
         Collection<Long> ogrgsId = new ArrayList<>();
@@ -50,9 +44,7 @@ public class EveryNightBusiness {
             String text = "Поздравляем с днем рождения";
             senderService.createMail(org.getEmail(), worker.getEmail(), "Поздравление с днем рождения",
                     nam.toString(), org.getAddress(), "С Уважением Ваша " + org.getName(), text, MailType.CONGRATULATION_BIRTHDAY);
-
         }
-
     }
 
 

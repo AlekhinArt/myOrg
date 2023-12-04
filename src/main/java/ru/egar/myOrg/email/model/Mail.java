@@ -1,4 +1,4 @@
-package ru.egar.myOrg.emailSendler.model;
+package ru.egar.myOrg.email.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

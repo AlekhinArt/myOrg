@@ -17,8 +17,7 @@
         <h4 class="mb-3">Изменение паспортных данных </h4>
     </div>
 
-    <form action="#" th:method="POST"
-          th:action="@{'/doc/{orgId}/{workerId}'(orgId = ${orgId}, workerId = ${workerId})}">
+    <form th:action="@{'/doc/{orgId}/{workerId}'(orgId = ${orgId}, workerId = ${workerId})}" >
 
         <div class=" form-group ">
             <input type="hidden" id="id" th:name="id" th:value="${oldPassport.id}"/>
@@ -70,19 +69,10 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-5">
-                <label for="whatDo" class="form-label">Заменить или обновить</label>
-                <select type="text" class="form-control" th:name="whatDo" id="whatDo" required>
-                    <option value="">-- выберите--</option>
-                    <option th:value="true">Обновить паспорт</option>
-                    <option th:value="false">Заменить паспорт</option>
-                </select>
-            </div>
-        </div>
-
         <hr>
-        <button type="submit" class="btn btn-primary btn-lg">Нажмите для продолжения</button>
+        <button type="submit" class="btn btn-primary btn-lg" th:formmethod="put"  >Обновить паспорт</button>
+
+        <button type="submit" class="btn btn-primary btn-lg" formmethod="post">Заменить паспорт</button>
         <hr>
     </form>
 

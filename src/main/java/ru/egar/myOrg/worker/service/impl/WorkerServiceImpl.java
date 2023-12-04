@@ -8,7 +8,6 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import ru.egar.myOrg.document.model.PaperDocument;
 import ru.egar.myOrg.document.service.DocumentService;
-import ru.egar.myOrg.document.service.TypeDocumentService;
 import ru.egar.myOrg.exception.NotFoundException;
 import ru.egar.myOrg.organization.repository.OrganizationRepository;
 import ru.egar.myOrg.worker.dto.WorkerCreateDto;
@@ -36,7 +35,8 @@ public class WorkerServiceImpl implements WorkerService {
     private final WorkHistoryService workHistoryService;
     private final OrganizationRepository orgRep;
     private final DocumentService ds;
-    TypeDocumentService tds;
+    private final WorkerMapper worMap;
+
 
     @Caching(evict = {
             @CacheEvict(cacheNames = "workers", allEntries = true),
@@ -45,7 +45,9 @@ public class WorkerServiceImpl implements WorkerService {
     @Override
     public WorkerDto create(WorkerDto workerDto) {
         workerDto.setOrganization(orgRep.findById(workerDto.getOrgId()).orElseThrow(() -> new NotFoundException("Организация не найдена")));
-        return WorkerMapper.toWorkerDto(workerRepository.save(WorkerMapper.toWorker(workerDto)));
+        var worker = worMap.toWorker(workerDto);
+        worker = workerRepository.save(worker);
+        return worMap.toWorkerDto(worker);
     }
 
     @Caching(evict = {
@@ -64,7 +66,7 @@ public class WorkerServiceImpl implements WorkerService {
     @Override
     public List<WorkerDto> getAll() {
         final List<WorkerDto> workerDTO = workerRepository.findAll().stream()
-                .map(WorkerMapper::toWorkerDto)
+                .map(worMap::toWorkerDto)
                 .collect(Collectors.toList());
         return workerDTO;
     }
@@ -73,7 +75,7 @@ public class WorkerServiceImpl implements WorkerService {
     @Override
     public Optional<WorkerDto> getById(Long aLong) {
         final var workerDto = workerRepository.findById(aLong)
-                .map(WorkerMapper::toWorkerDto);
+                .map(worMap::toWorkerDto);
         return workerDto;
     }
 
@@ -116,7 +118,7 @@ public class WorkerServiceImpl implements WorkerService {
                 .employPosition(emlpRepository.getByPosition(workerDto.getEmployPosition()))
                 .build());
         savePassport(newWorker, paperDocument);
-        return WorkerMapper.toWorkerDto(newWorker);
+        return worMap.toWorkerDto(newWorker);
     }
 
     @Cacheable(cacheNames = "workers")
@@ -124,7 +126,7 @@ public class WorkerServiceImpl implements WorkerService {
     public List<WorkerShowDto> showWorkers(Long id) {
         final List<WorkerShowDto> wsh = workerRepository.getWorkerByOrganization_Id(id)
                 .stream()
-                .map(WorkerMapper::toShowWorker)
+                .map(worMap::toShowWorker)
                 .collect(Collectors.toList());
         return wsh;
     }
@@ -133,7 +135,7 @@ public class WorkerServiceImpl implements WorkerService {
     public Collection<WorkerShowDto> searchWorkers(Long orgId, String word, String workNow) {
         return workerRepository.searchWorkerByParam(orgId, word, Boolean.valueOf(workNow))
                 .stream()
-                .map(WorkerMapper::toShowWorker)
+                .map(worMap::toShowWorker)
                 .collect(Collectors.toList());
     }
 
@@ -149,9 +151,8 @@ public class WorkerServiceImpl implements WorkerService {
         log.info("Готовим работников");
         return workerRepository.findAllByOrganizationInAndBirthday(orgs)
                 .stream()
-                .map(WorkerMapper::toShowWorker)
+                .map(worMap::toShowWorker)
                 .collect(Collectors.toList());
-
     }
 
     private void savePassport(Worker worker, PaperDocument paperDocument) {

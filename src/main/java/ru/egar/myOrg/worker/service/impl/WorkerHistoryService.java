@@ -32,11 +32,13 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class WorkerHistoryService implements WorkHistoryService {
+    private final EmployPositionMapper epMap;
     private final WorkHistoryRepository workHistoryRepository;
     private final WorkerRepository wr;
     private final EmployPositionService emps;
     private final NotWorkDayServiceImpl nwds;
     private final SalaryRepository salaryRep;
+    private final NotWorksDaysMapper mwdMap;
 
 
     @Override
@@ -97,7 +99,7 @@ public class WorkerHistoryService implements WorkHistoryService {
                 .worker(worker)
                 .employPosition(emps.getAll().stream()
                         .filter(pos -> Objects.equals(pos.getId(), emplPosId))
-                        .map(EmployPositionMapper::toEmployPosition)
+                        .map(epMap::toEmployPosition)
                         .findFirst().orElseThrow(() -> new NotFoundException("Позиция не найдена")))
                 .salary(salary)
                 .build());
@@ -129,7 +131,7 @@ public class WorkerHistoryService implements WorkHistoryService {
 
         List<NotWorksDaysWithDaysList> nwdsList = nwds.notWorkDayByTypeAndDate("", whId, startPeriod, endPeriod)
                 .stream()
-                .map(NotWorksDaysMapper::toList)
+                .map(mwdMap::toList)
                 .collect(Collectors.toList());
         LocalDate localDate = LocalDate.parse(startPeriod);
 

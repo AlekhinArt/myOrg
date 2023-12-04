@@ -1,11 +1,13 @@
 package ru.egar.myOrg.organization.mapper;
 
+import org.springframework.stereotype.Component;
 import ru.egar.myOrg.organization.dto.OrganizationDto;
 import ru.egar.myOrg.organization.model.Organization;
 
+@Component
 public class OrganizationMapper {
 
-    public static OrganizationDto toOrganizationDto(Organization organization) {
+    public OrganizationDto toOrganizationDto(Organization organization) {
         return OrganizationDto.builder()
                 .id(organization.getId())
                 .address(organization.getAddress())
@@ -18,7 +20,7 @@ public class OrganizationMapper {
                 .build();
     }
 
-    public static Organization toOrganization(OrganizationDto organizationDto) {
+    public Organization toOrganization(OrganizationDto organizationDto) {
         return Organization.builder()
                 .id(organizationDto.getId())
                 .address(organizationDto.getAddress())

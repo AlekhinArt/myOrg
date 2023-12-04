@@ -1,5 +1,6 @@
 package ru.egar.myOrg.worker.service.impl;
 
+import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -14,12 +15,10 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class EmployPositionServImpl implements EmployPositionService {
 
-    public EmployPositionServImpl(EmployPositionRepository employPositionRepository) {
-        this.employPositionRepository = employPositionRepository;
-    }
-
+    private final EmployPositionMapper epMap;
     private final EmployPositionRepository employPositionRepository;
 
     @Cacheable(cacheNames = "emsdto")
@@ -27,7 +26,7 @@ public class EmployPositionServImpl implements EmployPositionService {
     public List<EmployPositionDto> getAll() {
         final List<EmployPositionDto> empsDto = employPositionRepository.findAll()
                 .stream()
-                .map(EmployPositionMapper::toEmployPositionDto)
+                .map(epMap::toEmployPositionDto)
                 .collect(Collectors.toList());
         return empsDto;
     }
@@ -35,16 +34,16 @@ public class EmployPositionServImpl implements EmployPositionService {
     @Override
     public Optional<EmployPositionDto> getById(Long aLong) {
         return employPositionRepository.findById(aLong)
-                .map(EmployPositionMapper::toEmployPositionDto);
+                .map(epMap::toEmployPositionDto);
 
     }
 
     @CacheEvict(cacheNames = "emsdto", allEntries = true)
     @Override
     public EmployPositionDto create(EmployPositionDto dto) {
-        return EmployPositionMapper.toEmployPositionDto(
+        return epMap.toEmployPositionDto(
                 employPositionRepository.save(
-                        EmployPositionMapper.toEmployPosition(dto)));
+                        epMap.toEmployPosition(dto)));
     }
 
     @Override

@@ -3,10 +3,8 @@ package ru.egar.myOrg.worker.service.impl;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.transaction.annotation.Transactional;
 import ru.egar.myOrg.document.model.PaperDocument;
-import ru.egar.myOrg.document.repository.PassportRepository;
+import ru.egar.myOrg.document.repository.DocumentRepository;
 import ru.egar.myOrg.organization.dto.OrganizationDto;
 import ru.egar.myOrg.organization.mapper.OrganizationMapper;
 import ru.egar.myOrg.organization.model.Organization;
@@ -35,13 +33,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 class WorkerServiceImplTest {
     @Autowired
+    private OrganizationMapper orgMap;
+    @Autowired
     private WorkerService workerService;
     @Autowired
     private OrganizationService organizationService;
     @Autowired
     private WorkerRepository workerRepository;
     @Autowired
-    private PassportRepository passportRepository;
+    private DocumentRepository documentRepository;
     @Autowired
     private EmployPositionRepository employPositionRepository;
 
@@ -157,8 +157,8 @@ class WorkerServiceImplTest {
     @Order(2)
     @Test
     void create() {
-        OrganizationDto organizationDto = organizationService.create(OrganizationMapper.toOrganizationDto(organization));
-        OrganizationDto organizationDto2 = organizationService.create(OrganizationMapper.toOrganizationDto(organization2));
+        OrganizationDto organizationDto = organizationService.create(orgMap.toOrganizationDto(organization));
+        OrganizationDto organizationDto2 = organizationService.create(orgMap.toOrganizationDto(organization2));
 
 
         workerDto.setOrgId(organizationDto.getId());

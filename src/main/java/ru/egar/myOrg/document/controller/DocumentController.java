@@ -31,15 +31,23 @@ public class DocumentController {
     }
 
     @PostMapping("/{orgId}/{workerId}")
+    private String createPassport(@PathVariable Long workerId,
+                                  @PathVariable Long orgId,
+                                  @ModelAttribute PassportDto passport) {
+        log.info("PassportDto {}, {},{}, {}, {},{},", passport.getId(),
+                passport.getIssued(), passport.getWhoIssued(), passport.getNumber(), passport.getSeries(), passport.getCodeType());
+        ds.createNew(passport);
+
+        return "redirect:/worker/" + orgId + "/get/" + workerId;
+    }
+
+    @PutMapping("/{orgId}/{workerId}")
     private String updPassport(@PathVariable Long workerId,
                                @PathVariable Long orgId,
-                               @ModelAttribute PassportDto passport,
-                               @RequestParam String whatDo,
-                               Model model) {
-        log.info("PassportDto {}, {},{}, {}, {},{},{}", passport.getId(),
-                passport.getIssued(), passport.getWhoIssued(), passport.getNumber(), passport.getSeries(), passport.getCodeType(),
-                whatDo);
-        ds.updPas(passport, whatDo);
+                               @ModelAttribute PassportDto passport) {
+        log.info("PassportDto {}, {},{}, {}, {},{}", passport.getId(),
+                passport.getIssued(), passport.getWhoIssued(), passport.getNumber(), passport.getSeries(), passport.getCodeType());
+        ds.updPas(passport);
 
         return "redirect:/worker/" + orgId + "/get/" + workerId;
     }
