@@ -1,10 +1,8 @@
 package ru.egar.myOrg.organization.service;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.jdbc.Sql;
 import ru.egar.myOrg.organization.dto.OrganizationDto;
 import ru.egar.myOrg.organization.mapper.OrganizationMapper;
 import ru.egar.myOrg.organization.model.Organization;

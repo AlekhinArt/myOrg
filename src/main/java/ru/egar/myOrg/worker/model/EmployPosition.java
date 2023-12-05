@@ -3,7 +3,7 @@ package ru.egar.myOrg.worker.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-// TODO: 31.10.2023 Сделать контроллер, добавить в выезжающий список выбор готовых позиций в newWorker
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter

@@ -4,7 +4,6 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import ru.egar.myOrg.document.model.PaperDocument;
-import ru.egar.myOrg.document.repository.DocumentRepository;
 import ru.egar.myOrg.organization.dto.OrganizationDto;
 import ru.egar.myOrg.organization.mapper.OrganizationMapper;
 import ru.egar.myOrg.organization.model.Organization;
@@ -40,8 +39,7 @@ class WorkerServiceImplTest {
     private OrganizationService organizationService;
     @Autowired
     private WorkerRepository workerRepository;
-    @Autowired
-    private DocumentRepository documentRepository;
+
     @Autowired
     private EmployPositionRepository employPositionRepository;
 

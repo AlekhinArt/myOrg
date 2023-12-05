@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import ru.egar.myOrg.document.model.PaperDocument;
 import ru.egar.myOrg.document.service.DocumentService;
@@ -12,7 +11,6 @@ import ru.egar.myOrg.exception.NotFoundException;
 import ru.egar.myOrg.organization.repository.OrganizationRepository;
 import ru.egar.myOrg.worker.dto.WorkerCreateDto;
 import ru.egar.myOrg.worker.dto.WorkerDto;
-import ru.egar.myOrg.worker.dto.WorkerShowDto;
 import ru.egar.myOrg.worker.mapper.WorkerMapper;
 import ru.egar.myOrg.worker.model.WorkHistory;
 import ru.egar.myOrg.worker.model.Worker;
@@ -65,7 +63,7 @@ public class WorkerServiceImpl implements WorkerService {
         return workerDTO;
     }
 
-    @Cacheable(cacheNames = "worker")
+//    @Cacheable(cacheNames = "worker")
     @Override
     public Optional<WorkerDto> getById(Long aLong) {
         final var workerDto = workerRepository.findById(aLong)
@@ -111,35 +109,30 @@ public class WorkerServiceImpl implements WorkerService {
 
     @Cacheable(cacheNames = "workers")
     @Override
-    public List<WorkerShowDto> showWorkers(Long id) {
-        final List<WorkerShowDto> wsh = workerRepository.getWorkerByOrganization_Id(id)
+    public List<WorkerDto> showWorkers(Long id) {
+        final List<WorkerDto> wsh = workerRepository.getWorkerByOrganization_Id(id)
                 .stream()
-                .map(worMap::toShowWorker)
+                .map(worMap::toWorkerDto)
                 .collect(Collectors.toList());
         return wsh;
     }
 
     @Override
-    public Collection<WorkerShowDto> searchWorkers(Long orgId, String word, String workNow) {
+    public Collection<WorkerDto> searchWorkers(Long orgId, String word, String workNow) {
         return workerRepository.searchWorkerByParam(orgId, word, Boolean.valueOf(workNow))
                 .stream()
-                .map(worMap::toShowWorker)
+                .map(worMap::toWorkerDto)
                 .collect(Collectors.toList());
     }
 
 
-    @Override
-    public Worker createWorker(Worker worker) {
-
-        return workerRepository.save(worker);
-    }
 
     @Override
-    public Collection<WorkerShowDto> getForSendMail(Collection<Long> orgs) {
+    public Collection<WorkerDto> getForSendMail(Collection<Long> orgs) {
         log.info("Готовим работников");
         return workerRepository.findAllByOrganizationInAndBirthday(orgs)
                 .stream()
-                .map(worMap::toShowWorker)
+                .map(worMap::toWorkerDto)
                 .collect(Collectors.toList());
     }
 

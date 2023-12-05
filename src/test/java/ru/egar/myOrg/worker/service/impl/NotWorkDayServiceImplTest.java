@@ -1,25 +1,18 @@
 package ru.egar.myOrg.worker.service.impl;
 
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.jdbc.Sql;
 import ru.egar.myOrg.exception.DataConflictException;
-import ru.egar.myOrg.exception.ValidException;
 import ru.egar.myOrg.worker.model.WorkHistory;
 import ru.egar.myOrg.worker.model.notWorksDays.NotWorksDays;
 import ru.egar.myOrg.worker.repository.NotWorksDaysRepository;
 import ru.egar.myOrg.worker.repository.WorkHistoryRepository;
 import ru.egar.myOrg.worker.service.NotWorksDayService;
 
-import java.time.Duration;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.Period;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -84,7 +77,7 @@ public class NotWorkDayServiceImplTest {
 
         nwd3.setStart(LocalDate.parse("2022-10-20"));
         nwd3.setEnd(LocalDate.parse("2022-10-19"));
-        assertThrows(ValidException.class, () -> {
+        assertThrows(DataConflictException.class, () -> {
             nwds.saveNotWorksDay(nwd3, 1L);
         });
 

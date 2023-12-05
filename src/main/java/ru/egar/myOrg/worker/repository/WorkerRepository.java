@@ -1,11 +1,13 @@
 package ru.egar.myOrg.worker.repository;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import ru.egar.myOrg.worker.model.Worker;
 
 import java.util.Collection;
+import java.util.Optional;
 
 public interface WorkerRepository extends JpaRepository<Worker, Long> {
 
@@ -37,6 +39,8 @@ public interface WorkerRepository extends JpaRepository<Worker, Long> {
             "AND " +
             "    DATE_PART('month', w.birthday) = date_part('month', CURRENT_DATE)", nativeQuery = true)
     Collection<Worker> findAllByOrganizationInAndBirthday(Collection<Long> orgs);
+    @Cacheable(cacheNames = "worker")
+    Optional<Worker> findById(Long id);
 
 
 }

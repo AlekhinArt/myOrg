@@ -7,7 +7,6 @@ import org.springframework.validation.Validator;
 import ru.egar.myOrg.worker.model.notWorksDays.NotWorksDays;
 
 @Slf4j
-
 @Component
 public class NotWorksDayValidator implements Validator {
 
@@ -25,7 +24,6 @@ public class NotWorksDayValidator implements Validator {
         if (nwd.getStart().isAfter(nwd.getEnd())) {
             er.rejectValue("start", "value.negative");
         }
-
 
 
     }

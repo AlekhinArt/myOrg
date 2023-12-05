@@ -2,14 +2,12 @@ package ru.egar.myOrg.worker.mapper;
 
 import org.springframework.stereotype.Component;
 import ru.egar.myOrg.worker.dto.WorkerDto;
-import ru.egar.myOrg.worker.dto.WorkerShowDto;
 import ru.egar.myOrg.worker.model.Worker;
 
 @Component
 public class WorkerMapper {
 
-
-    public  Worker toWorker(WorkerDto workerDto) {
+    public Worker toWorker(WorkerDto workerDto) {
         return Worker.builder()
                 .id(workerDto.getId())
                 .name(workerDto.getName())
@@ -28,7 +26,7 @@ public class WorkerMapper {
 
     }
 
-    public  WorkerDto toWorkerDto(Worker worker) {
+    public WorkerDto toWorkerDto(Worker worker) {
         return WorkerDto.builder()
                 .id(worker.getId())
                 .name(worker.getName())
@@ -42,21 +40,6 @@ public class WorkerMapper {
                 .gender(worker.getGender())
                 .minorChildren(worker.getMinorChildren())
                 .email(worker.getEmail())
-                .build();
-
-    }
-
-    public  WorkerShowDto toShowWorker(Worker worker) {
-        return WorkerShowDto.builder()
-                .id(worker.getId())
-                .name(worker.getName())
-                .surname(worker.getSurname())
-                .patronymic(worker.getPatronymic())
-                .birthday(worker.getBirthday())
-                .phoneNumber(worker.getPhoneNumber())
-                .workNow(worker.getWorkNow())
-                .email(worker.getEmail())
-                .orgId(worker.getOrganization().getId())
                 .build();
 
     }

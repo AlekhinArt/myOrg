@@ -8,7 +8,7 @@ import ru.egar.myOrg.email.model.enumerated.MailType;
 import ru.egar.myOrg.email.service.SenderService;
 import ru.egar.myOrg.organization.model.Organization;
 import ru.egar.myOrg.organization.service.impl.OrganizationServiceImpl;
-import ru.egar.myOrg.worker.dto.WorkerShowDto;
+import ru.egar.myOrg.worker.dto.WorkerDto;
 import ru.egar.myOrg.worker.service.WorkerService;
 
 import java.util.Collection;
@@ -31,10 +31,10 @@ public class EveryNightBusiness {
         Collection<Long> ogrgsId = orgs.stream()
                 .map(Organization::getId)
                 .collect(Collectors.toList());
-        Collection<WorkerShowDto> workers = workerService.getForSendMail(ogrgsId);
+        Collection<WorkerDto> workers = workerService.getForSendMail(ogrgsId);
         log.info("Длина списка сотрудников для поздравления {}", workers.size());
         Map<Long, Organization> orgsMap = orgs.stream().collect(Collectors.toMap(Organization::getId, Function.identity()));
-        for (WorkerShowDto worker : workers) {
+        for (WorkerDto worker : workers) {
             Organization org = orgsMap.get(worker.getOrgId());
             StringBuilder nam = new StringBuilder(worker.getName());
             nam.append(" ");
