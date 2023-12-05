@@ -61,17 +61,23 @@
                 <td th:text="${worker.name}">name</td>
                 <td th:text="${worker.surname}">surname</td>
                 <td th:text="${worker.patronymic}">patronymic</td>
-<!--                <td th:text="${worker.employPosition}">employPosition</td>-->
+                <!--                <td th:text="${worker.employPosition}">employPosition</td>-->
                 <td th:text="${worker.birthday}">birthday</td>
                 <td th:text="${worker.phoneNumber}">phoneNumber</td>
-                <td style="text-align: center"><a th:href="@{'/worker/{orgId}/edit/{id}'(id=${worker.id}, orgId= ${orgId})}"><i
+                <td style="text-align: center"><a
+                        th:href="@{'/worker/{orgId}/edit/{id}'(id=${worker.id}, orgId= ${orgId})}"><i
                         class="fa fa-edit"
                         style="font-size:20px"></i></a>
                 </td>
-                <td style="text-align: center"><a
-                        th:href="@{'/worker/{orgId}/delete/{id}'(id=${worker.id}, orgId= ${orgId})}"><i
-                        class="fa fa-trash"
-                        style="font-size:20px"></i></a>
+                <td style="text-align: center">
+                    <form th:action="@{'/worker/{orgId}/delete/{id}'(id=${worker.id}, orgId= ${orgId})}"
+                          th:method="POST">
+                        <input type="hidden" name="_method" value="DELETE"/>
+                        <button type="submit" >
+                            <i class="fa fa-trash"
+                               style="font-size:20px"></i></button>
+
+                    </form>
                 </td>
             </tr>
             </tbody>

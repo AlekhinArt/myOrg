@@ -35,7 +35,7 @@ public interface WorkerRepository extends JpaRepository<Worker, Long> {
             "from worker w  " +
             "where w.org_id in :orgs and " +
             "DATE_PART('day', w.birthday) = date_part('day', CURRENT_DATE)" +
-            "AND " +
+            "AND  w.delete =false and" +
             "    DATE_PART('month', w.birthday) = date_part('month', CURRENT_DATE)", nativeQuery = true)
     Collection<Worker> findAllByOrganizationInAndBirthday(Collection<Long> orgs);
 

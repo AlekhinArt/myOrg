@@ -11,6 +11,10 @@ import java.time.LocalDate;
 @Entity
 @Builder
 @NoArgsConstructor
+
+@Table(name = "paper_document", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"number", "series"})
+})
 //Документ
 public class PaperDocument extends BasePaperDocument {
     @Id

@@ -6,6 +6,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import ru.egar.myOrg.document.model.PaperDocument;
 import ru.egar.myOrg.document.service.DocumentService;
+import ru.egar.myOrg.exception.DataConflictException;
 import ru.egar.myOrg.exception.NotFoundException;
 import ru.egar.myOrg.organization.repository.OrganizationRepository;
 import ru.egar.myOrg.worker.dto.WorkerCreateDto;
@@ -81,36 +82,43 @@ public class WorkerServiceImpl implements WorkerService {
     @CacheEvict(cacheNames = {"workers", "worker"}, allEntries = true)
     @Override
     public WorkerDto create(WorkerCreateDto workerDto, PaperDocument paperDocument) {
-        Worker newWorker = workerRepository.save(Worker.builder()
-                .name(workerDto.getName())
-                .surname(workerDto.getSurname())
-                .patronymic(workerDto.getPatronymic())
-                .phoneNumber(workerDto.getPhoneNumber())
-                .birthday(workerDto.getBirthday())
-                .workNow(workerDto.getWorkNow())
-                .familyStatus(workerDto.getFamilyStatus())
-                .gender(workerDto.getGender())
-                .delete(Boolean.FALSE)
-                .minorChildren(workerDto.getMinorChildren())
-                .organization(orgRepo.findById(workerDto.getOrgId()).orElseThrow(
-                        () -> new NotFoundException("Organization with id " +
-                                workerDto.getOrgId() + " not found")))
-                .build());
-        log.info("worker id {}", newWorker.getId());
-        workHistoryService.create(WorkHistory.builder()
-                .worker(newWorker)
-                .startWork(workerDto.getStartWork())
-                .workNow(workerDto.getWorkNow())
-                .employPosition(emlpRepository.getByPosition(workerDto.getEmployPosition()))
-                .build());
-        savePassport(newWorker, paperDocument);
-        return worMap.toWorkerDto(newWorker);
+        try {
+            Worker newWorker = workerRepository.save(Worker.builder()
+                    .name(workerDto.getName())
+                    .surname(workerDto.getSurname())
+                    .patronymic(workerDto.getPatronymic())
+                    .phoneNumber(workerDto.getPhoneNumber())
+                    .birthday(workerDto.getBirthday())
+                    .workNow(workerDto.getWorkNow())
+                    .familyStatus(workerDto.getFamilyStatus())
+                    .gender(workerDto.getGender())
+                    .delete(Boolean.FALSE)
+                    .minorChildren(workerDto.getMinorChildren())
+                    .organization(orgRepo.findById(workerDto.getOrgId()).orElseThrow(
+                            () -> new NotFoundException("Organization with id " +
+                                    workerDto.getOrgId() + " not found")))
+                    .build());
+            log.info("worker id {}", newWorker.getId());
+            workHistoryService.create(WorkHistory.builder()
+                    .worker(newWorker)
+                    .startWork(workerDto.getStartWork())
+                    .workNow(workerDto.getWorkNow())
+                    .employPosition(emlpRepository.getByPosition(workerDto.getEmployPosition()))
+                    .build());
+            savePassport(newWorker, paperDocument);
+            return worMap.toWorkerDto(newWorker);
+        } catch (Exception e) {
+            throw new DataConflictException(e.getMessage());
+        }
+
+
     }
 
     @Override
     public List<WorkerDto> showWorkers(Long id) {
         final List<WorkerDto> wsh = workerRepository.getWorkerByOrganization_Id(id)
                 .stream()
+                .filter(w -> w.getDelete().equals(false))
                 .map(worMap::toWorkerDto)
                 .collect(Collectors.toList());
         return wsh;
