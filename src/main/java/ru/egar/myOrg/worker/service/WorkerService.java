@@ -14,8 +14,5 @@ public interface WorkerService extends BaseService<WorkerDto, Long> {
 
     Collection<WorkerDto> searchWorkers(Long orgId, String word, String workNow);
 
-
-
-
     Collection<WorkerDto> getForSendMail(Collection<Long> orgs);
 }

@@ -1,9 +1,7 @@
 package ru.egar.myOrg.worker.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import ru.egar.myOrg.worker.model.notWorksDays.NotWorksDays;
 
 import java.time.LocalDate;
@@ -33,5 +31,7 @@ public interface NotWorksDaysRepository extends JpaRepository<NotWorksDays, Long
                                                                                   LocalDate end);
 
     Collection<NotWorksDays> findAllByWorkHistoryId(Long whId);
+
+
 
 }

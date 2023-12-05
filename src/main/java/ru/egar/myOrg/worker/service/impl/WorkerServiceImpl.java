@@ -3,7 +3,6 @@ package ru.egar.myOrg.worker.service.impl;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import ru.egar.myOrg.document.model.PaperDocument;
 import ru.egar.myOrg.document.service.DocumentService;
@@ -63,7 +62,6 @@ public class WorkerServiceImpl implements WorkerService {
         return workerDTO;
     }
 
-//    @Cacheable(cacheNames = "worker")
     @Override
     public Optional<WorkerDto> getById(Long aLong) {
         final var workerDto = workerRepository.findById(aLong)
@@ -75,7 +73,9 @@ public class WorkerServiceImpl implements WorkerService {
 
     @Override
     public WorkerDto updateById(Long aLong, WorkerDto workerDto) {
-        return null;
+        Worker worker = worMap.toWorker(workerDto);
+        worker.setId(aLong);
+        return worMap.toWorkerDto(workerRepository.save(worker));
     }
 
     @CacheEvict(cacheNames = {"workers", "worker"}, allEntries = true)
@@ -107,7 +107,6 @@ public class WorkerServiceImpl implements WorkerService {
         return worMap.toWorkerDto(newWorker);
     }
 
-    @Cacheable(cacheNames = "workers")
     @Override
     public List<WorkerDto> showWorkers(Long id) {
         final List<WorkerDto> wsh = workerRepository.getWorkerByOrganization_Id(id)
@@ -124,7 +123,6 @@ public class WorkerServiceImpl implements WorkerService {
                 .map(worMap::toWorkerDto)
                 .collect(Collectors.toList());
     }
-
 
 
     @Override

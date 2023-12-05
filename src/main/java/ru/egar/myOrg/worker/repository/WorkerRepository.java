@@ -11,8 +11,7 @@ import java.util.Optional;
 
 public interface WorkerRepository extends JpaRepository<Worker, Long> {
 
-
-    @Query
+    @Cacheable(cacheNames = "workers")
     Collection<Worker> getWorkerByOrganization_Id(Long Id);
 
     @Query(value = "select w.* " +
@@ -39,6 +38,7 @@ public interface WorkerRepository extends JpaRepository<Worker, Long> {
             "AND " +
             "    DATE_PART('month', w.birthday) = date_part('month', CURRENT_DATE)", nativeQuery = true)
     Collection<Worker> findAllByOrganizationInAndBirthday(Collection<Long> orgs);
+
     @Cacheable(cacheNames = "worker")
     Optional<Worker> findById(Long id);
 

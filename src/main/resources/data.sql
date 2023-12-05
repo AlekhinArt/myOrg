@@ -24,9 +24,9 @@ VALUES ('2007-11-02', FALSE, 'Иван', 'Васильевич', '+79998885544', 'Пупкин', TRU
 ON CONFLICT (id)
     DO NOTHING;
 insert into salary(base_rate, index_rate)
-VALUES (100000, 1.25),
-       (140000, 1.15),
-       (102000, 1.25);
+VALUES (100, 1.25),
+       (140, 1.15),
+       (120, 1.25);
 insert into work_history (start_work, work_now, empl_id, worker_id, salary_id)
 VALUES ('2023-10-15', True, 3, 1, 1),
        ('2023-11-15', True, 3, 2, 2)

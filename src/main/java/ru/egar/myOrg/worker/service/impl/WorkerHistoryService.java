@@ -3,7 +3,7 @@ package ru.egar.myOrg.worker.service.impl;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import ru.egar.myOrg.exception.NotFoundException;
 import ru.egar.myOrg.worker.mapper.EmployPositionMapper;
@@ -84,7 +84,6 @@ public class WorkerHistoryService implements WorkHistoryService {
     }
 
 
-    @CacheEvict(value = "worker", allEntries = true)
     @Override
     public void createNewWorkHistory(Long workerId, LocalDate startWork, Long emplPosId, String baseRate, String indexRate) {
         Worker worker = workerRepo.findById(workerId).orElseThrow(() -> new NotFoundException("Работник не найден"));
@@ -116,10 +115,9 @@ public class WorkerHistoryService implements WorkHistoryService {
         }
     }
 
-    //    @Cacheable(cacheNames = "table")
+    @Cacheable(cacheNames = "table")
     @Override
     public WorkTableInfo[][] getNotWorksDayInCalendar(Long whId, String startPeriod, String endPeriod) {
-        log.info("начал гиблое дело");
         WorkHistory whById = getById(whId).orElseThrow(() -> new NotFoundException("История не найдена"));
         LocalDate startWh = whById.getStartWork();
         LocalDate endWh;
@@ -158,10 +156,7 @@ public class WorkerHistoryService implements WorkHistoryService {
         }
         WorkHistory workHistory = getById(whId).orElseThrow(() -> new NotFoundException("История не найдена"));
         if (sumHours > 0)
-            pay = ((workHistory.getSalary().getBaseRate() * workHistory.getSalary().getIndexRate()) * ((double) sumHours / (double) sumWorkHours));
-
-        clearCash();
-
+            pay = ((workHistory.getSalary().getBaseRate() * workHistory.getSalary().getIndexRate()) * (sumWorkHours));
         return SalaryShow.builder()
                 .allWorkHours(sumWorkHours)
                 .sumHours(sumHours)
@@ -171,10 +166,6 @@ public class WorkerHistoryService implements WorkHistoryService {
                 .build();
     }
 
-    //    @CacheEvict(cacheNames = "table", allEntries = true)
-    public void clearCash() {
-
-    }
 
     //метод создания календаря
     private WorkTableInfo[][] getCalendar(LocalDate firstDayMonth) {
@@ -232,9 +223,11 @@ public class WorkerHistoryService implements WorkHistoryService {
                 log.info("{}", calendar[i][j]);
                 //точка для отсчета
                 if (calendar[i][j].getDateMonth() > 0) {
-                    startPer = startPer.plusDays(1L);
+
                     WorkTableInfo wti = calendar[i][j];
-                    if (startPer.isAfter(startWh) && startPer.isBefore(endWh)) {
+                    if ((startPer.isAfter(startWh) || startPer.isEqual(startWh)) &&
+                            ((startPer.isBefore(LocalDate.now()) || startPer.equals(LocalDate.now()))) &&
+                            (startPer.isBefore(endWh) || startPer.isEqual(endWh))) {
                         log.info("wti SET HOURS date {}, i = {}, j ={}", calendar[i][j], i, j);
                         if (j != 5 && j != 6) {
                             wti.setHours(8);
@@ -250,7 +243,8 @@ public class WorkerHistoryService implements WorkHistoryService {
                                 }
                             }
                         }
-                    } else wti.setWhereBe("НЕ В ДОЛЖНОСТИ");
+                    } else wti.setWhereBe("--------");
+                    startPer = startPer.plusDays(1L);
                 }
             }
         }
