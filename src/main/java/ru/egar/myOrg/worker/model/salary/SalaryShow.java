@@ -12,7 +12,7 @@ public class SalaryShow {
 
     private Double indexRate;
 
-    private Double sumMoney;
+    private String sumMoney;
     private Integer sumHours;
     private Integer allWorkHours;
 }

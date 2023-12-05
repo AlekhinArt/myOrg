@@ -5,7 +5,11 @@ import ru.egar.myOrg.worker.model.ValuableObject;
 
 import java.util.Collection;
 
-public interface ValuableObjectsService extends BaseService<ValuableObject, Long> {
+public interface ValuableObjectsService  {
+
+    ValuableObject create(ValuableObject vo);
+
+    void deleteById(Long aLong);
 
     ValuableObject create(ValuableObject vo, Long orgId);
 

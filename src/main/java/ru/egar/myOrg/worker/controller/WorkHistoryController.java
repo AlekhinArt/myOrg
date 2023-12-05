@@ -1,10 +1,16 @@
 package ru.egar.myOrg.worker.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.AllArgsConstructor;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import ru.egar.myOrg.exception.NotFoundException;
 import ru.egar.myOrg.worker.model.WorkHistory;
@@ -21,29 +27,37 @@ import java.util.Collection;
 @Slf4j
 @Controller
 @RequestMapping("/wh")
-@Tag(name = "История работы", description = "Взаимодействие с сущностью NotWorksDAys")
-@AllArgsConstructor
+@Tag(name = "История работы", description = "Взаимодействие с сущностью NotWorksDays")
+@RequiredArgsConstructor
 public class WorkHistoryController {
+    @Qualifier("notWorksDayValidator")
+    @Autowired
+    private Validator nwdValidator;
+    private final NotWorksDayService nwdService;
+    private final WorkerHistoryService whService;
+    private final EmployPositionService empService;
+    private final WorkerService workerService;
 
-    private final NotWorksDayService nwds;
-    private final WorkerHistoryService whs;
-    private final EmployPositionService emps;
-    private final WorkerService ws;
 
+
+
+    @InitBinder("notWorksDays")
+    protected void initBinder(WebDataBinder binder) {
+        binder.setValidator(nwdValidator);
+    }
 
     @GetMapping("/{orgId}/{whId}")
     public String getAllNotWorkDayByWh(@PathVariable Long whId, @PathVariable Long orgId, Model model) {
         log.info("getAllNotWorkDayByWh historyId {} ", whId);
-        WorkHistory workHistory = whs.getById(whId)
+        WorkHistory workHistory = whService.getById(whId)
                 .orElseThrow(() -> new NotFoundException("История не найдена"));
-        Collection<NotWorksDays> notWorksDays = nwds.getAllByWhId(whId);
+        Collection<NotWorksDays> notWorksDays = nwdService.getAllByWhId(whId);
         model.addAttribute("ndws", notWorksDays);
         model.addAttribute("whId", whId);
         model.addAttribute("workerId", workHistory.getWorker().getId());
         model.addAttribute("orgId", orgId);
-        model.addAttribute("sum", nwds.getSumNotWorkDays(notWorksDays));
+        model.addAttribute("sum", nwdService.getSumNotWorkDays(notWorksDays));
         model.addAttribute("dateNow", LocalDate.now());
-
 
         return "notWorksDays/notWorksDays";
     }
@@ -53,13 +67,13 @@ public class WorkHistoryController {
                                        @RequestParam String typeOffDay, Model model,
                                        @RequestParam String start, @RequestParam String end) {
         log.info("getNotWorkDaysByType historyId {}, type {}, start {} , end {}", whId, typeOffDay, start, end);
-        WorkHistory workHistory = whs.getById(whId)
+        WorkHistory workHistory = whService.getById(whId)
                 .orElseThrow(() -> new NotFoundException("История не найдена"));
-        model.addAttribute("ndws", nwds.notWorkDayByTypeAndDate(typeOffDay, whId, start, end));
+        model.addAttribute("ndws", nwdService.notWorkDayByTypeAndDate(typeOffDay, whId, start, end));
         model.addAttribute("whId", whId);
         model.addAttribute("workerId", workHistory.getWorker().getId());
         model.addAttribute("orgId", orgId);
-        model.addAttribute("sum", nwds.getSumNotWorkDays(nwds.notWorkDayByTypeAndDate(typeOffDay, whId, start, end)));
+        model.addAttribute("sum", nwdService.getSumNotWorkDays(nwdService.notWorkDayByTypeAndDate(typeOffDay, whId, start, end)));
         model.addAttribute("dateNow", LocalDate.now());
 
         return "notWorksDays/notWorksDays";
@@ -70,22 +84,25 @@ public class WorkHistoryController {
     @GetMapping("/{orgId}/create/{id}")
     public String createNotWorkDaysMVC(@PathVariable Long id, @PathVariable Long orgId, Model model) {
         log.info("createNotWorkDaysMVC historyId {} ", id);
-        model.addAttribute("whs", whs.getById(id)
+        model.addAttribute("whs", whService.getById(id)
                 .orElseThrow(() -> new NotFoundException("История не найдена")));
         model.addAttribute("maxTime", LocalDate.now());
         model.addAttribute("orgId", orgId);
-
 
         return "notWorksDays/newNWD";
     }
 
 
     @PostMapping("{orgId}/{whId}")
-    public String saveNotWorkDay(@ModelAttribute NotWorksDays nwd, @PathVariable Long whId,
-                                 @PathVariable Long orgId, Model model) {
+    public String saveNotWorkDay(@ModelAttribute @Valid NotWorksDays nwd, @PathVariable Long whId,
+                                 @PathVariable Long orgId, BindingResult bindingResult,
+                                 Model model) {
         log.info("Добавили не рабочий день {}, {}, {}, {},{}", nwd.getNwdId(), nwd.getStart(), nwd.getEnd(), nwd.getTypeDay(), nwd.getNote());
-        nwds.saveNotWorksDay(nwd, whId);
-
+        if (bindingResult.hasErrors()) {
+            log.info("------------ yes baby");
+            return "redirect:/wh/" + orgId + "/" + whId;
+        }
+        nwdService.saveNotWorksDay(nwd, whId);
 
         return "redirect:/wh/" + orgId + "/" + whId;
     }
@@ -95,9 +112,9 @@ public class WorkHistoryController {
                                    @PathVariable Long whId,
                                    @PathVariable Long orgId) {
         log.info("delete not work day id {}", id);
-        nwds.deleteById(id);
-        return "redirect:/wh/" + orgId + "/" + whId;
+        nwdService.deleteById(id);
 
+        return "redirect:/wh/" + orgId + "/" + whId;
     }
 
     @GetMapping("/{orgId}/{workerId}/delete/wh/{whId}")
@@ -105,10 +122,10 @@ public class WorkHistoryController {
                                     @PathVariable Long workerId,
                                     @PathVariable Long orgId) {
         log.info("delete workHistory {}", whId);
-        whs.deleteById(whId);
-        whs.changeWorkerStatus(workerId);
-        return "redirect:/worker/" + orgId + "/get/" + workerId;
+        whService.deleteById(whId);
+        whService.changeWorkerStatus(workerId);
 
+        return "redirect:/worker/" + orgId + "/get/" + workerId;
     }
 
     @GetMapping("/{orgId}/{workerId}/edit/{whId}")
@@ -116,11 +133,10 @@ public class WorkHistoryController {
                                   @PathVariable Long workerId,
                                   @PathVariable Long orgId,
                                   Model model) {
-        model.addAttribute("wh", whs.getById(whId)
+        model.addAttribute("wh", whService.getById(whId)
                 .orElseThrow(() -> new NotFoundException("История не найдена")));
         model.addAttribute("workerId", workerId);
         model.addAttribute("orgId", orgId);
-
 
         return "workHistory/layOffWorker";
     }
@@ -132,7 +148,8 @@ public class WorkHistoryController {
                                @PathVariable Long workerId,
                                @PathVariable Long orgId) {
 
-        whs.layOffWorker(workHistory, whId);
+        whService.layOffWorker(workHistory, whId);
+
         return "redirect:/worker/" + orgId + "/get/" + workerId;
     }
 
@@ -140,7 +157,7 @@ public class WorkHistoryController {
     public String createWorkHistoryMVC(@PathVariable Long workerId,
                                        @PathVariable Long orgId,
                                        Model model) {
-        model.addAttribute("employPositions", emps.getAll());
+        model.addAttribute("employPositions", empService.getAll());
         model.addAttribute("workerId", workerId);
         model.addAttribute("orgId", orgId);
         model.addAttribute("currentDate", LocalDate.now());
@@ -158,8 +175,7 @@ public class WorkHistoryController {
                                     Model model) {
         log.info("createWorkHistory workerId {}, orgId {}, wh.start {}, emplPosId {}, baseRate {}, indexRate {}",
                 workerId, orgId, startWork, emplPosId, baseRate, indexRate);
-        whs.createNewWorkHistory(workerId, startWork, emplPosId, baseRate, indexRate);
-
+        whService.createNewWorkHistory(workerId, startWork, emplPosId, baseRate, indexRate);
 
         return "redirect:/worker/" + orgId + "/get/" + workerId;
     }
@@ -179,12 +195,11 @@ public class WorkHistoryController {
         model.addAttribute("workerId", workerId);
         model.addAttribute("orgId", orgId);
         model.addAttribute("month", start.getMonth().name());
-        model.addAttribute("worker", ws.getById(orgId).orElseThrow(() -> new NotFoundException("Работник не найден")));
-        model.addAttribute("table", whs.getNotWorksDayInCalendar(whId,
+        model.addAttribute("worker", workerService.getById(orgId).orElseThrow(() -> new NotFoundException("Работник не найден")));
+        model.addAttribute("table", whService.getNotWorksDayInCalendar(whId,
                 start.format(DateTimeFormatter.ISO_LOCAL_DATE), end.format(DateTimeFormatter.ISO_LOCAL_DATE)));
-        model.addAttribute("paymentInfo", whs.getPaymentInfo(whId,
+        model.addAttribute("paymentInfo", whService.getPaymentInfo(whId,
                 start.format(DateTimeFormatter.ISO_LOCAL_DATE), end.format(DateTimeFormatter.ISO_LOCAL_DATE)));
-
 
         return "workHistory/workHours";
     }

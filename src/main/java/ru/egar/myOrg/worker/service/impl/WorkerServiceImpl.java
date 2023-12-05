@@ -33,27 +33,21 @@ public class WorkerServiceImpl implements WorkerService {
     private final WorkerRepository workerRepository;
     private final EmployPositionRepository emlpRepository;
     private final WorkHistoryService workHistoryService;
-    private final OrganizationRepository orgRep;
-    private final DocumentService ds;
+    private final OrganizationRepository orgRepo;
+    private final DocumentService documentService;
     private final WorkerMapper worMap;
 
 
-    @Caching(evict = {
-            @CacheEvict(cacheNames = "workers", allEntries = true),
-            @CacheEvict(cacheNames = "worker", allEntries = true)
-    })
+    @CacheEvict(cacheNames = {"workers", "worker"}, allEntries = true)
     @Override
     public WorkerDto create(WorkerDto workerDto) {
-        workerDto.setOrganization(orgRep.findById(workerDto.getOrgId()).orElseThrow(() -> new NotFoundException("Организация не найдена")));
+        workerDto.setOrganization(orgRepo.findById(workerDto.getOrgId()).orElseThrow(() -> new NotFoundException("Организация не найдена")));
         var worker = worMap.toWorker(workerDto);
         worker = workerRepository.save(worker);
         return worMap.toWorkerDto(worker);
     }
 
-    @Caching(evict = {
-            @CacheEvict(cacheNames = "workers", allEntries = true),
-            @CacheEvict(cacheNames = "worker", allEntries = true)
-    })
+    @CacheEvict(cacheNames = {"workers", "worker"}, allEntries = true)
     @Override
     public void deleteById(Long aLong) {
         Worker worker = workerRepository.findById(aLong).orElseThrow(() -> new NotFoundException("Работник не найден"));
@@ -79,20 +73,14 @@ public class WorkerServiceImpl implements WorkerService {
         return workerDto;
     }
 
-    @Caching(evict = {
-            @CacheEvict(cacheNames = "workers", allEntries = true),
-            @CacheEvict(cacheNames = "worker", allEntries = true)
-    })
+    @CacheEvict(cacheNames = {"workers", "worker"}, allEntries = true)
 
     @Override
     public WorkerDto updateById(Long aLong, WorkerDto workerDto) {
         return null;
     }
 
-    @Caching(evict = {
-            @CacheEvict(cacheNames = "workers", allEntries = true),
-            @CacheEvict(cacheNames = "worker", allEntries = true)
-    })
+    @CacheEvict(cacheNames = {"workers", "worker"}, allEntries = true)
     @Override
     public WorkerDto create(WorkerCreateDto workerDto, PaperDocument paperDocument) {
         Worker newWorker = workerRepository.save(Worker.builder()
@@ -106,7 +94,7 @@ public class WorkerServiceImpl implements WorkerService {
                 .gender(workerDto.getGender())
                 .delete(Boolean.FALSE)
                 .minorChildren(workerDto.getMinorChildren())
-                .organization(orgRep.findById(workerDto.getOrgId()).orElseThrow(
+                .organization(orgRepo.findById(workerDto.getOrgId()).orElseThrow(
                         () -> new NotFoundException("Organization with id " +
                                 workerDto.getOrgId() + " not found")))
                 .build());
@@ -159,7 +147,7 @@ public class WorkerServiceImpl implements WorkerService {
         paperDocument.setWorker(worker);
         paperDocument.setActual(true);
         paperDocument.setTypeDocument("001");
-        ds.save(paperDocument);
+        documentService.save(paperDocument);
 
     }
 

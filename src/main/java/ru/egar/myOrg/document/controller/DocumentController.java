@@ -17,13 +17,13 @@ import java.time.LocalDate;
 @Tag(name = "Документы", description = "Обработка различных документов")
 @AllArgsConstructor
 public class DocumentController {
-    private final DocumentService ds;
+    private final DocumentService documentService;
 
     @GetMapping("/{orgId}/{workerId}")
     private String updPassportMVC(@PathVariable Long workerId,
                                   @PathVariable Long orgId,
                                   Model model) {
-        model.addAttribute("oldPassport", ds.findByWorkerIdAndActualTrue(workerId));
+        model.addAttribute("oldPassport", documentService.findByWorkerIdAndActualTrue(workerId));
         model.addAttribute("workerId", workerId);
         model.addAttribute("orgId", orgId);
         model.addAttribute("currentDate", LocalDate.now());
@@ -36,7 +36,7 @@ public class DocumentController {
                                   @ModelAttribute PassportDto passport) {
         log.info("PassportDto {}, {},{}, {}, {},{},", passport.getId(),
                 passport.getIssued(), passport.getWhoIssued(), passport.getNumber(), passport.getSeries(), passport.getCodeType());
-        ds.createNew(passport);
+        documentService.createNew(passport);
 
         return "redirect:/worker/" + orgId + "/get/" + workerId;
     }
@@ -47,7 +47,7 @@ public class DocumentController {
                                @ModelAttribute PassportDto passport) {
         log.info("PassportDto {}, {},{}, {}, {},{}", passport.getId(),
                 passport.getIssued(), passport.getWhoIssued(), passport.getNumber(), passport.getSeries(), passport.getCodeType());
-        ds.updPas(passport);
+        documentService.updPas(passport);
 
         return "redirect:/worker/" + orgId + "/get/" + workerId;
     }

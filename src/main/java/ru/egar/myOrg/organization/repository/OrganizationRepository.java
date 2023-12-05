@@ -10,4 +10,5 @@ import java.util.Collection;
 public interface OrganizationRepository extends JpaRepository<Organization, Long> {
 
     Collection<Organization> getAllBySupportOrg_SendEmailBirthday(Boolean tr);
+
 }

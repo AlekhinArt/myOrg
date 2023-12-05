@@ -38,6 +38,7 @@ public class Organization {
     @Column(name = "phone_number")
     private String phoneNumber;
     @OneToOne
+
     private SupportOrg supportOrg;
     private String email;
 }

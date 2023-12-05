@@ -12,14 +12,15 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class TypeDocumentServiceImpl implements TypeDocumentService {
-    private final TypeDocumentRepository tdr;
+    private final TypeDocumentRepository typeDocumentRepository;
 
     @Override
     public TypeDocument getById(Long id) {
-        return tdr.findById(id).orElseThrow(() -> new NotFoundException("Документ не найден"));
+        return typeDocumentRepository.findById(id).orElseThrow(() -> new NotFoundException("Документ не найден"));
     }
+
     @Override
-    public List<TypeDocument> getAllByIdentity(Boolean identity){
-    return tdr.findAllByIdentity(identity);
+    public List<TypeDocument> getAllByIdentity(Boolean identity) {
+        return typeDocumentRepository.findAllByIdentity(identity);
     }
 }

@@ -1,4 +1,4 @@
-package ru.egar.myOrg.email.senderService.impl;
+package ru.egar.myOrg.email.service.impl;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -12,7 +12,7 @@ import org.thymeleaf.spring6.SpringTemplateEngine;
 import ru.egar.myOrg.email.model.Form;
 import ru.egar.myOrg.email.model.Mail;
 import ru.egar.myOrg.email.model.enumerated.MailType;
-import ru.egar.myOrg.email.senderService.SenderService;
+import ru.egar.myOrg.email.service.SenderService;
 
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;

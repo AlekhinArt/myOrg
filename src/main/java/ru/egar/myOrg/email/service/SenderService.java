@@ -1,4 +1,4 @@
-package ru.egar.myOrg.email.senderService;
+package ru.egar.myOrg.email.service;
 
 import jakarta.mail.MessagingException;
 import ru.egar.myOrg.email.model.Mail;

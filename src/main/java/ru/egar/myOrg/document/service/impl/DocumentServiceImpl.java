@@ -16,12 +16,12 @@ import ru.egar.myOrg.exception.NotFoundException;
 @AllArgsConstructor
 public class DocumentServiceImpl implements DocumentService {
     private final PassportMapper pasMap;
-    private final DocumentRepository pr;
+    private final DocumentRepository documentRepository;
 
     @Override
     public void save(PaperDocument paperDocument) {
         try {
-            pr.save(paperDocument);
+            documentRepository.save(paperDocument);
         } catch (Exception e) {
             throw new DataConflictException("Паспортные данные не сохранены");
 
@@ -30,7 +30,7 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Override
     public PassportDto findByWorkerIdAndActualTrue(Long workerId) {
-        var documentByWorker = pr.findByWorkerIdAndActualTrue(workerId)
+        var documentByWorker = documentRepository.findByWorkerIdAndActualTrue(workerId)
                 .orElseThrow(() -> new NotFoundException("Документ не найдет"));
         return pasMap.toPassportDto(documentByWorker);
     }
@@ -38,22 +38,22 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Override
     public void updPas(PassportDto passportDto) {
-        PaperDocument oldPas = pr.findById(passportDto.getId())
+        PaperDocument oldPas = documentRepository.findById(passportDto.getId())
                 .orElseThrow(() -> new NotFoundException("Паспорт не найден"));
         oldPas.setIssued(passportDto.getIssued());
         oldPas.setWhoIssued(passportDto.getWhoIssued());
         oldPas.setSeries(passportDto.getSeries());
         oldPas.setNumber(passportDto.getNumber());
-        pr.save(oldPas);
+        documentRepository.save(oldPas);
 
     }
 
     @Override
     public void createNew(PassportDto passportDto) {
-        PaperDocument oldPas = pr.findById(passportDto.getId())
+        PaperDocument oldPas = documentRepository.findById(passportDto.getId())
                 .orElseThrow(() -> new NotFoundException("Паспорт не найден"));
         oldPas.setActual(false);
-        pr.save(oldPas);
+        documentRepository.save(oldPas);
         PaperDocument newPas = new PaperDocument();
         newPas.setWorker(oldPas.getWorker());
         newPas.setActual(true);
@@ -62,7 +62,7 @@ public class DocumentServiceImpl implements DocumentService {
         newPas.setSeries(passportDto.getSeries());
         newPas.setNumber(passportDto.getNumber());
         newPas.setTypeDocument(passportDto.getCodeType());
-        pr.save(newPas);
+        documentRepository.save(newPas);
 
 
     }

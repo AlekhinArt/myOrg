@@ -21,7 +21,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class ValuableObjectController {
 
-    private final ValuableObjectsService vos;
+    private final ValuableObjectsService voService;
 
 
     @Operation(summary = "Добавление",
@@ -33,7 +33,7 @@ public class ValuableObjectController {
                 vo.getPrice(),
                 vo.getDateOfPurchase(),
                 vo.getIsUse());
-        vos.create(vo, orgId);
+        voService.create(vo, orgId);
         return "redirect:/obj/get/" + orgId;
     }
 
@@ -49,7 +49,7 @@ public class ValuableObjectController {
     public String getAllVo(@PathVariable Long orgId, Model model) {
         log.info("get all V object orgId {}", orgId);
         model.addAttribute("orgId", orgId);
-        model.addAttribute("objs", vos.getAllByOrgId(orgId));
+        model.addAttribute("objs", voService.getAllByOrgId(orgId));
         model.addAttribute("types", TypeOfValue.values());
         return "valuableObject/allValuableObject";
     }
@@ -60,7 +60,7 @@ public class ValuableObjectController {
                            @RequestParam String type) {
         log.info("searchBy orgId {}, word {}, type {}", orgId, word, type);
         model.addAttribute("orgId", orgId);
-        model.addAttribute("objs", vos.searchBy(orgId, word, type));
+        model.addAttribute("objs", voService.searchBy(orgId, word, type));
         model.addAttribute("types", TypeOfValue.values());
         return "valuableObject/allValuableObject";
     }

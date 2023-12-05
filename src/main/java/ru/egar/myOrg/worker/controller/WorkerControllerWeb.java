@@ -26,16 +26,16 @@ import java.time.Month;
 public class WorkerControllerWeb {
     private final WorkerService workerService;
     private final EmployPositionService empPosService;
-    private final WorkHistoryService whs;
-    private final DocumentService ds;
-    private final TypeDocumentService tds;
+    private final WorkHistoryService workHistoryService;
+    private final DocumentService documentService;
+    private final TypeDocumentService typeDocumentService;
 
     @GetMapping("/newWorker/{id}")
     public String newWorker(@PathVariable Long id, Model model) {
         model.addAttribute("employPositions", empPosService.getPositionName());
         model.addAttribute("orgId", id);
         model.addAttribute("currentDate", LocalDate.now());
-        model.addAttribute("docktype", tds.getAllByIdentity(true));
+        model.addAttribute("docktype", typeDocumentService.getAllByIdentity(true));
         return "workers/newWorker";
     }
 
@@ -89,9 +89,9 @@ public class WorkerControllerWeb {
         log.info("get worker {}", workerId);
         model.addAttribute("worker", workerService.getById(workerId)
                 .orElseThrow(() -> new NotFoundException("Работник не найден")));
-        model.addAttribute("whs", whs.getByWorkerId(workerId));
+        model.addAttribute("whs", workHistoryService.getByWorkerId(workerId));
         model.addAttribute("orgId", orgId);
-        model.addAttribute("paperDocument", ds.findByWorkerIdAndActualTrue(workerId));
+        model.addAttribute("paperDocument", documentService.findByWorkerIdAndActualTrue(workerId));
         model.addAttribute("Months", Month.values());
 
         return "workers/fullWorker";

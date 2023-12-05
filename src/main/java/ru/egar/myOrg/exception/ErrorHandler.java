@@ -2,6 +2,7 @@ package ru.egar.myOrg.exception;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -41,6 +42,17 @@ public class ErrorHandler {
         log.info("ValidException {}", e.getMessage());
         return MainServiceError.builder()
                 .message("ValidException " + e.getMessage())
+                .status("FORBIDDEN")
+                .reason("For the requested operation the conditions are not met.")
+                .timestamp(LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME))
+                .build();
+    }
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public MainServiceError dateConflict(final MethodArgumentNotValidException e) {
+        log.info("Date conflict {}", e.getMessage());
+        return MainServiceError.builder()
+                .message("MethodArgumentNotValidException " + e.getMessage())
                 .status("FORBIDDEN")
                 .reason("For the requested operation the conditions are not met.")
                 .timestamp(LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME))

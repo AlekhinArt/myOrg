@@ -4,14 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.egar.myOrg.exception.DataConflictException;
-import ru.egar.myOrg.exception.ValidException;
 import ru.egar.myOrg.worker.model.WorkHistory;
 import ru.egar.myOrg.worker.model.notWorksDays.NotWorksDays;
 import ru.egar.myOrg.worker.repository.NotWorksDaysRepository;
 import ru.egar.myOrg.worker.service.NotWorksDayService;
 
 import java.time.LocalDate;
-import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.List;
@@ -21,11 +19,11 @@ import java.util.Optional;
 @AllArgsConstructor
 @Slf4j
 public class NotWorkDayServiceImpl implements NotWorksDayService {
-    private final NotWorksDaysRepository nwdRep;
+    private final NotWorksDaysRepository nwdRepo;
 
     @Override
     public List<NotWorksDays> getAll() {
-        return null;
+        return nwdRepo.findAll();
     }
 
     @Override
@@ -35,47 +33,39 @@ public class NotWorkDayServiceImpl implements NotWorksDayService {
 
     @Override
     public NotWorksDays create(NotWorksDays dto) {
-        return null;
+        return nwdRepo.save(dto);
     }
 
     @Override
     public NotWorksDays updateById(Long aLong, NotWorksDays notWorksDays) {
-        return null;
+        notWorksDays.setNwdId(aLong);
+
+        return nwdRepo.save(notWorksDays);
     }
 
     @Override
     public void deleteById(Long aLong) {
-        nwdRep.deleteById(aLong);
+        nwdRepo.deleteById(aLong);
 
     }
 
     @Override
     public Collection<NotWorksDays> getAllByWhId(Long id) {
-        return nwdRep.findAllByWorkHistoryId(id);
+        return nwdRepo.findAllByWorkHistoryId(id);
     }
 
 
     @Override
     public NotWorksDays saveNotWorksDay(NotWorksDays nwd, Long whId) {
-        if (nwd.getEnd().isBefore(nwd.getStart()) || nwd.getStart().isAfter(nwd.getEnd())) {
-            throw new ValidException("Не корректно указаны даты начала и окончания не рабочих дней");
-        }
-
-        for (NotWorksDays oldNwd : nwdRep.findAllByWorkHistoryId(whId)) {
+        for (NotWorksDays oldNwd : nwdRepo.findAllByWorkHistoryId(whId)) {
             if (!(nwd.getEnd().isBefore(oldNwd.getStart()) || nwd.getStart().isAfter(oldNwd.getEnd()))) {
-                throw new DataConflictException(" Не корректно указаны даты");
+                throw new DataConflictException("В эти дни работник уже " + oldNwd.getTypeDay());
             }
         }
-
-
         nwd.setWorkHistory(WorkHistory.builder().
-
                 id(whId).
-
                 build());
-        return nwdRep.save(nwd);
-
-
+        return nwdRepo.save(nwd);
     }
 
     @Override
@@ -90,10 +80,10 @@ public class NotWorkDayServiceImpl implements NotWorksDayService {
         } else maxDate = LocalDate.parse(end, DateTimeFormatter.ISO_LOCAL_DATE);
         log.info("max {} , min {}", maxDate, minDate);
         if (type == null || type.isBlank()) {
-            return nwdRep.findAllByWorkHistoryIdDayAndStartAfterAndStartBefore(whId,
+            return nwdRepo.findAllByWorkHistoryIdDayAndStartAfterAndStartBefore(whId,
                     minDate, maxDate);
         }
-        return nwdRep.findAllByWorkHistoryIdAndTypeDayAndStartAfterAndStartBefore(whId,
+        return nwdRepo.findAllByWorkHistoryIdAndTypeDayAndStartAfterAndStartBefore(whId,
                 type, minDate, maxDate);
     }
 

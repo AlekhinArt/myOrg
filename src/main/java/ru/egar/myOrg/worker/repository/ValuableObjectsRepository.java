@@ -9,7 +9,7 @@ import ru.egar.myOrg.worker.model.ValuableObject;
 import java.util.Collection;
 
 
-public interface ValuableObjectsRepository extends JpaRepository<ValuableObject, Integer> {
+public interface ValuableObjectsRepository extends JpaRepository<ValuableObject, Long> {
 
     Collection <ValuableObject> findAllByOrganization_Id (Long orgId);
 

@@ -10,61 +10,43 @@ import ru.egar.myOrg.worker.repository.ValuableObjectsRepository;
 import ru.egar.myOrg.worker.service.ValuableObjectsService;
 
 import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
 public class ValuableObjectServiceImpl implements ValuableObjectsService {
     private final OrganizationMapper orgMap;
-    private final ValuableObjectsRepository vorRep;
-    private final OrganizationService orgSer;
+    private final ValuableObjectsRepository voRepo;
+    private final OrganizationService orgService;
 
-    @Override
-    public List<ValuableObject> getAll() {
-        return null;
-    }
-
-    @Override
-    public Optional<ValuableObject> getById(Long aLong) {
-        return Optional.empty();
-    }
 
     @Override
     public ValuableObject create(ValuableObject vo) {
-        vorRep.save(vo);
-        return null;
-    }
-
-    @Override
-    public ValuableObject updateById(Long aLong, ValuableObject valuableObject) {
-        return null;
+        return voRepo.save(vo);
     }
 
     @Override
     public void deleteById(Long aLong) {
+        voRepo.deleteById(aLong);
 
     }
 
     @Override
     public ValuableObject create(ValuableObject vo, Long orgId) {
-        vo.setOrganization(orgSer.getById(orgId)
+        vo.setOrganization(orgService.getById(orgId)
                 .map(orgMap::toOrganization)
                 .orElseThrow(() -> new NotFoundException("Организация не найдена")));
-
-        return vorRep.save(vo);
+        return voRepo.save(vo);
     }
 
     @Override
     public Collection<ValuableObject> getAllByOrgId(Long orgId) {
-
-        return vorRep.findAllByOrganization_Id(orgId);
+        return voRepo.findAllByOrganization_Id(orgId);
 
     }
 
     @Override
     public Collection<ValuableObject> searchBy(Long orgId, String word, String type) {
 
-        return vorRep.searchValuableObjectByByOrgAndParam(orgId, word);
+        return voRepo.searchValuableObjectByByOrgAndParam(orgId, word);
     }
 }

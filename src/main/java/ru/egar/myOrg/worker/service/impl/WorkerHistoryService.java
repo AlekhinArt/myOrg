@@ -4,7 +4,6 @@ package ru.egar.myOrg.worker.service.impl;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import ru.egar.myOrg.exception.NotFoundException;
 import ru.egar.myOrg.worker.mapper.EmployPositionMapper;
@@ -34,10 +33,10 @@ import java.util.stream.Collectors;
 public class WorkerHistoryService implements WorkHistoryService {
     private final EmployPositionMapper epMap;
     private final WorkHistoryRepository workHistoryRepository;
-    private final WorkerRepository wr;
-    private final EmployPositionService emps;
-    private final NotWorkDayServiceImpl nwds;
-    private final SalaryRepository salaryRep;
+    private final WorkerRepository workerRepo;
+    private final EmployPositionService empService;
+    private final NotWorkDayServiceImpl nwdService;
+    private final SalaryRepository salaryRepo;
     private final NotWorksDaysMapper mwdMap;
 
 
@@ -88,8 +87,8 @@ public class WorkerHistoryService implements WorkHistoryService {
     @CacheEvict(value = "worker", allEntries = true)
     @Override
     public void createNewWorkHistory(Long workerId, LocalDate startWork, Long emplPosId, String baseRate, String indexRate) {
-        Worker worker = wr.findById(workerId).orElseThrow(() -> new NotFoundException("Работник не найден"));
-        Salary salary = salaryRep.save(Salary.builder()
+        Worker worker = workerRepo.findById(workerId).orElseThrow(() -> new NotFoundException("Работник не найден"));
+        Salary salary = salaryRepo.save(Salary.builder()
                 .baseRate(Double.valueOf(baseRate))
                 .indexRate(Double.valueOf(indexRate))
                 .build());
@@ -97,31 +96,30 @@ public class WorkerHistoryService implements WorkHistoryService {
                 .workNow(true)
                 .startWork(startWork)
                 .worker(worker)
-                .employPosition(emps.getAll().stream()
+                .employPosition(empService.getAll().stream()
                         .filter(pos -> Objects.equals(pos.getId(), emplPosId))
                         .map(epMap::toEmployPosition)
                         .findFirst().orElseThrow(() -> new NotFoundException("Позиция не найдена")))
                 .salary(salary)
                 .build());
         worker.setWorkNow(true);
-        wr.save(worker);
+        workerRepo.save(worker);
 
     }
 
     @Override
     public void changeWorkerStatus(Long workerId) {
         if (workHistoryRepository.findAllByWorkerIdAndWorkNow(workerId, true).size() < 1) {
-            Worker worker = wr.findById(workerId).orElseThrow(() -> new NotFoundException("Работник не найден"));
+            Worker worker = workerRepo.findById(workerId).orElseThrow(() -> new NotFoundException("Работник не найден"));
             worker.setWorkNow(false);
-            wr.save(worker);
+            workerRepo.save(worker);
         }
     }
 
-    @Cacheable(cacheNames = "table")
+    //    @Cacheable(cacheNames = "table")
     @Override
     public WorkTableInfo[][] getNotWorksDayInCalendar(Long whId, String startPeriod, String endPeriod) {
         log.info("начал гиблое дело");
-//        List<NotWorksDaysWithDaysList> nwdssad = getNotWorksDay(1L, "2023-11-01", "2023-11-30");
         WorkHistory whById = getById(whId).orElseThrow(() -> new NotFoundException("История не найдена"));
         LocalDate startWh = whById.getStartWork();
         LocalDate endWh;
@@ -129,7 +127,7 @@ public class WorkerHistoryService implements WorkHistoryService {
             endWh = LocalDate.MAX;
         } else endWh = whById.getEndWork();
 
-        List<NotWorksDaysWithDaysList> nwdsList = nwds.notWorkDayByTypeAndDate("", whId, startPeriod, endPeriod)
+        List<NotWorksDaysWithDaysList> nwdsList = nwdService.notWorkDayByTypeAndDate("", whId, startPeriod, endPeriod)
                 .stream()
                 .map(mwdMap::toList)
                 .collect(Collectors.toList());
@@ -152,29 +150,28 @@ public class WorkerHistoryService implements WorkHistoryService {
                 if (workTableInfos[j].getHours() != null) {
                     sumHours = sumHours + workTableInfos[j].getHours();
                     if (workTableInfos[j].isWorkDay()) {
-                        sumWorkHours = sumWorkHours + workTableInfos[j].getHours();
+                        sumWorkHours = sumWorkHours + 8;
                     }
                 }
 
             }
         }
-
-
         WorkHistory workHistory = getById(whId).orElseThrow(() -> new NotFoundException("История не найдена"));
         if (sumHours > 0)
-            pay = (workHistory.getSalary().getBaseRate() * workHistory.getSalary().getIndexRate()) * (sumHours / sumWorkHours);
+            pay = ((workHistory.getSalary().getBaseRate() * workHistory.getSalary().getIndexRate()) * ((double) sumHours / (double) sumWorkHours));
 
         clearCash();
+
         return SalaryShow.builder()
                 .allWorkHours(sumWorkHours)
                 .sumHours(sumHours)
                 .indexRate(workHistory.getSalary().getIndexRate())
                 .baseRate(workHistory.getSalary().getBaseRate())
-                .sumMoney(pay)
+                .sumMoney(String.format("%.2f", pay))
                 .build();
     }
 
-    @CacheEvict(cacheNames = "table", allEntries = true)
+    //    @CacheEvict(cacheNames = "table", allEntries = true)
     public void clearCash() {
 
     }
@@ -238,7 +235,6 @@ public class WorkerHistoryService implements WorkHistoryService {
                     startPer = startPer.plusDays(1L);
                     WorkTableInfo wti = calendar[i][j];
                     if (startPer.isAfter(startWh) && startPer.isBefore(endWh)) {
-
                         log.info("wti SET HOURS date {}, i = {}, j ={}", calendar[i][j], i, j);
                         if (j != 5 && j != 6) {
                             wti.setHours(8);
@@ -246,7 +242,7 @@ public class WorkerHistoryService implements WorkHistoryService {
                         for (NotWorksDaysWithDaysList nwd : nwds) {
                             for (LocalDate notWorksDay : nwd.getNotWorksDays()) {
                                 if (calendar[i][j].getDateMonth() == notWorksDay.getDayOfMonth()) {
-                                    log.info("{} = {}, {} ", calendar[i][j].getDateMonth(), notWorksDay.getDayOfMonth(), nwd.getNwdId());
+                                    log.info("{} = {}, {}, type {} ", calendar[i][j].getDateMonth(), notWorksDay.getDayOfMonth(), nwd.getNwdId(), nwd.getTypeDay().getType());
                                     wti = calendar[i][j];
                                     wti.setHours(0);
                                     wti.setWhereBe("Не был на работе(" + nwd.getTypeDay().getType() + ")");
