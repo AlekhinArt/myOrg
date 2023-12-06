@@ -71,7 +71,6 @@ public class WorkerServiceImpl implements WorkerService {
     }
 
     @CacheEvict(cacheNames = {"workers", "worker"}, allEntries = true)
-
     @Override
     public WorkerDto updateById(Long aLong, WorkerDto workerDto) {
         Worker worker = worMap.toWorker(workerDto);

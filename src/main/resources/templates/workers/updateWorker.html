@@ -16,9 +16,8 @@
     <div class="row">
         <div class="col-md-7 col-lg-8">
             <h4 class="mb-3">Чуть ниже введите данные</h4>
-            <form action="#" th:method="POST" th:object=" ${worker}"
-                  th:action="@{'/worker/{orgId}/upd'(orgId = ${orgId})}">
-
+            <form action="#" th:method="PUT" th:object=" ${worker}"
+                  th:action="@{'/worker/upd/{orgId}'(orgId = ${orgId})}">
 
                 <div class=" form-group ">
                     <input type="hidden" id="id" th:name="id" th:value="${workerId}"/>
@@ -89,6 +88,18 @@
                                    required>
                             <div class="invalid-feedback">
                                 Пожалуйста введите контактный телефон работника.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-5">
+                        <label for="email" class="form-label">Электронная почта</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="email" placeholder="as@Mail.ru"
+                                   th:name="email" th:value="*{email}" th:placeholder="*{email}" required>
+                            <div class="invalid-feedback">
+                                Пожалуйста введите адрес элетронной почты работника.
                             </div>
                         </div>
                     </div>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>New org</title>
+    <title>Upd org</title>
     <head th:insert="~{fragments/head :: head}"></head>
 </head>
 <body>
@@ -18,7 +18,10 @@
     <div class="row">
         <div class="col-md-7 col-lg-8">
             <h5 class="mb-3">Чуть ниже введите данные</h5>
-            <form  th:method="POST" th:object="${organization}" th:action="@{/organization}">
+            <form  th:method="PUT" th:object="${organization}"
+                   th:action="@{'/organization/upd/{orgId}'(orgId = ${organization.id})}">
+
+
                 <div class="form-group">
                     <input type="hidden" id="id" th:name="id" th:value="*{id}"/>
                 </div>

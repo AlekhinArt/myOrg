@@ -58,8 +58,8 @@ public class WorkerController {
     }
 
     @Operation(summary = "Обновление Данных работника",
-            description = "Добавляем работника")
-    @PostMapping("/{orgId}/upd")
+            description = "Обновление данных ")
+    @PutMapping("/upd/{orgId}")
     public String updWorker(@ModelAttribute @Valid WorkerDto workerDto,
                             @PathVariable Long orgId) {
         log.info("Create worker: {}, {}, {}, {}, {}, {}, {}, {}, {}, {}",
@@ -79,35 +79,34 @@ public class WorkerController {
 
     @Operation(summary = "Удаление",
             description = "Удаляем работник из бд")
-    @DeleteMapping("/{orgId}/delete/{id}")
-    public String deleteWorker(@PathVariable Long id, @PathVariable Long orgId) {
-        log.info("delete worker {}", id);
-        workerService.deleteById(id);
+    @DeleteMapping("/{workerId}/{orgId}/delete")
+    public String deleteWorker(@PathVariable Long workerId, @PathVariable Long orgId) {
+        log.info("delete worker {}", workerId);
+        workerService.deleteById(workerId);
         return "redirect:/worker/org/" + orgId;
     }
 
-    @GetMapping("/newWorker/{id}")
-    public String newWorker(@PathVariable Long id, Model model) {
+    @GetMapping("/newWorker/{orgId}")
+    public String newWorker(@PathVariable Long orgId, Model model) {
         model.addAttribute("employPositions", empPosService.getPositionName());
-        model.addAttribute("orgId", id);
+        model.addAttribute("orgId", orgId);
         model.addAttribute("currentDate", LocalDate.now());
         model.addAttribute("docktype", typeDocumentService.getAllByIdentity(true));
         return "workers/newWorker";
     }
 
-    @GetMapping("/{orgId}/edit/{id}")
-    public String updWorker(@PathVariable Long id, @PathVariable Long orgId, Model model) {
+    @GetMapping("/{workerId}/edit/{orgId}")
+    public String updWorker(@PathVariable Long workerId, @PathVariable Long orgId, Model model) {
         model.addAttribute("employPositions", empPosService.getPositionName());
         model.addAttribute("orgId", orgId);
         model.addAttribute("currentDate", LocalDate.now());
-        model.addAttribute("workerId", id);
-        model.addAttribute("worker", workerService.getById(id)
+        model.addAttribute("workerId", workerId);
+        model.addAttribute("worker", workerService.getById(workerId)
                 .orElseThrow(() -> new NotFoundException("Работник не найден")));
 
         return "workers/updateWorker";
 
     }
-
 
 
     @GetMapping("/org/{orgId}")
@@ -140,7 +139,7 @@ public class WorkerController {
 
     @Operation(summary = "Получить работника",
             description = "Получаем всю информацию о работнике")
-    @GetMapping("/{orgId}/get/{workerId}")
+    @GetMapping("/{workerId}/get/{orgId}")
     public String getWorker(@PathVariable Long workerId, @PathVariable Long orgId, Model model) {
         log.info("get worker {}", workerId);
         model.addAttribute("worker", workerService.getById(workerId)

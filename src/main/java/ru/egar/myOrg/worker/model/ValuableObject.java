@@ -10,8 +10,6 @@ import ru.egar.myOrg.worker.model.enumerated.TypeOfValue;
 
 import java.time.LocalDate;
 
-;
-
 
 @Setter
 @Getter
@@ -38,9 +36,6 @@ public class ValuableObject {
     @Column(name = "type_of_value")
     @Enumerated(EnumType.STRING)
     private TypeOfValue typeOfValue;
-    @ManyToOne
-    @JoinColumn(name = "worker_id")
-    private Worker worker;
     @ManyToOne
     @JoinColumn(name = "org_id")
     private Organization organization;

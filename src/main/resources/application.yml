@@ -14,8 +14,8 @@ spring:
   mail:
     default-encoding: UTF-8
     host: smtp.mail.ru
-    username: teman94@mail.ru
-    password: cRDMYerMPjkebmuEhurF
+    username:
+    password:
     port: 465
     protocol: smtps
     properties:

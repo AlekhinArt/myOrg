@@ -58,10 +58,16 @@ public class OrganizationController {
     }
 
     @GetMapping("/organization/upd/{id}")
-    public String updateOrg(@PathVariable Long id, Model model) {
+    public String updateOrgMVC(@PathVariable Long id, Model model) {
         model.addAttribute("organization", organizationService.getById(id)
                 .orElseThrow(() -> new NotFoundException("Организация не найдена")));
         return "organization/updOrg";
+    }
+
+    @PutMapping("/organization/upd/{id}")
+    public String updateOrg(@ModelAttribute("organization") @Valid OrganizationDto organizationDto,
+                            @PathVariable Long id) {
+        return "redirect:/organization/" + organizationService.updateById(id, organizationDto).getId();
     }
 
     @GetMapping("/")
