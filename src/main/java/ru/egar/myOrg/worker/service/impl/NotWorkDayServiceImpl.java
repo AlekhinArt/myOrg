@@ -2,7 +2,6 @@ package ru.egar.myOrg.worker.service.impl;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import ru.egar.myOrg.exception.DataConflictException;
 import ru.egar.myOrg.worker.model.WorkHistory;
@@ -31,7 +30,7 @@ public class NotWorkDayServiceImpl implements NotWorksDayService {
     public Optional<NotWorksDays> getById(Long aLong) {
         return Optional.empty();
     }
-    @CacheEvict(cacheNames = "table", allEntries = true)
+
     @Override
     public NotWorksDays create(NotWorksDays dto) {
         return nwdRepo.save(dto);
@@ -43,7 +42,7 @@ public class NotWorkDayServiceImpl implements NotWorksDayService {
 
         return nwdRepo.save(notWorksDays);
     }
-    @CacheEvict(cacheNames = "table", allEntries = true)
+
     @Override
     public void deleteById(Long aLong) {
         nwdRepo.deleteById(aLong);
@@ -55,7 +54,7 @@ public class NotWorkDayServiceImpl implements NotWorksDayService {
         return nwdRepo.findAllByWorkHistoryId(id);
     }
 
-    @CacheEvict(cacheNames = "table", allEntries = true)
+
     @Override
     public NotWorksDays saveNotWorksDay(NotWorksDays nwd, Long whId) {
         for (NotWorksDays oldNwd : nwdRepo.findAllByWorkHistoryId(whId)) {

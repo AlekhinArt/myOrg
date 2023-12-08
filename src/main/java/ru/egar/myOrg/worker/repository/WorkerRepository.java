@@ -1,5 +1,6 @@
 package ru.egar.myOrg.worker.repository;
 
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -42,5 +43,11 @@ public interface WorkerRepository extends JpaRepository<Worker, Long> {
     @Cacheable(cacheNames = "worker")
     Optional<Worker> findById(Long id);
 
+    @CacheEvict(cacheNames = {"workers", "worker"}, allEntries = true)
+    @Override
+    <S extends Worker> S save(S entity);
 
+    @CacheEvict(cacheNames = {"workers", "worker"}, allEntries = true)
+    @Override
+    void deleteById(Long aLong);
 }

@@ -3,7 +3,6 @@ package ru.egar.myOrg.worker.service.impl;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import ru.egar.myOrg.exception.NotFoundException;
 import ru.egar.myOrg.worker.mapper.EmployPositionMapper;
@@ -115,7 +114,7 @@ public class WorkerHistoryService implements WorkHistoryService {
         }
     }
 
-    @Cacheable(cacheNames = "table")
+
     @Override
     public WorkTableInfo[][] getNotWorksDayInCalendar(Long whId, String startPeriod, String endPeriod) {
         WorkHistory whById = getById(whId).orElseThrow(() -> new NotFoundException("История не найдена"));

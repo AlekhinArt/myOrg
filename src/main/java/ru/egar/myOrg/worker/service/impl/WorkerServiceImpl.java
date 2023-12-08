@@ -2,7 +2,6 @@ package ru.egar.myOrg.worker.service.impl;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import ru.egar.myOrg.document.model.PaperDocument;
 import ru.egar.myOrg.document.service.DocumentService;
@@ -36,7 +35,6 @@ public class WorkerServiceImpl implements WorkerService {
     private final WorkerMapper worMap;
 
 
-    @CacheEvict(cacheNames = {"workers", "worker"}, allEntries = true)
     @Override
     public WorkerDto create(WorkerDto workerDto) {
         workerDto.setOrganization(orgRepo.findById(workerDto.getOrgId()).orElseThrow(() -> new NotFoundException("Организация не найдена")));
@@ -45,7 +43,6 @@ public class WorkerServiceImpl implements WorkerService {
         return worMap.toWorkerDto(worker);
     }
 
-    @CacheEvict(cacheNames = {"workers", "worker"}, allEntries = true)
     @Override
     public void deleteById(Long aLong) {
         Worker worker = workerRepository.findById(aLong).orElseThrow(() -> new NotFoundException("Работник не найден"));
@@ -70,7 +67,7 @@ public class WorkerServiceImpl implements WorkerService {
         return workerDto;
     }
 
-    @CacheEvict(cacheNames = {"workers", "worker"}, allEntries = true)
+
     @Override
     public WorkerDto updateById(Long aLong, WorkerDto workerDto) {
         Worker worker = worMap.toWorker(workerDto);
@@ -78,7 +75,7 @@ public class WorkerServiceImpl implements WorkerService {
         return worMap.toWorkerDto(workerRepository.save(worker));
     }
 
-    @CacheEvict(cacheNames = {"workers", "worker"}, allEntries = true)
+
     @Override
     public WorkerDto create(WorkerCreateDto workerDto, PaperDocument paperDocument) {
         try {

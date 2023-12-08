@@ -1,8 +1,6 @@
 package ru.egar.myOrg.organization.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import ru.egar.myOrg.organization.dto.OrganizationDto;
 import ru.egar.myOrg.organization.mapper.OrganizationMapper;
@@ -30,7 +28,7 @@ public class OrganizationServiceImpl implements OrganizationService {
                 .collect(Collectors.toList());
     }
 
-    @Cacheable(cacheNames = "organizathion")
+
     @Override
     public Optional<OrganizationDto> getById(Long aLong) {
         final Optional<OrganizationDto> orgDto = organizationRepository.findById(aLong).
@@ -38,20 +36,20 @@ public class OrganizationServiceImpl implements OrganizationService {
         return orgDto;
     }
 
-    @CacheEvict(cacheNames = "organizathion", allEntries = true)
+
     @Override
     public OrganizationDto create(OrganizationDto dto) {
         return saveOrgByDto(dto);
     }
 
-    @CacheEvict(cacheNames = "organizathion", allEntries = true)
+
     @Override
     public OrganizationDto updateById(Long aLong, OrganizationDto organizationDto) {
         organizationDto.setId(aLong);
         return saveOrgByDto(organizationDto);
     }
 
-    @CacheEvict(cacheNames = "organizathion", allEntries = true)
+
     @Override
     public void deleteById(Long aLong) {
         organizationRepository.deleteById(aLong);

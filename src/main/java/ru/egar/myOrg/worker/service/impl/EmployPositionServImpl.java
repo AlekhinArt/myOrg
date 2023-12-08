@@ -1,8 +1,6 @@
 package ru.egar.myOrg.worker.service.impl;
 
 import lombok.AllArgsConstructor;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import ru.egar.myOrg.worker.dto.EmployPositionDto;
 import ru.egar.myOrg.worker.mapper.EmployPositionMapper;
@@ -21,7 +19,7 @@ public class EmployPositionServImpl implements EmployPositionService {
     private final EmployPositionMapper epMap;
     private final EmployPositionRepository employPositionRepository;
 
-    @Cacheable(cacheNames = "emsdto")
+
     @Override
     public List<EmployPositionDto> getAll() {
         final List<EmployPositionDto> empsDto = employPositionRepository.findAll()
@@ -38,7 +36,7 @@ public class EmployPositionServImpl implements EmployPositionService {
 
     }
 
-    @CacheEvict(cacheNames = "emsdto", allEntries = true)
+
     @Override
     public EmployPositionDto create(EmployPositionDto dto) {
         return epMap.toEmployPositionDto(
@@ -57,7 +55,7 @@ public class EmployPositionServImpl implements EmployPositionService {
         return employPositionDto;
     }
 
-    @CacheEvict(cacheNames = "emsdto", allEntries = true)
+
     @Override
     public void deleteById(Long aLong) {
         employPositionRepository.deleteById(aLong);
