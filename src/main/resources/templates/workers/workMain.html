@@ -55,7 +55,7 @@
 
             <tr th:each="worker, iterationStatus : ${workers}">
                 <td style="text-align: center"><a
-                        th:href="@{'/worker/{workerId}/get/{orgId}'(workerId=${worker.id}, orgId= ${orgId})}"><i
+                        th:href="@{'/worker/{workerId}/org/{orgId}'(workerId=${worker.id}, orgId= ${orgId})}"><i
                         class="fa fa-address-card-o" style="font-size:20px" aria-hidden="true"></i></a>
                 </td>
                 <td th:text="${worker.name}">name</td>
@@ -70,7 +70,7 @@
                         style="font-size:20px"></i></a>
                 </td>
                 <td style="text-align: center">
-                    <form th:action="@{'/worker/{workerId}/{orgId}/delete'(workerId=${worker.id}, orgId= ${orgId})}"
+                    <form th:action="@{'/worker/{workerId}/org/{orgId}/delete'(workerId=${worker.id}, orgId= ${orgId})}"
                           th:method="POST">
                         <input type="hidden" name="_method" value="DELETE"/>
                         <button type="submit">

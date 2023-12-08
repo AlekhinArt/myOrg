@@ -79,7 +79,7 @@ public class WorkerController {
 
     @Operation(summary = "Удаление",
             description = "Удаляем работник из бд")
-    @DeleteMapping("/{workerId}/{orgId}/delete")
+    @DeleteMapping("/{workerId}/org/{orgId}/delete")
     public String deleteWorker(@PathVariable Long workerId, @PathVariable Long orgId) {
         log.info("delete worker {}", workerId);
         workerService.deleteById(workerId);
@@ -139,7 +139,7 @@ public class WorkerController {
 
     @Operation(summary = "Получить работника",
             description = "Получаем всю информацию о работнике")
-    @GetMapping("/{workerId}/get/{orgId}")
+    @GetMapping("/{workerId}/org/{orgId}")
     public String getWorker(@PathVariable Long workerId, @PathVariable Long orgId, Model model) {
         log.info("get worker {}", workerId);
         model.addAttribute("worker", workerService.getById(workerId)

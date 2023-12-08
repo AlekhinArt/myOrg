@@ -180,7 +180,7 @@ public class WorkHistoryController {
         return "redirect:/worker/" + orgId + "/get/" + workerId;
     }
 
-    @GetMapping("/{orgId}/{workerId}/calendar")
+    @GetMapping("/org/{orgId}/{workerId}/calendar")
     public String workHours(@PathVariable Long workerId,
                             @PathVariable Long orgId,
                             @RequestParam Long whId,
