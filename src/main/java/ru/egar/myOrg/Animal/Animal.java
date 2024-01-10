@@ -10,8 +10,6 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-
 @MappedSuperclass
 public abstract class Animal {
     @Id
