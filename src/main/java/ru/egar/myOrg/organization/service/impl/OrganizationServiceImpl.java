@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.egar.myOrg.organization.dto.OrganizationDto;
 import ru.egar.myOrg.organization.mapper.OrganizationMapper;
 import ru.egar.myOrg.organization.model.Organization;
+import ru.egar.myOrg.Animal.BaseRep;
 import ru.egar.myOrg.organization.repository.OrganizationRepository;
 import ru.egar.myOrg.organization.service.OrganizationService;
 
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 public class OrganizationServiceImpl implements OrganizationService {
     private final OrganizationMapper orgMap;
     private final OrganizationRepository organizationRepository;
+
 
 
     @Override

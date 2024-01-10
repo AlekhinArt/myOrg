@@ -18,6 +18,7 @@ public class DocumentServiceImpl implements DocumentService {
     private final PassportMapper pasMap;
     private final DocumentRepository documentRepository;
 
+
     @Override
     public void save(PaperDocument paperDocument) {
         try {
