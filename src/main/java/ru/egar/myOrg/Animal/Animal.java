@@ -16,4 +16,6 @@ public abstract class Animal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "a_id")
     private Long id;
+
+    private String name;
 }

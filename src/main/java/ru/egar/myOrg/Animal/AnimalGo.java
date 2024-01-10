@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface AnimalGo {
 
-    List<Cat> findAllCats();
+    List<Animal> findAllCats();
 
-    List<Dog> findAllDogs ();
+    List<Animal> findAllDogs();
 }

@@ -16,13 +16,15 @@ public class Controller {
 
     private final AnimalGo animalGo;
 
+    private final BaseMapper mapper;
+
     @GetMapping("/cats")
-    public List<Cat> getCats() {
-        return animalGo.findAllCats();
+    public List<Response> getCats() {
+        return mapper.toDto(animalGo.findAllCats());
     }
 
     @GetMapping("/dogs")
-    public List<Dog> getDogs() {
-        return animalGo.findAllDogs();
+    public List<Response> getDogs() {
+        return mapper.toDto(animalGo.findAllDogs());
     }
 }
