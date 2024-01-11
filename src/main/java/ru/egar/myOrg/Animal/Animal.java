@@ -10,12 +10,12 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-
 @MappedSuperclass
 public abstract class Animal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "a_id")
     private Long id;
+
+    private String name;
 }

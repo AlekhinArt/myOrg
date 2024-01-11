@@ -2,7 +2,9 @@ package ru.egar.myOrg.Animal;
 
 import java.util.List;
 
-public interface AnimalGo<T extends Animal >{
+public interface AnimalGo {
 
-    List<T> findAll ();
+    List<Animal> findAllCats();
+
+    List<Animal> findAllDogs();
 }

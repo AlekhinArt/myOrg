@@ -1,12 +1,11 @@
 package ru.egar.myOrg.Animal;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.repository.NoRepositoryBean;
 
 import java.util.List;
 
-@Repository
-public interface BaseRep<T extends Animal> extends JpaRepository<T, Long> {
+@NoRepositoryBean
+public interface BaseRep<T extends Animal> {
 
-    List<T> findAll(Class<T> g);
+    List<T> find(Class<T> type);
 }
